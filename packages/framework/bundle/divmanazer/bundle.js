@@ -282,9 +282,6 @@ Oskari.clazz.define("Oskari.userinterface.bundle.ui.UserInterfaceBundle", functi
             }, {
                 "type": "text/css",
                 "src": "../../../../bundles/framework/divmanazer/resources/css/popover.css"
-            }, {
-                "type": "text/javascript",
-                "src": "../../../../libraries/jquery/plugins/jquery-placeholder/jquery.placeholder.js"
             }
         ],
         "locales": [{
