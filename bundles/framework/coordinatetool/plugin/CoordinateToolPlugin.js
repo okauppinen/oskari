@@ -130,7 +130,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.coordinatetool.plugin.Coordinate
             me._lonInput = popupContent.find('.lon-input');
             me._reverseGeocodeLabel = popupContent.find('.reverseGeocode-label');
 
-            popupContent.find('.coordinatetool__popup__content').html(loc.popup.info);
+            popupContent.find('.coordinatetool__popup__conte nt').html(loc.popup.info);
             popupContent.find('.lat-label').html(loc.compass.lat);
             popupContent.find('.lon-label').html(loc.compass.lon);
             popupContent.find('.mousecoordinates-label').html(loc.popup.showMouseCoordinates);
@@ -379,7 +379,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.coordinatetool.plugin.Coordinate
                 fromProj = me._mapmodule.getProjection();
                 toProj = me._projectionSelect.val();
             }
-
             me._coordinateTransformationExtension.getTransformedCoordinatesFromServer(data, fromProj, toProj, successCb, errorCb);
         },
 
@@ -543,6 +542,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.coordinatetool.plugin.Coordinate
                 }
                 lon = lon.replace(/,/g,'.');
 
+
                 // Need to show degrees ?
                 if(me._allowDegrees()) {
                     var degreePoint = Oskari.util.coordinateMetricToDegrees([lon,lat], me._getProjectionDecimals());
@@ -651,10 +651,21 @@ Oskari.clazz.define('Oskari.mapframework.bundle.coordinatetool.plugin.Coordinate
             service.getReverseGeocode(
                 // Success callback
                 function (response) {
-                    var hasResponse = (response && response.length > 0 && response[0].name && response[0].channelId) ? true : false;
+                    var hasResponse = (response && response.length > 0) ? true : false;
+
+                    // typestä title jos ei ole localea
 
                     if (hasResponse && me._reverseGeocodeLabel && locale[response[0].channelId]){
-                        me._reverseGeocodeLabel.html(locale[response[0].channelId].label + '<u>' + response[0].name + '</u>');
+                        me._reverseGeocodeLabel.html('');
+//                        me._reverseGeocodeLabel.html(locale[response[0].channelId].label + '<u>' + response[0].name + '</u>');
+                        for (var i = 0; i < response.length; i++) {
+                            var r = response[i];
+                            var title = locale[r.channelId].label;
+                            if (title == undefined) {
+                                title = r.type;
+                            }
+                            me._reverseGeocodeLabel.append("<div>" + title + "<u>" + r.name + "</u></div>")
+                        }
                     }
                 },
                 // Error callback
@@ -696,7 +707,9 @@ Oskari.clazz.define('Oskari.mapframework.bundle.coordinatetool.plugin.Coordinate
                         fromProjection = me._previousProjection;
                         me._projectionChanged = false;
                     }
+                    me._previousProjection = changeToProjection;
                     data = me._coordinateTransformationExtension.transformCoordinates(data, fromProjection, changeToProjection);
+
                 } catch(error) {}
             }
             me._updateLonLat(data);

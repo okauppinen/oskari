@@ -9,7 +9,6 @@
  * These are for flyout version of statsgrid
  * ******************************************* */
 .statsgrid-grid-table-header {
-  position: absolute;
   top: 0;
   left: 0;
   width: 94%;
@@ -17,14 +16,18 @@
   text-align: left;
   padding: 5px 5px 0px 5px;
   font-weight: normal; }
-  .statsgrid-grid-table-header .selection .parameter {
-    .clear-display: none !important; }
-    .statsgrid-grid-table-header .selection .parameter .label {
-      display: none !important;
-      float: none !important; }
-    .statsgrid-grid-table-header .selection .parameter .select {
-      width: auto !important;
-      float: none !important; }
+  .statsgrid-grid-table-header .header {
+    position: absolute;
+    width: 94%;
+    top: 0; }
+  .statsgrid-grid-table-header .selection .parameter .label {
+    display: none !important;
+    float: none !important; }
+  .statsgrid-grid-table-header .selection .parameter .select {
+    width: auto !important;
+    float: none !important; }
+  .statsgrid-grid-table-header .selection .parameter .clear {
+    display: none !important; }
   .statsgrid-grid-table-header .title {
     font-weight: bold;
     font-size: 16px;
@@ -56,7 +59,6 @@
         background-position: right center; }
 
 .statsgrid-grid-table-header-content {
-  position: absolute;
   top: 0;
   left: 0;
   width: 94%;
@@ -65,7 +67,9 @@
   padding: 5px 5px 0px 5px;
   font-weight: normal; }
   .statsgrid-grid-table-header-content .header {
-    width: 90%; }
+    width: 90%;
+    position: absolute;
+    top: 5px; }
     .statsgrid-grid-table-header-content .header .title {
       font-weight: bold; }
   .statsgrid-grid-table-header-content .icon {
@@ -244,5 +248,34 @@ div.oskari-flyoutcontent .statsgrid-grouping-header {
         margin-left: 4px; }
     .statsgrid-legend-flyout-published div.accordion div.accordion_panel.open div.header {
       background-color: #F3F3F3; }
+
+/** Toggle buttons */
+.statsgrid-published-toggle-buttons {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  position: absolute;
+  right: 10px;
+  bottom: 10px; }
+  .statsgrid-published-toggle-buttons .map {
+    background-color: #3c3c3c;
+    float: left;
+    height: 36px;
+    width: 36px;
+    background-image: url("../images/map_dark.png");
+    cursor: pointer; }
+    .statsgrid-published-toggle-buttons .map.active {
+      background-color: #ffffff;
+      background-image: url("../images/map_light.png"); }
+  .statsgrid-published-toggle-buttons .table {
+    background-color: #3c3c3c;
+    float: left;
+    height: 36px;
+    width: 36px;
+    background-image: url("../images/table_dark.png");
+    cursor: pointer; }
+    .statsgrid-published-toggle-buttons .table.active {
+      background-color: #ffffff;
+      background-image: url("../images/table_light.png"); }
+  .statsgrid-published-toggle-buttons .clear {
+    clear: both; }
 
 /*# sourceMappingURL=style.css.map */
