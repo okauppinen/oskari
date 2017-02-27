@@ -107,13 +107,6 @@
         var appConfig = config || {};
 
         var globalExpose = {};
-
-        if(o.getLoaderMode() === 'dev') {
-            // config for dev mode
-            require.config({
-                urlArgs: "ts=" + (new Date()).getTime()
-            });
-        }
         // Listen to started bundles
         var result = {
             bundles : [],
@@ -247,11 +240,12 @@
                 }
                 log.debug('Starting bundle ' + bundleId);
                 try {
-                    instance.start();
+                    instance.start(Oskari.getSandbox());
                     Oskari.trigger('bundle.start', { id : bundleId });
                 } catch(err) {
                     Oskari.trigger('bundle.err', { id : bundleId, error : err });
-                    throw new Error('Couldn\'t start bundle with id ' + bundleId + '. Error was: ' + err);
+                    log.error('Couldn\'t start bundle with id ' + bundleId + '. Error was: ',err);
+                    throw err;
                 }
             },
             processBundleJS : function(bundles, callback) {

@@ -20,7 +20,7 @@ This bundle provides a plugin (Oskari.mapframework.bundle.coordinatetool.plugin.
 
 No configuration is required, but there is few possible configurations:
 
-- Setting `projectionShowFormat` to configure how different projections are showed in textfields. This setting supports all projections or projection specific configuration. In both of these `metric` property define decimal plates (if format is `degrees` then this seconds is rounded to wanted decimals), `format` property define showed format (`degrees` or `metric`). If not setted then metric format and 0 decimals are default.
+- Setting `projectionShowFormat` to configure how different projections are showed in textfields. This setting supports all projections or projection specific configuration. In both of these `metric` property define decimal plates (if format is `degrees` then this seconds is rounded to wanted decimals), `format` property define showed format (`degrees` or `metric`). If not setted then metric format and 0 decimals are default. if projectionShowFormat not defined then using map units and this decimals.
   - Option to change all projections formats
 ````
 {
@@ -84,6 +84,20 @@ No configuration is required, but there is few possible configurations:
         "EPSG:3881", "EPSG:3882", "EPSG:3883",
         "EPSG:3884", "EPSG:3885"
       ]
+}
+````
+
+- Option to configure XY-icon not visible (for example coordinatetools is used in published map and it's opened/closed by RPC request):
+````
+{
+    "noUI": true
+}
+````
+
+- Option to configure to show emergency call message:
+````
+{
+    "showEmergencyCallMessage" : true
 }
 ````
 

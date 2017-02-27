@@ -17,14 +17,24 @@ table.layer-rights-table {
     th:first-child {
       width: 40%;
       padding: 2px 5px;
-      padding-left: 30px;
-      text-align: left;
       min-width: 360px;
     }
     th {
       width: 15%;
     }
   }
+  tr.control{
+    padding-left: 370px;
+    border-bottom: thin solid silver;
+  td {
+     @media screen and (min-width:1000px) and (max-width:1600px){
+          width: 25%;
+          min-width: 122px;
+      }
+    width: 25%;
+    min-width: 108px;
+  }
+}
 
   tbody {
     @media screen and (max-height: 600px) {
@@ -43,13 +53,8 @@ table.layer-rights-table {
     overflow: auto;
     tr {
       td:first-child {
-        width: 10%;
-        min-width: 50px;
-      }
-      td:nth-child(2) {
-        width: 30%;
-        text-align: left;
-        min-width: 320px;
+        width: 40%;
+        min-width: 370px;
       }
       td {
         width: 15%;

@@ -9,6 +9,68 @@ Some extra tags:
 - [rpc] tag indicates that the change affects RPC API
 - [breaking] tag indicates that the change is not backwards compatible
 
+## 1.41
+
+### [mod] [rpc] RouteResultEvent
+
+Now includes the parameters from the request under rawParams key. You can also send an additional id when making the request and the id will be returned under the rawParams. As some routes take longer to determine than others this can be used to detect order of the responses.
+
+Also a RouteResultEvent with success: false is now sent correctly if there's a network issue or some other internal problem.
+
+### [mod] [rpc] AfterMapMoveEvent
+
+The marker flag has been removed as it was misleading. The value was always false.
+
+### [rem] FeaturesAvailableEvent
+
+Event removed as deprecated and unsupported. Use MapModulePlugin.AddFeaturesToMapRequest instead.
+
+### [mod] AddMapLayerRequest
+
+Request only has one parameter: the layer ID. This simplifies layer order handling and makes it work more intuitively.
+
+### [rem] DimMapLayerRequest, HighlightMapLayerRequest, AfterDimMapLayerEvent and AfterHighlightMapLayerEvent
+
+The above requests and events have been merged to "map.layer.activation" request and event. It has a new boolean flag indicating activation/deactivation instead of own events/requests.
+
+### [rem] AfterShowMapLayerInfoEvent
+
+Event removed as backendstatus bundle sent it to itself reacting to ShowMapLayerInfoRequest that it also handles.
+
+### [rem] CtrlKeyDownRequest and CtrlKeyUpRequest
+
+Requests removed as deprecated. These should be events if anything. Oskari.ctrlKeyDown(blnPressed) can be used instead, but it's deprecated as well.
+
+### [rem] HideMapMarkerRequest and AfterHideMapMarkerEvent
+
+AfterHideMapMarkerEvent was removed as it's no longer used and is misleading as it was used to notify markerlayer being hidden.
+HideMapMarkerRequest was removed as it's no longer used and is misleading. Use MapModulePlugin.MarkerVisibilityRequest instead.
+
+### [rem] Printout.PrintWithParcelUIEvent
+
+Removed parcel application specific event from printout.
+
+## 1.40
+
+### [mod] [rpc] InfoBox.ShowInfoBoxRequest
+
+Updating existing infibox in mobile mode had timing problems and ended in javascript error and/or popup being closed instead of updated. This has been fixed.
+
+### [mod] [rpc] [breaking] feedbackService (Open311)
+
+NOTE! Still under construction, this is a POC solution for testing Open311 servers.
+For more detailed information, see documentation http://oskari.org/api/requests.
+
+#### GetFeedbackRequest & PostFeedbackRequest
+
+The parameters "getServiceRequests" and "postServiceRequest" are no longer available, but the same content can now be sent with parameter named "payload".
+The payload no longer needs to be JSON.stringified.
+
+#### GetFeedbackServiceRequest & GetFeedbackServiceDefinitionRequest
+
+The two requests have been merged to GetFeedbackServiceRequest. The request without a parameter results in a FeedbackResultEvent with a listing of services and
+ when the request is sent with a parameter with the value of a service code the event will include metadata (service definition) for that single service.
+
 ## 1.39
 
 #### [add] [rpc] New MapModulePlugin.MapLayerUpdateRequest Request
@@ -211,8 +273,6 @@ Posts user's feedback data to the Open311 service.
 
 For more detailed information, see documentation http://oskari.org/api/requests.
 
-feedback.open331.key=     setup is required in oskari server properties
-(api_key  of Open311 service)
 
 #### [add] [rpc] GetFeedbackServiceRequest
 

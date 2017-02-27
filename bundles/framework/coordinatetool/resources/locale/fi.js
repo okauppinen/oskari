@@ -19,8 +19,12 @@ Oskari.registerLocalization(
                 "showMouseCoordinates": "Näytä hiiren kursorin koordinaatit."
             },
             "compass": {
-                "lon": "E / lon:",
-                "lat": "N / lat:"
+                "lon": "Lon",
+                "lat": "Lat",
+                "n": "N",
+                "e": "E",
+                "p": "P",
+                "i": "I"
             },
             "reversegeocode": {
                 "errorTitle": "Reverse geokoodaus virhe",
@@ -28,12 +32,13 @@ Oskari.registerLocalization(
                 "WHAT3WORDS_CHANNEL": {
                     "label": "what3words: "
                 },
-                "NLS_NEAREST_FEATURE_CHANNEL" : {
+                "NLS_NEAREST_FEATURE_CHANNEL": {
                     "label": "Osoite: "
                 },
                 "TM35LEHTIJAKO_CHANNEL": {
                     "label": "Karttalehti: "
-                }
+                },
+                "moreInfo": "Näytä sijainnin lisätiedot."
             },
             "tooltip": {
                 "tool": "Näytä koordinaatit tai kohdista kartta antamiisi koordinaatteihin.",
@@ -46,7 +51,7 @@ Oskari.registerLocalization(
             },
             "projectionChange": {
                 "header": "Vaihda projektiota",
-                "projection":"Projektio",
+                "projection": "Projektio",
                 "confirmationMessage": "Vaihtamalla projektiota sovellus palaa alkutilaan ja kaikki avatut tasot suljetaan. Haluatko jatkaa?",
                 "buttons": {
                     "ok": "OK",
@@ -84,10 +89,10 @@ Oskari.registerLocalization(
                 },
                 "emergencyCallLabel": "Hätäpuheluissa käytettäväksi suositellut koordinaatit ovat",
                 "emergencyCallLabelAnd": "ja",
-                "showCoordinateFormatDisplay":"Näytä koordinaatit &raquo;",
-                "showInputValues":"&laquo; Syötä arvot"
+                "showCoordinateFormatDisplay": "Näytä koordinaatit &raquo;",
+                "showInputValues": "&laquo; Syötä arvot"
             },
-            "cannotTransformCoordinates" : {
+            "cannotTransformCoordinates": {
                 "title": "Virhe",
                 "message": "Koordinaatteja ei saatu muunnettua"
             },
@@ -97,5 +102,4 @@ Oskari.registerLocalization(
             }
         }
     }
-}
-);
+});
