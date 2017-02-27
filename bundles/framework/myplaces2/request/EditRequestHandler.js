@@ -44,10 +44,10 @@ Oskari.clazz.define('Oskari.mapframework.bundle.myplaces2.request.EditRequestHan
             var service = this.instance.getService(),
                 place = service.findMyPlace(request.getId());
             if (place) {
-                var center = place.getGeometry().getCentroid(),
+                var bbox = place.getGeometry().getBounds(),
                     location = {
-                        lon: center.x,
-                        lat: center.y
+                        lon: bbox.right,
+                        lat: bbox.top
                     };
                 this.instance.getDrawPlugin().startDrawing({
                     geometry: place.getGeometry()
