@@ -80,6 +80,9 @@ Oskari.clazz.define('Oskari.mapframework.bundle.myplaces2.request.EditRequestHan
                     sandbox.notifyAll(event);
                 }
             }
+            var closeGFIRequestBuilder = sandbox.getRequestBuilder('InfoBox.HideInfoBoxRequest'),
+                closeGFIRequest = closeGFIRequestBuilder('getinforesult');
+            sandbox.request(this.instance, closeGFIRequest);
 
             this.instance.getDrawPlugin().stopDrawing();
             this.instance.getMainView().cleanupPopup();
