@@ -36,7 +36,8 @@ Oskari.clazz.category('Oskari.mapframework.mapmodule.GetInfoPlugin', 'formatter'
             var content = jQuery('<div class="myplaces_place">' + '<h3 class="myplaces_header"></h3>' + '<p class="myplaces_desc"></p>' + '<a class="myplaces_imglink" target="_blank"><img class="myplaces_img"></img></a>' + '<br><a class="myplaces_link" target="_blank"></a>' + '</div>'),
                 desc = content.find('p.myplaces_desc'),
                 img = content.find('a.myplaces_imglink'),
-                link = content.find('a.myplaces_link');
+                link = content.find('a.myplaces_link'),
+                loc = Oskari.getLocalization('MapModule');
 
             content.find('h3.myplaces_header').html(place.name);
 
@@ -63,11 +64,11 @@ Oskari.clazz.category('Oskari.mapframework.mapmodule.GetInfoPlugin', 'formatter'
             } else {
                 img.remove();
             }
-
+            
             if (place.link) {
                 link.attr({
                     'href': place.link
-                }).html(place.link);
+                }).html(loc.plugin.GetInfoPlugin.link); 
             } else {
                 link.remove();
             }
