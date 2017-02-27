@@ -140,10 +140,10 @@ Oskari.clazz.define("Oskari.mapframework.bundle.myplaces2.view.MainView",
          * @param {Oskari.mapframework.ui.module.common.mapmodule.DrawPlugin.event.FinishedDrawingEvent} event
          */
         _handleFinishedDrawingEvent: function (event) {
-            var center = event.getDrawing().getCentroid(),
+            var bbox = event.getDrawing().getBounds(),
                 lonlat = {
-                    lon: center.x,
-                    lat: center.y
+                    lon: bbox.right,
+                    lat: bbox.top
                 };
             this.showPlaceForm(lonlat);
         },
