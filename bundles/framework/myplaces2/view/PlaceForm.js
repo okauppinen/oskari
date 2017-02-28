@@ -104,19 +104,12 @@ Oskari.clazz.define("Oskari.mapframework.bundle.myplaces2.view.PlaceForm",
             this._bindImageUrlChange();
 
             if (this.initialValues) {
-<<<<<<< HEAD
                 ui.find('input[name=placename]').attr('value', this.initialValues.place.name);
                 ui.find('input[name=placedesc]').attr('value', this.initialValues.place.desc);
                 ui.find('input[name=placeAttention]').attr('value', this.initialValues.place.attention_text);
                 ui.find('input[name=placelink]').attr('value', this.initialValues.place.link);
                 ui.find('input[name=imagelink]').attr('value', this.initialValues.place.imageLink);
-=======
-                ui.find('input[data-name=placename]').attr('value', this.initialValues.place.name);
-                ui.find('textarea[data-name=placedesc]').append(this.initialValues.place.desc);
-                ui.find('input[data-name=placeAttention]').attr('value', this.initialValues.place.attention_text);
-                ui.find('input[data-name=placelink]').attr('value', this.initialValues.place.link);
-                ui.find('input[data-name=imagelink]').attr('value', this.initialValues.place.imageLink);
->>>>>>> origin/master
+
                 this._updateImageUrl(this.initialValues.place.imageLink, ui);
             }
 
@@ -143,17 +136,11 @@ Oskari.clazz.define("Oskari.mapframework.bundle.myplaces2.view.PlaceForm",
 
             if (onScreenForm.length > 0) {
                 // found form on screen
-<<<<<<< HEAD
                 var placeName = onScreenForm.find('input[name=placename]').val(),
                     placeDesc = onScreenForm.find('input[name=placedesc]').val(),
                     placeAttention = onScreenForm.find('input[name=placeAttention]').val(),
                     placeLink = onScreenForm.find('input[name=placelink]').val();
-=======
-                var placeName = onScreenForm.find('input[data-name=placename]').val(),
-                    placeDesc = onScreenForm.find('textarea[data-name=placedesc]').val(),
-                    placeAttention = onScreenForm.find('input[data-name=placeAttention]').val(),
-                    placeLink = onScreenForm.find('input[data-name=placelink]').val();
->>>>>>> origin/master
+
                 if (placeLink) {
                     if (placeLink.indexOf('://') === -1 || placeLink.indexOf('://') > 6) {
                         placeLink = 'http://' + placeLink;
