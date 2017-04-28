@@ -431,12 +431,17 @@ Oskari.clazz.category('Oskari.mapframework.mapmodule.GetInfoPlugin', 'formatter'
                     continue;
                 }
                 vType = (typeof value).toLowerCase();
+                valueLowerCase = value.toLowerCase();
                 valpres = '';
                 switch (vType) {
                 case 'string':
-                    if (value.indexOf('http://') === 0) {
+                    if (valueLowerCase.indexOf('http://') === 0 || valueLowerCase.indexOf('https://') === 0) {
                         valpres = this.template.linkOutside.clone();
                         valpres.attr('href', value);
+                        valpres.append(value);
+                    } else if (this._isValidEmail(value)){
+                        valpres = this.template.linkOutside.clone();
+                        valpres.attr('href', 'mailto:' + value);
                         valpres.append(value);
                     } else {
                         valpres = value;
@@ -502,5 +507,13 @@ Oskari.clazz.category('Oskari.mapframework.mapmodule.GetInfoPlugin', 'formatter'
             }
         }
         return html;
+    },
+    _isValidEmail: function(email){
+        if ((!email) || (typeof email !== 'string')) {
+            return false;
+        }
+        var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        return re.test(email);
     }
+
 });
