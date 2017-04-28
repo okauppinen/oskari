@@ -146,7 +146,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.myplaces2.MyPlacesTab',
             // center map on selected place
             var me = this,
                 center = geometry.getCentroid(),
-                bounds = me._fitBounds(geometry.getBounds()),
+                bounds = me._fitBounds(geometry.getBounds(),2),
                 mapmoveRequest = this.instance.sandbox.getRequestBuilder('MapMoveRequest')(center.x, center.y, bounds);
             this.instance.sandbox.request(this.instance, mapmoveRequest);
             // add the myplaces layer to map
@@ -426,15 +426,15 @@ Oskari.clazz.define('Oskari.mapframework.bundle.myplaces2.MyPlacesTab',
          * @private
          * TODO: maybe config for expansion frame size
          */
-        _fitBounds: function (gbounds) {
-
+        _fitBounds: function (gbounds, frameSize) {
+            frameSize = frameSize || 100;
             if (gbounds.bottom === gbounds.top &&
                 gbounds.left === gbounds.right)
             {
-                gbounds.bottom = gbounds.bottom - 100;
-                gbounds.left = gbounds.left - 100;
-                gbounds.top = gbounds.top + 100;
-                gbounds.right = gbounds.right + 100;
+                gbounds.bottom = gbounds.bottom - frameSize;
+                gbounds.left = gbounds.left - frameSize;
+                gbounds.top = gbounds.top + frameSize;
+                gbounds.right = gbounds.right + frameSize;
             }
 
             return gbounds;
