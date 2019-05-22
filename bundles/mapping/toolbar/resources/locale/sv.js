@@ -14,7 +14,7 @@ Oskari.registerLocalization(
                 "skipInfo": "Visa inte snabbguide"
             },
             "history": {
-                "reset": "Gå tillbaka till standardvyn för kartvyn.",
+                "reset": "Gå tillbaka till standardvyn.",
                 "back": "Gå tillbaka till föregående kartvy.",
                 "next": "Flytta till nästa kartvy."
             },
