@@ -389,6 +389,22 @@ Oskari.clazz.define('Oskari.mapping.mapmodule.plugin.BasicMapModulePlugin',
                 }
             }
         },
+        addControlElementToMobileToolbar: function () {
+            const tool = 'fake';
+            const config = {
+                id: tool,
+                el: this.getElement(),
+                index: this.getIndex(),
+                isSvg: true
+            };
+            const sandbox = this.getSandbox();
+            const toolbarId = this.getMapModule().getMobileToolbar();
+            if (!sandbox.hasHandler('Toolbar.AddToolButtonRequest')) {
+                return true;
+            }
+            const addToolButtonBuilder = Oskari.requestBuilder('Toolbar.AddToolButtonRequest');
+            sandbox.request(this, addToolButtonBuilder('mobile-' + tool, toolbarId, config));
+        },
         removeToolbarButtons: function (buttons, group) {
             var sandbox = this.getSandbox();
             if (!sandbox) {

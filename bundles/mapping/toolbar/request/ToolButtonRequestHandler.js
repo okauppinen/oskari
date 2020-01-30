@@ -27,8 +27,13 @@ Oskari.clazz.define('Oskari.mapframework.bundle.toolbar.request.ToolButtonReques
         handleRequest: function (core, request) {
             var requestName = request.getName();
             if (requestName === 'Toolbar.AddToolButtonRequest') {
+                const conf = request.getConfig();
+                if (conf.isSvg) {
+                    this._toolbar.addMobileSvgButton(conf);
+                    return;
+                }
                 this._toolbar.addToolButton(
-                    request.getId(), request.getGroup(), request.getConfig());
+                    request.getId(), request.getGroup(), conf);
             } else if (requestName === 'Toolbar.RemoveToolButtonRequest') {
                 this._toolbar.removeToolButton(
                     request.getId(), request.getGroup(), request.getToolbarId());

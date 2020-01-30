@@ -136,6 +136,50 @@ Oskari.clazz.category('Oskari.mapframework.bundle.toolbar.ToolbarBundleInstance'
             me._addButtonTheme(pConfig, toolbarConfig, button);
         }
     },
+    addMobileSvgButton: function (config = {}) {
+        const { id, index, el } = config;
+        if (!id) {
+            // no config -> do nothing
+            Oskari.log('Toolbar').warn('All parameters must be defined in AddToolButtonRequest');
+            return;
+        }
+
+        const mapmodule = this.getMapModule();
+        const toolbarId = mapmodule.getMobileToolbar();
+        const groupId = 'mobile-toolbar';
+        const toolbar = this.getToolbarContainer(toolbarId, {});
+        const prefixedGroup = toolbarId + '-' + groupId;
+        let groupEl;
+        if (!this.buttons[prefixedGroup]) {
+            // create group if not existing
+            this.buttons[prefixedGroup] = {};
+            groupEl = this.templateGroup.clone();
+            groupEl.attr('tbgroup', prefixedGroup);
+            toolbar.append(groupEl);
+            this.groupsToToolbars[prefixedGroup] = toolbarId;
+        } else {
+            groupEl = toolbar.find('div.toolrow[tbgroup=' + prefixedGroup + ']');
+        }
+        if (this.buttons[prefixedGroup][id]) {
+            return;
+        }
+        const buttons = this.buttons[prefixedGroup];
+        let nearest;
+        let nearestId;
+        Object.keys(buttons).forEach(id => {
+            const btn = buttons[id];
+            const diff = index - (btn.index || 0);
+            if (diff < nearest && diff > 0) {
+                nearestId = id;
+            }
+        });
+        if (nearestId) {
+            groupEl.find('[tool=' + nearestId + ']').after(el);
+        } else {
+            groupEl.append(el);
+        }
+        this.buttons[prefixedGroup][id] = config;
+    },
 
     getMapModule: function () {
         return Oskari.getSandbox().findRegisteredModuleInstance('MainMapModule');
