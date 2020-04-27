@@ -557,7 +557,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.toolbar.ToolbarBundleInstance',
             var me = this;
             function sendRegister () {
                 var requestBuilder = Oskari.requestBuilder('Guidedtour.AddToGuidedTourRequest');
-                if (requestBuilder && me.sandbox.hasHandler('Guidedtour.AddToGuidedTourRequest')) {
+                if (requestBuilder) {
                     var delegate = {
                         bundleName: me.getName()
                     };
@@ -578,8 +578,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.toolbar.ToolbarBundleInstance',
                 }
             }
 
-            var tourInstance = me.sandbox.findRegisteredModuleInstance('GuidedTour');
-            if (tourInstance) {
+            if (this.sandbox.hasHandler('Guidedtour.AddToGuidedTourRequest')) {
                 sendRegister();
             } else {
                 Oskari.on('bundle.start', handler);
