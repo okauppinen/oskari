@@ -578,7 +578,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
             selectedLayers.forEach(l => {
                 if (typeof l.getCustomStyle === 'function') {
                     const custom = l.getCustomStyle();
-                    if (custom && custom.style) {
+                    const selected = l.getCurrentStyle().getName();
+                    if (custom && custom.name === selected && custom.style) {
                         customStyles[l.getId()] = custom.style;
                     }
                 }
