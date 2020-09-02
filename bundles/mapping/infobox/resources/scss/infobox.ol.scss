@@ -1,3 +1,7 @@
+$headerHeight: 40;
+:export {
+  cssHeaderHeight: $headerHeight
+}
 div.popupHeaderArrow {
 
     &.no-position-info {
@@ -129,7 +133,7 @@ div.popupHeader {
     display: inline-block;
     width: 390px;
     float: left;
-    height: 40px;
+    height: $headerHeight + px;
 
     div {
         vertical-align: top;

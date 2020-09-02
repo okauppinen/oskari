@@ -1,5 +1,5 @@
 import olOverlay from 'ol/Overlay';
-
+import { cssHeaderHeight } from '../../resources/scss/infobox.ol.scss';
 /**
  * @class Oskari.mapframework.bundle.infobox.plugin.mapmodule.OpenlayersPopupPlugin
  *
@@ -302,9 +302,9 @@ Oskari.clazz.define(
                     fixSize.left += (popupEl.length > 0 && popupHeaderEl.length > 0 && popupHeaderChildren.length > 0) ? popupHeaderChildren.position().left : 0;
                     fixSize.height += popupHeaderChildren.height() - popupHeaderChildren.position().top;
                 });
-
-                var fixedHeight = fixSize.height;
-                popupHeaderEl.height(fixedHeight);
+                if (fixSize.height > cssHeaderHeight) {
+                    popupHeaderEl.height(fixSize.height);
+                }
             }
 
             if (me.adaptable && !isInMobileMode) {
