@@ -25,7 +25,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
         this.dialog = undefined;
         this.printoutHandler = undefined;
         this.isMapStateChanged = true;
-        this.state = undefined;
         this.printService = undefined;
         this._log = Oskari.log(this.getName());
     }, {
@@ -122,11 +121,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
             // Let's extend UI
             var request = Oskari.requestBuilder('userinterface.AddExtensionRequest')(this);
             sandbox.request(this, request);
-
-            // sandbox.registerAsStateful(this.mediator.bundleId, this);
             // draw ui
             me._createUi();
-            sandbox.registerAsStateful(this.mediator.bundleId, this);
         },
         /**
          * @method init
@@ -308,9 +304,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
                 // proceed with printout view
                 this.printout = Oskari.clazz.create('Oskari.mapframework.bundle.printout.view.BasicPrintout', this, this.getLocalization('BasicView'));
                 this.printout.render(map);
-                if (this.state && this.state.form) {
-                    this.printout.setState(this.state.form);
-                }
                 this.printout.show();
                 this.printout.setEnabled(true);
                 this.printout.refresh(false);
@@ -342,37 +335,11 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
             if (isOpen) {
                 this.plugins['Oskari.userinterface.Flyout'].refresh();
             }
-        },
-
-        /**
-         * @method setState
-         * Sets the bundle state
-         * bundle documentation for details.
-         * @param {Object} state bundle state as JSON
-         */
-        setState: function (state) {
-            this.state = state;
-        },
-        /**
-         * @method getState
-         * Returns bundle state as JSON. State is bundle specific, check the
-         * bundle documentation for details.
-         * @return {Object}
-         */
-        getState: function () {
-            var state = this.state || {};
-
-            if (this.printout) {
-                var formState = this.printout.getState();
-                state.form = formState;
-            }
-
-            return state;
         }
     }, {
         /**
          * @property {String[]} protocol
          * @static
          */
-        protocol: ['Oskari.bundle.BundleInstance', 'Oskari.mapframework.module.Module', 'Oskari.userinterface.Extension', 'Oskari.userinterface.Stateful']
+        protocol: ['Oskari.bundle.BundleInstance', 'Oskari.mapframework.module.Module', 'Oskari.userinterface.Extension']
     });

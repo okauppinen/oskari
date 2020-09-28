@@ -715,26 +715,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
             } else {
                 this._cleanMapPreview();
             }
-        },
-
-        /**
-         * @public @method getState
-         *
-         *
-         * @return {Object} state
-         */
-        getState: function () {
-            return this._gatherParams();
-        },
-
-        /**
-         * @public @method setState
-         *
-         * @param {Object} formState
-         *
-         */
-        setState: function (formState) {
-
         }
     }
 );
