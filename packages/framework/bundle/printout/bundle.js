@@ -32,9 +32,6 @@ Oskari.clazz.define("Oskari.mapframework.bundle.printout.PrintoutBundle", functi
             "src": "../../../../bundles/framework/printout/Flyout.js"
         }, {
             "type": "text/javascript",
-            "src": "../../../../bundles/framework/printout/Tile.js"
-        }, {
-            "type": "text/javascript",
             "src": "../../../../bundles/framework/printout/service/PrintService.js"
         }, {
             "type": "text/javascript",
@@ -48,15 +45,6 @@ Oskari.clazz.define("Oskari.mapframework.bundle.printout.PrintoutBundle", functi
         }, {
             "type": "text/javascript",
             "src": "../../../../bundles/framework/printout/request/PrintMapRequestHandler.js"
-        }, {
-            "type": "text/javascript",
-            "src": "../../../../bundles/framework/printout/event/PrintableContentEvent.js"
-        }, {
-            "type": "text/javascript",
-            "src": "../../../../bundles/framework/printout/event/PrintWithoutUIEvent.js"
-        }, {
-            "type": "text/javascript",
-            "src": "../../../../bundles/framework/printout/event/PrintCanceledEvent.js"
         }, {
             "type": "text/css",
             "src": "../../../../bundles/framework/printout/resources/scss/style.scss"

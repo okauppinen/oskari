@@ -26,18 +26,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
         this.printoutHandler = undefined;
         this.isMapStateChanged = true;
         this.state = undefined;
-        this.geoJson = undefined;
-        this.tableJson = undefined;
-        // Additional data for each printable layer
-        this.tileData = undefined;
         this.printService = undefined;
-        //  Format producers
-        this.backendConfiguration = {
-            formatProducers: {
-                'application/pdf': '',
-                'image/png': ''
-            }
-        };
         this._log = Oskari.log(this.getName());
     }, {
         /**
@@ -84,7 +73,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
          */
         start: function () {
             var me = this;
-
             if (me.started) {
                 return;
             }
@@ -103,16 +91,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
                 if (me.eventHandlers.hasOwnProperty(p)) {
                     sandbox.registerForEventByName(me, p);
                 }
-            }
-
-            me.backendConfiguration.formatProducers['application/pdf'] = (conf && !jQuery.isEmptyObject(conf.backendConfiguration) ? conf.backendConfiguration.formatProducers['application/pdf'] : null) || '';
-            me.backendConfiguration.formatProducers['image/png'] = (conf && !jQuery.isEmptyObject(conf.backendConfiguration) ? conf.backendConfiguration.formatProducers['image/png'] : null) || '';
-
-            if (!me.backendConfiguration.formatProducers['application/pdf']) {
-                me.backendConfiguration.formatProducers['application/pdf'] = Oskari.urls.getRoute('GetPrint') + '&format=application/pdf&';
-            }
-            if (!me.backendConfiguration.formatProducers['image/png']) {
-                me.backendConfiguration.formatProducers['image/png'] = Oskari.urls.getRoute('GetPrint') + '&format=image/png&';
             }
             // requesthandler
             this.printoutHandler = Oskari.clazz.create('Oskari.mapframework.bundle.printout.request.PrintMapRequestHandler', sandbox, function () {
@@ -148,10 +126,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
             // sandbox.registerAsStateful(this.mediator.bundleId, this);
             // draw ui
             me._createUi();
-
             sandbox.registerAsStateful(this.mediator.bundleId, this);
-
-            this.tileData = {};
         },
         /**
          * @method init
@@ -233,56 +208,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
 
                 var isOpen = event.getViewState() !== 'close';
                 me.displayContent(isOpen);
-            },
-
-            /**
-             * Bundles interested to get printed send their data via this event.
-             * The event listener saves the GeoJSON (if given) for use in printing
-             * and the tile data (if given) for a given layer.
-             *
-             * @method Printout.PrintableContentEvent
-             * @param {Object} event
-             */
-            'Printout.PrintableContentEvent': function (event) {
-                var layer = event.getLayer(),
-                    layerId = ((layer && layer.getId) ? layer.getId() : null),
-                    tileData = event.getTileData(),
-                    geoJson = event.getGeoJsonData();
-
-                // Save the GeoJSON for later use if provided.
-                // TODO:
-                // Save the GeoJSON for each contentId separately.
-                // view/BasicPrintOut.js should be changed as well
-                // to parse the geoJson for the backend.
-                if (geoJson) {
-                    this.geoJson = geoJson;
-                }
-                // Save the tile data per layer for later use.
-                if (tileData && layerId) {
-                    this.tileData[layerId] = tileData;
-                }
-            },
-            /**
-             * Bundles could plot directly via this event
-             * @method Printout.PrintWithoutUIEvent
-             * @param {Object} event
-             */
-            'Printout.PrintWithoutUIEvent': function (event) {
-                var me = this,
-                    printParams = event.getPrintParams(),
-                    geoJson = event.getGeoJsonData();
-                if (geoJson) {
-                    me.geoJson = geoJson;
-                }
-                // Request pdf
-                if (!me.printout) {
-                    var map = jQuery('#contentMap');
-                    me.printout = Oskari.clazz.create('Oskari.mapframework.bundle.printout.view.BasicPrintout', this, this.getLocalization('BasicView'), this.backendConfiguration);
-                    me.printout.render(map);
-                    me.printout.setEnabled(false);
-                    me.printout.hide();
-                }
-                me.printout.printMap(printParams);
             }
         },
 
@@ -295,9 +220,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
                 this.printout.destroy();
                 this.printout = undefined;
             }
-
-            this.geoJson = null;
-            this.tileData = null;
 
             var sandbox = this.sandbox(),
                 p;
@@ -324,21 +246,19 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
          */
         startExtension: function () {
             this.plugins['Oskari.userinterface.Flyout'] = Oskari.clazz.create('Oskari.mapframework.bundle.printout.Flyout', this);
-            /* this.plugins['Oskari.userinterface.Tile'] = Oskari.clazz.create('Oskari.mapframework.bundle.printout.Tile', this); */
         },
         /**
          * @method stopExtension
          * implements Oskari.userinterface.Extension protocol stopExtension method
-         * Clears references to flyout and tile
+         * Clears references to flyout
          */
         stopExtension: function () {
             this.plugins['Oskari.userinterface.Flyout'] = null;
-            /* this.plugins['Oskari.userinterface.Tile'] = null; */
         },
         /**
          * @method getPlugins
          * implements Oskari.userinterface.Extension protocol getPlugins method
-         * @return {Object} references to flyout and tile
+         * @return {Object} references to flyout
          */
         getPlugins: function () {
             return this.plugins;
@@ -364,7 +284,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
          */
         _createUi: function () {
             this.plugins['Oskari.userinterface.Flyout'].createUi();
-            /* this.plugins['Oskari.userinterface.Tile'].refresh(); */
         },
         /**
          * @method setPublishMode
@@ -387,9 +306,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
                 me.sandbox.mapMode = 'mapPrintoutMode';
                 this.sandbox.postRequestByName('userinterface.UpdateExtensionRequest', [this, 'hide']);
                 // proceed with printout view
-                this.printout = Oskari.clazz.create('Oskari.mapframework.bundle.printout.view.BasicPrintout', this, this.getLocalization('BasicView'), this.backendConfiguration);
+                this.printout = Oskari.clazz.create('Oskari.mapframework.bundle.printout.view.BasicPrintout', this, this.getLocalization('BasicView'));
                 this.printout.render(map);
-
                 if (this.state && this.state.form) {
                     this.printout.setState(this.state.form);
                 }
@@ -418,18 +336,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
             var reqBuilder = Oskari.requestBuilder('MapFull.MapSizeUpdateRequest');
             if (reqBuilder) {
                 me.sandbox.request(me, reqBuilder(true));
-            }
-        },
-        /**
-         *  Send plotout canceled event
-         */
-        sendCanceledEvent: function (state) {
-            var me = this;
-            var eventBuilder = Oskari.eventBuilder('Printout.PrintCanceledEvent');
-
-            if (eventBuilder) {
-                var event = eventBuilder(state);
-                me.sandbox.notifyAll(event);
             }
         },
         displayContent: function (isOpen) {

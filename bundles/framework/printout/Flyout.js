@@ -115,5 +115,5 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.Flyout',
          * @property {String[]} protocol
          * @static
          */
-        'protocol': ['Oskari.userinterface.Flyout']
+        protocol: ['Oskari.userinterface.Flyout']
     });

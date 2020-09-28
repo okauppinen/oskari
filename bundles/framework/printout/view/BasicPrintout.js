@@ -13,19 +13,14 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
      * Reference to component that created this view
      * @param {Object} localization
      * Localization data in JSON format
-     * @param {Object} backendConfiguration
-     * Backend URL configuration for ajax and image requests
-     * @param {Object} formState
-     * FormState for ui state reload
      *
      */
-    function (instance, localization, backendConfiguration) {
+    function (instance, localization) {
         var me = this;
 
         me.isEnabled = false;
         me.instance = instance;
         me.loc = localization;
-        me.backendConfiguration = backendConfiguration;
 
         /* templates */
         me.template = {};
@@ -33,9 +28,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
         Object.keys(me.__templates).forEach(function (templateName) {
             me.template[templateName] = jQuery(me.__templates[templateName]);
         });
-
-        // Layout params, pdf template
-        me.layoutParams = {};
 
         me.mapmodule = me.instance.sandbox.findRegisteredModuleInstance('MainMapModule');
 
@@ -61,8 +53,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
         __templates: {
             preview: '<div><img /><span></span></div>',
             previewNotes: '<div class="previewNotes"><span></span></div>',
-            location: '<div class="location"></div>',
-            tool: '<div class="tool ">' + '<input type="checkbox"/>' + '<label></label></div>',
             buttons: '<div class="buttons"></div>',
             help: '<div class="help icon-info"></div>',
             main: '<div class="basic_printout">' + '<div class="header">' + '<div class="icon-close">' + '</div>' + '<h3></h3>' + '</div>' + '<div class="content">' + '</div></div>',
@@ -472,28 +462,11 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
 
             cancelBtn.setHandler(function () {
                 me.instance.setPublishMode(false);
-
-                // Send print canceled event
-                me.instance.sendCanceledEvent('cancel');
-
                 // enable navigations
                 me.instance.sandbox.postRequestByName('EnableMapKeyboardMovementRequest');
                 me.instance.sandbox.postRequestByName('EnableMapMouseMovementRequest');
             });
             cancelBtn.insertTo(buttonCont);
-
-            me.backBtn = Oskari.clazz.create(
-                'Oskari.userinterface.component.Button'
-            );
-            me.backBtn.setTitle(me.loc.buttons.back);
-            me.backBtn.setHandler(function () {
-                me.instance.setPublishMode(false);
-                // Send print canceled event previous
-                me.instance.sendCanceledEvent('previous');
-            });
-            me.backBtn.insertTo(buttonCont);
-            me.backBtn.hide();
-
             var saveBtn = Oskari.clazz.create('Oskari.userinterface.component.buttons.SaveButton');
             saveBtn.setTitle(me.loc.buttons.save);
             saveBtn.setHandler(function () {
@@ -667,45 +640,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
         },
 
         /**
-         * @public @method setLayoutParams
-         * Set params for backend print layout.
-         *
-         * @param {Object} printParams, parameters for printing pdf via print service
-         */
-        setLayoutParams: function (printParams) {
-            var me = this;
-            me.layoutParams = printParams;
-        },
-
-        /**
-         * @public @method getLayoutParams
-         * Get params for backend print layout.
-         * pdf template based on page Size
-         *
-         * @param {String} pageSize
-         */
-        // TODO is this needed??
-        _getLayoutParams: function (pageSize) {
-            var me = this;
-            var params = '';
-            var ind = SIZE_OPTIONS.findIndex(opt => opt.value === pageSize);
-
-            if (me.layoutParams.pageTemplate) {
-                params = '&pageTemplate=' + me.layoutParams.pageTemplate + '_' + pageSize + '.pdf';
-            }
-            if (me.layoutParams.pageMapRect) {
-                if (ind < me.layoutParams.pageMapRect.length) {
-                    params = params + '&pageMapRect=' + me.layoutParams.pageMapRect[ind];
-                }
-            }
-            if (me.layoutParams.tableTemplate) {
-                params = params + '&tableTemplate=' + me.layoutParams.tableTemplate + '_' + pageSize;
-            }
-
-            return params;
-        },
-
-        /**
          * @private @method _isLandscape
          * @return true/false
          * return true, if Landscape print orientation
@@ -718,86 +652,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
         _getPageSize: function () {
             return this.mainPanel.find('input[name=printout-size]:checked').val() || SIZE_OPTIONS[0].value;
         },
-        /**
-         * @private @method _stringifyGeoJson
-         * Get auxiliary graphics in geojson format + styles
-         *
-         * @param {JSON} geoJson
-         *
-         * @return {String/null} Stringified JSON or null if param is empty.
-         */
-        _stringifyGeoJson: function (geoJson) {
-            var ret = null;
-            if (geoJson) {
-                ret = JSON.stringify(geoJson).replace('"', '"');
-            }
-            return ret;
-        },
-
-        /**
-         * @private @method _stringifyTileData
-         * Flattens and stringifies tile data for each layer.
-         *
-         * @param {Object[Array[Object]]} tileData
-         *      Object of arrays each containing objects with keys 'bbox' and 'url', eg.
-         *      {
-         *         'layer1': [ {bbox: '...', url: '...'}, ... ],
-         *         'layer2': [ {bbox: '...', url: '...'}, ... ],
-         *      }
-         *
-         * @return {String/null} Stringified data object or null if tileData object is empty.
-         */
-        _stringifyTileData: function (tileData) {
-            if (!jQuery.isEmptyObject(tileData)) {
-                var dataArr = [];
-                var returnArr;
-                var key;
-
-                for (key in tileData) {
-                    if (tileData.hasOwnProperty(key)) {
-                        dataArr.push(tileData[key]);
-                    }
-                }
-                // dataArr is now an array like this:
-                // [ [{}, ...], [{}, ...], ... ]
-                returnArr = [].concat.apply([], dataArr);
-                return JSON.stringify(returnArr);
-            }
-            return null;
-        },
-
-        /**
-         * @private @method _stringifyTableData
-         * Stringifies table data.
-         *
-         * @param {} tableData
-         */
-        _stringifyTableData: function (tableData) {
-            if (!jQuery.isEmptyObject(tableData)) {
-                return JSON.stringify(tableData);
-            }
-            return null;
-        },
-
-        /**
-         * @private @method _getPageMapRectInd
-         * get index of pagesize for mapRectangle bbox
-         *
-         * @param {String} pageSize
-         *
-         * @return {Number} Page size index
-         */
-        _getPageMapRectInd: function (pageSize) {
-            if (pageSize === 'A4_Landscape') {
-                return 1;
-            } else if (pageSize === 'A3') {
-                return 2;
-            } else if (pageSize === 'A3_Landscape') {
-                return 3;
-            }
-            return 0;
-        },
-
         /**
          * @public @method destroy
          * Destroys/removes this view from the screen.
