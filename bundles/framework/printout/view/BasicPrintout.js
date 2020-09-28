@@ -144,6 +144,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
                 me.loc.error.title,
                 me.loc.error.nohelp
             );
+            this._updateMapPreview();
         },
 
         /**
@@ -408,6 +409,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
                 previewNotes.find('span').text(me.loc.preview.notes[locKey]);
                 contentPanel.append(previewNotes);
             });
+            this._cleanMapPreview();
 
             return panel;
         },
@@ -439,8 +441,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
             me.progressSpinner.start();
             window.setTimeout(function () {
                 me.previewImgDiv.imagesLoaded(function () {
-                    me.previewSpan.text('');
                     me.previewImgDiv.fadeIn('slow', function () {
+                        me.previewSpan.text('');
                         me.progressSpinner.stop();
                     });
                 });
@@ -704,17 +706,9 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.view.BasicPrintout',
          * @param {Boolean} isUpdate
          *
          */
-        refresh: function (isUpdate) {
-            var me = this;
-
-            // always  update current maps scale
-            me._updateScaleToSelected();
-
-            if (isUpdate) {
-                this._updateMapPreview();
-            } else {
-                this._cleanMapPreview();
-            }
+        refresh: function () {
+            this._updateScaleToSelected();
+            this._updateMapPreview();
         }
     }
 );

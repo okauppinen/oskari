@@ -24,7 +24,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
         this.ignoreEvents = false;
         this.dialog = undefined;
         this.printoutHandler = undefined;
-        this.isMapStateChanged = true;
         this.printService = undefined;
         this._log = Oskari.log(this.getName());
     }, {
@@ -158,37 +157,9 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
          * @static
          */
         eventHandlers: {
-            'MapLayerVisibilityChangedEvent': function (event) {
-                /* we might get 9 of these if 9 layers would have been selected */
-                if (this.printout && this.printout.isEnabled && this.isMapStateChanged) {
-                    this.isMapStateChanged = false;
-                    this._log.debug('PRINTOUT REFRESH');
-                    this.printout.refresh(true);
-                }
-            },
             'AfterMapMoveEvent': function (event) {
-                this.isMapStateChanged = true;
                 if (this.printout && this.printout.isEnabled) {
-                    this.printout.refresh(true);
-                }
-                this.isMapStateChanged = true;
-            },
-            'AfterMapLayerAddEvent': function (event) {
-                this.isMapStateChanged = true;
-                if (this.printout && this.printout.isEnabled) {
-                    this.printout.refresh(false);
-                }
-            },
-            'AfterMapLayerRemoveEvent': function (event) {
-                this.isMapStateChanged = true;
-                if (this.printout && this.printout.isEnabled) {
-                    this.printout.refresh(false);
-                }
-            },
-            'AfterChangeMapLayerStyleEvent': function (event) {
-                this.isMapStateChanged = true;
-                if (this.printout && this.printout.isEnabled) {
-                    this.printout.refresh(false);
+                    this.printout.refresh();
                 }
             },
             /**
@@ -306,8 +277,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
                 this.printout.render(map);
                 this.printout.show();
                 this.printout.setEnabled(true);
-                this.printout.refresh(false);
-                this.printout.refresh(true);
                 // reset and disable map rotation
                 this.sandbox.postRequestByName('rotate.map', []);
                 this.sandbox.postRequestByName('DisableMapMouseMovementRequest', [['rotate']]);
