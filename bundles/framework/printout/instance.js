@@ -158,7 +158,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
          */
         eventHandlers: {
             'AfterMapMoveEvent': function (event) {
-                if (this.printout && this.printout.isEnabled) {
+                if (this.printout && this.printout.getEnabled()) {
                     this.printout.refresh();
                 }
             },
@@ -201,7 +201,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
             var request = Oskari.requestBuilder('userinterface.RemoveExtensionRequest')(this);
             sandbox.request(this, request);
 
-            this.sandbox.unregisterStateful(this.mediator.bundleId);
             this.sandbox.unregister(this);
             this.started = false;
         },
@@ -270,7 +269,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
 
             if (blnEnabled) {
                 map.addClass('mapPrintoutMode');
-                me.sandbox.mapMode = 'mapPrintoutMode';
                 this.sandbox.postRequestByName('userinterface.UpdateExtensionRequest', [this, 'hide']);
                 // proceed with printout view
                 this.printout = Oskari.clazz.create('Oskari.mapframework.bundle.printout.view.BasicPrintout', this, this.getLocalization('BasicView'));
@@ -282,9 +280,6 @@ Oskari.clazz.define('Oskari.mapframework.bundle.printout.PrintoutBundleInstance'
                 this.sandbox.postRequestByName('DisableMapMouseMovementRequest', [['rotate']]);
             } else {
                 map.removeClass('mapPrintoutMode');
-                if (me.sandbox._mapMode === 'mapPrintoutMode') {
-                    delete me.sandbox._mapMode;
-                }
                 if (this.printout) {
                     this.sandbox.postRequestByName('userinterface.UpdateExtensionRequest', [this, 'close']);
                     this.printout.setEnabled(false);
