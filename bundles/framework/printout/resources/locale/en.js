@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Print the current map view to a PNG image or a PDF file.",
         "BasicView": {
             "title": "Print Map View",
-            "name": {
-                "label": "Map name",
-                "placeholder": "required",
-                "tooltip": "Type a name for your print-out. Please note the language used in the map layers."
-            },
-            "language": {
-                "label": "Language",
-                "options": {
-                    "fi": "Finnish",
-                    "sv": "Swedish",
-                    "en": "English"
-                },
-                "tooltip": "Select a language for your print-out. Please note the language used in the user interface and map layers."
-            },
             "size": {
                 "label": "Size and direction",
                 "tooltip": "Select a print size and direction. You can see updates in the preview image.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Print",
-                "ok": "OK",
-                "back": "Previous",
                 "cancel": "Cancel"
-            },
-            "location": {
-                "label": "Location and scale",
-                "tooltip": "The printout scale matches the scale used in the preview map.",
-                "zoomlevel": "Scale"
             },
             "settings": {
                 "label": "Additional settings",
@@ -91,11 +70,8 @@ Oskari.registerLocalization(
             "help": "Help",
             "error": {
                 "title": "Error",
-                "size": "Error in size definitions",
-                "name": "Name is required information",
                 "nohelp": "There is no help available.",
-                "saveFailed": "Printing the map view not succeeded. Please try again later.",
-                "nameIllegalCharacters": "The name contains disallowed characters. Allowed characters are the letters a-z as well as å, ä and ö, numbers, backspaces and hyphens."
+                "saveFailed": "Printing the map view not succeeded. Please try again later."
             },
             "scale": {
                 "label": "Scale",

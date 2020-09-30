@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Tulosta nykyinen karttanäkymä png-kuvaksi tai pdf-tiedostoon.",
         "BasicView": {
             "title": "Tulosta karttanäkymä",
-            "name": {
-                "label": "Kartan nimi",
-                "placeholder": "pakollinen",
-                "tooltip": "Anna tulostettavalle kartalle nimi. Ota huomioon kartan teksteissä käytetty kieli."
-            },
-            "language": {
-                "label": "Kieli",
-                "options": {
-                    "fi": "suomi",
-                    "sv": "ruotsi",
-                    "en": "englanti"
-                },
-                "tooltip": "Valitse tulosteessa käytettävä kieli. Ota huomioon käyttöliittymässä ja aineistossa käytetty kieli."
-            },
             "size": {
                 "label": "Koko ja suunta",
                 "tooltip": "Valitse tulosteen arkkikoko ja suunta. Tarkista muutokset esikatselukuvasta.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Tulosta",
-                "ok": "OK",
-                "back": "Edellinen",
                 "cancel": "Peruuta"
-            },
-            "location": {
-                "label": "Sijainti ja mittakaava",
-                "tooltip": "Kartan mittakaava tulosteessa vastaa esikatselukuvassa näytettävän kartan mittakaavaa.",
-                "zoomlevel": "Mittakaava"
             },
             "settings": {
                 "label": "Lisäasetukset",
@@ -91,11 +70,8 @@ Oskari.registerLocalization(
             "help": "Ohje",
             "error": {
                 "title": "Virhe",
-                "size": "Tulosteen koko on virheellinen.",
-                "name": "Kartalle ei ole annettu nimeä. Anna kartan nimi ja yritä uudelleen.",
                 "nohelp": "Ohjetta ei löytynyt.",
-                "saveFailed": "Tulostus epäonnistui.",
-                "nameIllegalCharacters": "Kartan nimessä on kiellettyjä merkkejä. Sallittuja merkkejä ovat suomen kielen aakkoset (a-ö, A-Ö), numerot (0-9), välilyönti ja yhdysmerkki (-)."
+                "saveFailed": "Tulostus epäonnistui."
             },
             "scale": {
                 "label": "Mittakaava",

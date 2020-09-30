@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Skriv ut",
         "BasicView": {
             "title": "Skriv ut kartvisning",
-            "name": {
-                "label": "Kartnavn",
-                "placeholder": "påkrevd",
-                "tooltip": "Gi kartet ditt et beskrivende navn. Legg merke til språket i grensesnittet."
-            },
-            "language": {
-                "label": "Språk",
-                "options": {
-                    "fi": "finsk",
-                    "sv": "svensk",
-                    "en": "engelsk"
-                },
-                "tooltip": "Velg hvilket språk som skal brukes i utskriften. Legg merke til språket i grensesnittet og datasettet"
-            },
             "size": {
                 "label": "Størrelse",
                 "tooltip": "Velg utskriftsstørrelse. Oppdateringer vises i forhåndsvisningen",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Hent utskrift",
-                "ok": "OK",
-                "back": "Forrige",
                 "cancel": "Avbryt"
-            },
-            "location": {
-                "label": "Posisjon og zoomnivå",
-                "tooltip": "Utskriftsmålestokk er den samme som i nettleseren",
-                "zoomlevel": "Utskriftsmålestokk"
             },
             "settings": {
                 "label": "Flere innstillinger",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Hjelp",
             "error": {
                 "title": "Feil",
-                "size": "Feil størrelse",
-                "name": "Navn er påkrevd",
                 "nohelp": "Ingen hjelpefunksjon er tilgjengelig",
-                "saveFailed": "Utskrift feilet. Vennligst prøv igjen seinere",
-                "nameIllegalCharacters": "Navnet inneholder ugyldige tegn. Tillatte tegn er bokstavene a-z samt å, ä og ö, tall og bindestreker."
+                "saveFailed": "Utskrift feilet. Vennligst prøv igjen seinere"
             }
         },
         "StartView": {

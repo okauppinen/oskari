@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "",
         "BasicView": {
             "title": "Drukāt kartes skatu",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "",
-                "options": {
-                    "fi": "",
-                    "sv": "",
-                    "en": ""
-                },
-                "tooltip": ""
-            },
             "size": {
                 "label": "Izmērs",
                 "tooltip": "Izvēlēties drukas izkārtojumu| Priekšskatījuma karte tiek atbilstoši atjaunota",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Saņemt izdruku",
-                "ok": "Labi",
-                "back": "",
                 "cancel": "Atcelt"
-            },
-            "location": {
-                "label": "Novietojums un tālummaiņas līmenis",
-                "tooltip": "Izdrukas mērogs atbilst kartes mērogam pārlūkā",
-                "zoomlevel": "Tālummaiņas līmenis"
             },
             "settings": {
                 "label": "Vairāk iestatījumu",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Palīdzība",
             "error": {
                 "title": "Kļūda",
-                "size": "",
-                "name": "",
                 "nohelp": "Palīdzība nav pieejama",
-                "saveFailed": "Karti izdrukāt neizdevās| Mēģiniet vēlreiz vēlāk",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Karti izdrukāt neizdevās| Mēģiniet vēlreiz vēlāk"
             }
         },
         "StartView": {

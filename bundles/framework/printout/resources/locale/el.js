@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Εκτύπωση",
         "BasicView": {
             "title": "Εκτύπωση χάρτη",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "Γλώσσα",
-                "options": {
-                    "fi": "Φινλανδικά",
-                    "sv": "Σουηδικά",
-                    "en": "Αγγλικά"
-                },
-                "tooltip": "Επιλέξτε την γλώσσα του interface του χάρτη και των δεδομένων"
-            },
             "size": {
                 "label": "Μέγεθος",
                 "tooltip": "Επιλέξτε διάταξη εκτύπωσης (print layout). Η προεπισκόπηση χάρτη ανανεώνεται ανάλογα.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Λήψη εκτύπωσης",
-                "ok": "OK",
-                "back": "",
                 "cancel": "Ακύρωση"
-            },
-            "location": {
-                "label": "Τοποθεσία και επίπεδο μεγέθυνσης",
-                "tooltip": "Η κλίμακα εκτύπωσης ταιριάζει με την κλίμακα του χα΄ρτη στον browser.",
-                "zoomlevel": "Επίπεδο μεγέθυνσης"
             },
             "settings": {
                 "label": "Περισσότερες ρυθμίσεις",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Βοήθεια",
             "error": {
                 "title": "Σφάλμα",
-                "size": "",
-                "name": "",
                 "nohelp": "Δεν διατίθεται βοήθεια",
-                "saveFailed": "Η εκτύπωση του χάρτη απέτυχε. Δοκιμάστε πάλι αργότερα.",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Η εκτύπωση του χάρτη απέτυχε. Δοκιμάστε πάλι αργότερα."
             }
         },
         "StartView": {

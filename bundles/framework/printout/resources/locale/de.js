@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Drucken",
         "BasicView": {
             "title": "Kartenansicht drucken",
-            "name": {
-                "label": "Kartenname",
-                "placeholder": "erforderlich",
-                "tooltip": "Geben Sie der Karte einen beschreibenden Namen. Bitte achten Sie auf die Sprache der Nutzeroberfläche."
-            },
-            "language": {
-                "label": "Sprache",
-                "options": {
-                    "fi": "Finnisch",
-                    "sv": "Schwedisch",
-                    "en": "Englisch"
-                },
-                "tooltip": "Wählen Sie die Sprache für den Ausdruck. Bitte achten Sie auf die Sprache der Nutzeroberfläche."
-            },
             "size": {
                 "label": "Größe",
                 "tooltip": "Wählen Sie das Druck-Layout. Die Vorschau wird entsprechend aktualisiert.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Ausdruck erstellen",
-                "ok": "OK",
-                "back": "Zurück",
                 "cancel": "Abbrechen"
-            },
-            "location": {
-                "label": "Ort und Zoomstufe",
-                "tooltip": "Der Maßstab des Ausdrucks entspricht dem der Karte im Browser.",
-                "zoomlevel": "Zoomstufe"
             },
             "settings": {
                 "label": "Weitere Einstellungen",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Hilfe",
             "error": {
                 "title": "Fehler",
-                "size": "Fehler bei der Definition der Größe",
-                "name": "Namensinformation wird benötigt",
                 "nohelp": "Keine Hilfe verfügbar",
-                "saveFailed": "Ausdrucken der Karte fehlgeschlagen. Bitte versuchen Sie es später noch mal.",
-                "nameIllegalCharacters": "Der Name enthält unerlaubte Zeichn. Erlaubte Zeichen sind Buchstaben a-z, Sonderbuchstaben, Ziffern, Rücksatz und Bindestrich."
+                "saveFailed": "Ausdrucken der Karte fehlgeschlagen. Bitte versuchen Sie es später noch mal."
             }
         },
         "StartView": {

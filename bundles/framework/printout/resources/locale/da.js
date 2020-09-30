@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "",
         "BasicView": {
             "title": "Udskriv kortvisning",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "",
-                "options": {
-                    "fi": "",
-                    "sv": "",
-                    "en": ""
-                },
-                "tooltip": ""
-            },
             "size": {
                 "label": "Størrelse",
                 "tooltip": "Vælg udskriftslayout │Forhåndsvisning af kort opdateres i overensstemmelse hermed",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Foretag udskrift",
-                "ok": "OK",
-                "back": "",
                 "cancel": "Annullér"
-            },
-            "location": {
-                "label": "Placering og zoomniveau",
-                "tooltip": "Udskriftsskalering svarer til skaleringen af kortet i browseren",
-                "zoomlevel": "Zoomniveau"
             },
             "settings": {
                 "label": "Flere indstillinger",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Hjælp",
             "error": {
                 "title": "Fejl",
-                "size": "",
-                "name": "",
                 "nohelp": "Ingen hjælp tilgængelig",
-                "saveFailed": "Kortudskrift mislykket│Prøv igen senere",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Kortudskrift mislykket│Prøv igen senere"
             }
         },
         "StartView": {

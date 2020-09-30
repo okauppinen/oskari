@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Skriv ut",
         "BasicView": {
             "title": "Skriv ut kartvyn",
-            "name": {
-                "label": "Kartans namn",
-                "placeholder": "obligatorisk uppgift",
-                "tooltip": "Ge kartan ett beskrivande namn. Observera användargränssnittets språk"
-            },
-            "language": {
-                "label": "Språk",
-                "options": {
-                    "fi": "finska",
-                    "sv": "svenska",
-                    "en": "engelska"
-                },
-                "tooltip": "Välj det språk som ska användas i tryck. Observera språket i användargränssnittet och datasetet."
-            },
             "size": {
                 "label": "Storlek",
                 "tooltip": "Välj utskriftsstorlek. Uppdateringar visas i förhandsgranskningsbilden.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Få utskrift",
-                "ok": "OK",
-                "back": "Föregående",
                 "cancel": "Avbryt"
-            },
-            "location": {
-                "label": "Läge och skalnivå",
-                "tooltip": "Utskriftens skalnivå motsvarar skalnivån i webbläsaren.",
-                "zoomlevel": "Utskriftens skalnivå"
             },
             "settings": {
                 "label": "Fler inställningar",
@@ -91,11 +70,8 @@ Oskari.registerLocalization(
             "help": "Hjälp",
             "error": {
                 "title": "Fel",
-                "size": "Fel i storleksdefinitionerna",
-                "name": "Namnet är en nödvändig uppgift",
                 "nohelp": "Ingen hjälp finns tillgänglig.",
-                "saveFailed": "Utskriften av kartvyn lyckades inte. Försök igen senare.",
-                "nameIllegalCharacters": "Namnet innehåller otillåtna tecken. Tillåtna tecken är bokstäverna az samt å, ä och ö, siffror, backsteg och bindestreck."
+                "saveFailed": "Utskriften av kartvyn lyckades inte. Försök igen senare."
             },
             "scale": {
                 "label": "Skala",

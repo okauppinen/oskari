@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "",
         "BasicView": {
             "title": "Imprimir vista",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "",
-                "options": {
-                    "fi": "",
-                    "sv": "",
-                    "en": ""
-                },
-                "tooltip": ""
-            },
             "size": {
                 "label": "Dimensão",
                 "tooltip": "Escolher aspeto da impressão| Pré-visualização é atualizada em consonância",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Obter impressão",
-                "ok": "OK",
-                "back": "",
                 "cancel": "Cancelar"
-            },
-            "location": {
-                "label": "Localização e nível de ampliação",
-                "tooltip": "Escala de impressão coincide com escala da carta no navegador web",
-                "zoomlevel": "Nível de ampliação"
             },
             "settings": {
                 "label": "Mais definições",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Ajuda",
             "error": {
                 "title": "Erro",
-                "size": "",
-                "name": "",
                 "nohelp": "Ajuda indisponível",
-                "saveFailed": "Falha na impressão| Tente mais tarde",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Falha na impressão| Tente mais tarde"
             }
         },
         "StartView": {

@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Prenta núverandi kortaglugga sem PNG mynd eða PDF skrá.",
         "BasicView": {
             "title": "Prenta kortaglugga",
-            "name": {
-                "label": "Nafn á korti",
-                "placeholder": "verður að vera",
-                "tooltip": "Sláðu inn nafn á útprentuninni. Vinsamlegast athugaðu tungumálið sem er notað í kortalögunum."
-            },
-            "language": {
-                "label": "Tungumál",
-                "options": {
-                    "fi": "finnska",
-                    "sv": "sænska",
-                    "en": "enska"
-                },
-                "tooltip": "Veldu tungumál fyrir útprentunina. Vinsamlegast athugaðu tungumálið sem er notað í notendaviðmótinu og kortalögunum."
-            },
             "size": {
                 "label": "Stærð og stefna",
                 "tooltip": "Veldu prentstærð og hvernig blaðið snýr. Þú getur séð uppfærslur í forskoðunarglugganum.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Prenta",
-                "ok": "Í lagi",
-                "back": "Fyrri",
                 "cancel": "Hætta við"
-            },
-            "location": {
-                "label": "Staðsetning og mælikvarði",
-                "tooltip": "Prentkvarðinn passar við mælikvarðann sem er notaður til að forskoða kortið.",
-                "zoomlevel": "Mælikvarði."
             },
             "settings": {
                 "label": "Viðbótarstillingar",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Hjálp",
             "error": {
                 "title": "Villa",
-                "size": "Villa í stærðarskilgreiningum.",
-                "name": "Það verður að vera nafn.",
                 "nohelp": "Það er engin hjálp.",
-                "saveFailed": "Það tókst ekki að prenta kortið. Reyndu aftur síðar.",
-                "nameIllegalCharacters": "Nafnið inniheldur stafi sem eru ekki leyfðir. Það má nota stafi frá a-ö, tölustafi, bandstrik og undirstrik."
+                "saveFailed": "Það tókst ekki að prenta kortið. Reyndu aftur síðar."
             }
         },
         "StartView": {

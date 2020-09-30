@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "",
         "BasicView": {
             "title": "Prikaz mape za štampu",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "",
-                "options": {
-                    "fi": "",
-                    "sv": "",
-                    "en": ""
-                },
-                "tooltip": ""
-            },
             "size": {
                 "label": "Veličina",
                 "tooltip": "Izaberi prikaz štampe. Prikaz je ažuriran",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Prihvati podešavanja štampe",
-                "ok": "Potvrdi",
-                "back": "",
                 "cancel": "Odustani"
-            },
-            "location": {
-                "label": "Područje i razmera",
-                "tooltip": "Razmera štampe odgovara razmeri u kartografskom pregledu",
-                "zoomlevel": "Razmera"
             },
             "settings": {
                 "label": "Dodatna podešavanja",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Pomoć",
             "error": {
                 "title": "Greška",
-                "size": "",
-                "name": "",
                 "nohelp": "Pomoć nije dostupna",
-                "saveFailed": "Greška. Probajte kasnije",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Greška. Probajte kasnije"
             }
         },
         "StartView": {

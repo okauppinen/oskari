@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Skriv ut",
         "BasicView": {
             "title": "Skriv ut kartvisning",
-            "name": {
-                "label": "Kartnamn",
-                "placeholder": "påkravd",
-                "tooltip": "Gi kartet ditt eit beskrivande namn. Legg merke til språket i grensesnittet."
-            },
-            "language": {
-                "label": "Språk",
-                "options": {
-                    "fi": "finsk",
-                    "sv": "svensk",
-                    "en": "engelsk"
-                },
-                "tooltip": "Vel kva for eit språk som skal brukast i utskriften. Legg merke til språket i grensesnittet og datasettet"
-            },
             "size": {
                 "label": "Storleik",
                 "tooltip": "Velg utskriftsstørrelse. Oppdateringer vises i forhåndsvisningen",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Hent utskrift",
-                "ok": "OK",
-                "back": "Forrige",
                 "cancel": "Avbryt"
-            },
-            "location": {
-                "label": "Posisjon og zoomnivå",
-                "tooltip": "Utskriftsmålestokk er den same som i nettlesaren",
-                "zoomlevel": "Utskriftsmålestokk"
             },
             "settings": {
                 "label": "Fleire innstillingar",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Hjelp",
             "error": {
                 "title": "Feil",
-                "size": "Feil storleik",
-                "name": "Namn er påkravd",
                 "nohelp": "Ingen hjelpefunksjon er tilgjengeleg",
-                "saveFailed": "Utskrift feila. Ver grei og prøv om att seinare",
-                "nameIllegalCharacters": "Namnet inneheld ugyldige teikn. Tillatne teikn er bokstavane a-z samt å, ä og ö, tal og bindestrekar."
+                "saveFailed": "Utskrift feila. Ver grei og prøv om att seinare"
             }
         },
         "StartView": {

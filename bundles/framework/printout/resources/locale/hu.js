@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "",
         "BasicView": {
             "title": "Nyomtatási térképnézet",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "",
-                "options": {
-                    "fi": "",
-                    "sv": "",
-                    "en": ""
-                },
-                "tooltip": ""
-            },
             "size": {
                 "label": "Méret",
                 "tooltip": "Nyomtatási elrendezés kiválasztsa. Az előnézet ennek megfelelően frissül.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Nyomtatási kép mentése",
-                "ok": "OK",
-                "back": "",
                 "cancel": "Mégse"
-            },
-            "location": {
-                "label": "Helyzet és nagyítási szint",
-                "tooltip": "A nyomtatási méretarány megegyezik a böngészőben beállított méretaránnyal.",
-                "zoomlevel": "Nagyítási szint"
             },
             "settings": {
                 "label": "További beállítások",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Segítség",
             "error": {
                 "title": "Hiba",
-                "size": "",
-                "name": "",
                 "nohelp": "Segítség nem áll rendelkezésre.",
-                "saveFailed": "Térképnyomtatási hiba. Probálja meg később.",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Térképnyomtatási hiba. Probálja meg később."
             }
         },
         "StartView": {

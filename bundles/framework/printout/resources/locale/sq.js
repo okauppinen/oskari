@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "",
         "BasicView": {
             "title": "Shtyp pamjen e hartës",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "",
-                "options": {
-                    "fi": "",
-                    "sv": "",
-                    "en": ""
-                },
-                "tooltip": ""
-            },
             "size": {
                 "label": "Madhësia",
                 "tooltip": "Zgjidh formën (modelin) e shtypjes I",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Merr shtypjen (printout)",
-                "ok": "OK (prano)",
-                "back": "",
                 "cancel": "Anulo"
-            },
-            "location": {
-                "label": "Lokacioni dhe niveli i zmadhimit",
-                "tooltip": "Shkalla e shtypjes përputhet me shkallën e hartës në shfletues",
-                "zoomlevel": "Niveli i zmadhimit"
             },
             "settings": {
                 "label": "Më shumë panele (settings)",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Ndihmë",
             "error": {
                 "title": "Gabim",
-                "size": "",
-                "name": "",
                 "nohelp": "Nuk ka ndihmë në dispozicion",
-                "saveFailed": "Dështoi shtypja e hartës I Ju lutem provoni më vonë",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Dështoi shtypja e hartës I Ju lutem provoni më vonë"
             }
         },
         "StartView": {

@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Imprimer la vue de la carte actuelle vers une image PNG ou un fichier PDF.",
         "BasicView": {
             "title": "Imprimer la vue de la carte",
-            "name": {
-                "label": "Nom de la carte",
-                "placeholder": "requis",
-                "tooltip": "Entrez un nom pour votre impression. Attention à la langue utilisée dans les couches cartographiques."
-            },
-            "language": {
-                "label": "Lague",
-                "options": {
-                    "fi": "Finnois",
-                    "sv": "Suédois",
-                    "en": "Anglais"
-                },
-                "tooltip": "Sélectionnez un nom pour votre impression. Attention à la langue utilisée dans les couches cartographiques et l'interface utilisateur."
-            },
             "size": {
                 "label": "Taille et direction.",
                 "tooltip": "Sélectionnez une taille d'impression et une direction. Vous pouvez voir les changements dans l'aperçu de l'image.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Imprimer",
-                "ok": "OK",
-                "back": "Précédent",
                 "cancel": "Annuler"
-            },
-            "location": {
-                "label": "Emplacement et échelle",
-                "tooltip": "L'échelle d'impression correspond à l'échelle utilisée pour la carte précédente.",
-                "zoomlevel": "Échelle"
             },
             "settings": {
                 "label": "Paramètres avancés",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Aide",
             "error": {
                 "title": "Erreur",
-                "size": "Erreur dans les définitions de tailles",
-                "name": "Le nom est requis",
                 "nohelp": "Aucune aide disponible",
-                "saveFailed": "Échec de l'impression de la vue de la carte. Réessayez plus tard.",
-                "nameIllegalCharacters": "Le nom contient des caractères non-autorisés. Les caractères autorisés sont les lettres de a à z ainsi que å, ä et ö, les nombres, backspaces, et les traits d'union."
+                "saveFailed": "Échec de l'impression de la vue de la carte. Réessayez plus tard."
             },
             "scale": {
                 "label": "Échelle",

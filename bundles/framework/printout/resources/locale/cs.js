@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Tisk",
         "BasicView": {
             "title": "Tisknout zobrazení mapy",
-            "name": {
-                "label": "The name of the map",
-                "placeholder": "required",
-                "tooltip": "Give your map a descriptive name. Please note the language of the user interface."
-            },
-            "language": {
-                "label": "Jazyk",
-                "options": {
-                    "fi": "finština",
-                    "sv": "švédština",
-                    "en": "angličtina"
-                },
-                "tooltip": "Select the language of the map interface and map data."
-            },
             "size": {
                 "label": "Velikost",
                 "tooltip": "Vyberte rozložení tisku| Současně je aktualizován náhled mapy.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Získat výtisk",
-                "ok": "OK",
-                "back": "",
                 "cancel": "Storno"
-            },
-            "location": {
-                "label": "Umístění a úroveň přiblížení",
-                "tooltip": "Měřítko výtisku odpovídá měřítku mapy v prohlížeči.",
-                "zoomlevel": "Úroveň přiblížení"
             },
             "settings": {
                 "label": "Více nastavení",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Nápověda",
             "error": {
                 "title": "Chyba",
-                "size": "Error in size definitions",
-                "name": "Name is required information",
                 "nohelp": "Nápověda není dostupná",
-                "saveFailed": "Tisk mapy selhal. Zkuste to později.",
-                "nameIllegalCharacters": "The name contains disallowed characters. Allowed characters are the letters a-z as well as å, ä and ö, numbers, backspaces and hyphens."
+                "saveFailed": "Tisk mapy selhal. Zkuste to později."
             }
         },
         "StartView": {

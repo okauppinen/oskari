@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Ispis",
         "BasicView": {
             "title": "Ispis prikaza karte",
-            "name": {
-                "label": "Naziv karte",
-                "placeholder": "",
-                "tooltip": "Dajte karti opisni naziv. Jezik korisničkog sučelja"
-            },
-            "language": {
-                "label": "Jezik",
-                "options": {
-                    "fi": "Finski",
-                    "sv": "Švedski",
-                    "en": "Engleski"
-                },
-                "tooltip": "Odaberi jezik sučelja karte i podataka o karti"
-            },
             "size": {
                 "label": "Veličina",
                 "tooltip": "Odabir izgleda ispisa Prethodni pregled se ažurira.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Ispiši",
-                "ok": "OK",
-                "back": "",
                 "cancel": "Poništi"
-            },
-            "location": {
-                "label": "Lokacija i stupanj zumiranja",
-                "tooltip": "Razmjer ispisa odgovara razmjeru karte u pregledniku.",
-                "zoomlevel": "Stupanj zumiranja"
             },
             "settings": {
                 "label": "Daljnje postavke",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Pomoć",
             "error": {
                 "title": "Greška",
-                "size": "",
-                "name": "",
                 "nohelp": "Nema dostupne pomoći",
-                "saveFailed": "Greška u ispisu karte Pokušajte ponovno kasnije",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Greška u ispisu karte Pokušajte ponovno kasnije"
             }
         },
         "StartView": {

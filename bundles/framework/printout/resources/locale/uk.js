@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "",
         "BasicView": {
             "title": "Друкувати вигляд карти",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "",
-                "options": {
-                    "fi": "",
-                    "sv": "",
-                    "en": ""
-                },
-                "tooltip": ""
-            },
             "size": {
                 "label": "Розмір",
                 "tooltip": "Обрати макет друку| Попередній перегляд оновлюється відповідно",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Друк",
-                "ok": "ОК",
-                "back": "",
                 "cancel": "Скасувати"
-            },
-            "location": {
-                "label": "Місцеположення та масштаб",
-                "tooltip": "Масштаб друку співпадає з масштабом карти у вікні браузера",
-                "zoomlevel": "Масштаб"
             },
             "settings": {
                 "label": "Додаткові налаштування",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Довідка",
             "error": {
                 "title": "Помилка",
-                "size": "",
-                "name": "",
                 "nohelp": "Немає доступних довідок",
-                "saveFailed": "Друк карти не виконано| Спробуйте пізніше",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Друк карти не виконано| Спробуйте пізніше"
             }
         },
         "StartView": {

@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "",
         "BasicView": {
             "title": "Imprimare vedere hartă",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "",
-                "options": {
-                    "fi": "",
-                    "sv": "",
-                    "en": ""
-                },
-                "tooltip": ""
-            },
             "size": {
                 "label": "Dimensiune",
                 "tooltip": "Alegere format de imprimare",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Imprimare",
-                "ok": "OK",
-                "back": "",
                 "cancel": "Anulare"
-            },
-            "location": {
-                "label": "Localizare şi nivel de mărire/micşorare",
-                "tooltip": "Scara hărţii imprimate se potriveşte cu scara hărţii în browser",
-                "zoomlevel": "Nivel de mărire/micşorare"
             },
             "settings": {
                 "label": "Mai multe setări",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Ajutor",
             "error": {
                 "title": "Eroare",
-                "size": "",
-                "name": "",
                 "nohelp": "Nu există asistenă disponibilă",
-                "saveFailed": "Imprimare hartă nereuşită | Încercaţi mai târziu",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Imprimare hartă nereuşită | Încercaţi mai târziu"
             }
         },
         "StartView": {

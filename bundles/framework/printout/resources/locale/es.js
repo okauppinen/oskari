@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Imprimir",
         "BasicView": {
             "title": "Imprimir vista",
-            "name": {
-                "label": "El nombre del mapa",
-                "placeholder": "requerido",
-                "tooltip": "Pon a tu mapa un nombre descriptivo. Por favor, tenga en cuenta el idioma de la interfaz de usuario"
-            },
-            "language": {
-                "label": "Idioma",
-                "options": {
-                    "fi": "Finlandés",
-                    "sv": "Sueco",
-                    "en": "Inglés"
-                },
-                "tooltip": "Seleccione el idioma a usar en la impresión. Por favor, tenga en cuenta el idioma de la interfaz de usuario y del conjunto de datos"
-            },
             "size": {
                 "label": "Tamaño",
                 "tooltip": "Seleccione el tamaño de impresión. La previsualización del mapa muestra las actualizaciones",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Imprimir",
-                "ok": "Hecho",
-                "back": "Previo",
                 "cancel": "Cancelar"
-            },
-            "location": {
-                "label": "Localización y nivel de zoom",
-                "tooltip": "La escala de impresión coincide con la escala del mapa en el navegador",
-                "zoomlevel": "Escala de impresión"
             },
             "settings": {
                 "label": "Más configuraciones",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Ayuda",
             "error": {
                 "title": "Error",
-                "size": "Error en las definiciones de tamaños",
-                "name": "Se requiere la información del nombre",
                 "nohelp": "No hay ayuda disponible",
-                "saveFailed": "La impresión del mapa ha fallado. Por favor, inténtelo más tarde",
-                "nameIllegalCharacters": "El nombre contiene caracteres no válidos. Son válidos las letras a-z, además de å, ä y ö, números (0-9), retornos y guiones (-)"
+                "saveFailed": "La impresión del mapa ha fallado. Por favor, inténtelo más tarde"
             }
         },
         "StartView": {

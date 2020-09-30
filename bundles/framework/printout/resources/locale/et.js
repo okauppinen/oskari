@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Trüki kaart png pildiformaadis või pdf dokumendina",
         "BasicView": {
             "title": "Trüki kaardivaade",
-            "name": {
-                "label": "Kaardi nimi",
-                "placeholder": "kohustuslik",
-                "tooltip": "Kirjuta trükise nimi. Märgi keel, mida kasutad kaardikihtidel."
-            },
-            "language": {
-                "label": "Keel",
-                "options": {
-                    "fi": "Soome",
-                    "sv": "Rootsi",
-                    "en": "Inglise"
-                },
-                "tooltip": "Vali kaardiliidese ja kaardiandmete keel."
-            },
             "size": {
                 "label": "Suurus ja  suund",
                 "tooltip": "Vali trükimall. Nähtav eelvaates.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Trüki",
-                "ok": "OK",
-                "back": "Eelmine",
                 "cancel": "Tühista"
-            },
-            "location": {
-                "label": "Asukoht ja suurendusaste",
-                "tooltip": "Väljatrüki mõõtkava vastab eelvaate aknas olevale.",
-                "zoomlevel": "Mõõtkava"
             },
             "settings": {
                 "label": "Lisaseaded",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Abi",
             "error": {
                 "title": "Viga",
-                "size": "Viga trükise suuruse määrangutes",
-                "name": "Pealkiri on kohustuslik",
                 "nohelp": "Abi pole saadaval",
-                "saveFailed": "Kaardi väljatrükk ebaõnnestus. Proovi hiljem uuesti.",
-                "nameIllegalCharacters": "Pealkiri sisaldab lubamatuid tähemärke. Lubatud on tähed a-z,  å, ä ja ö, numbrid, tühikud ja sidekriipsud"
+                "saveFailed": "Kaardi väljatrükk ebaõnnestus. Proovi hiljem uuesti."
             }
         },
         "StartView": {

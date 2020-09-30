@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "",
         "BasicView": {
             "title": "Տպել դիտվող քարտեզը",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "",
-                "options": {
-                    "fi": "",
-                    "sv": "",
-                    "en": ""
-                },
-                "tooltip": ""
-            },
             "size": {
                 "label": "Չափ",
                 "tooltip": "Ընտրել տպվող չափը/քարտեզի նախադիտումը համապատասխանաբար թարմացվում է",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Տպել",
-                "ok": "OK",
-                "back": "",
                 "cancel": "Դադարեցնել"
-            },
-            "location": {
-                "label": "Տեղանքը և մեծացման մակարդակը",
-                "tooltip": "Տպման մասշտաբը համապատասխանում է բրաուզերում քարտեզի մասշտաբին",
-                "zoomlevel": "Մեծացման մակարդակ"
             },
             "settings": {
                 "label": "Նոր պարամետրեր",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Օգնություն",
             "error": {
                 "title": "Սխալ",
-                "size": "",
-                "name": "",
                 "nohelp": "Օգնությունը հասանելի չէ",
-                "saveFailed": "Քարտեզի տպումը ձախողված է/կրկին փորձեք",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Քարտեզի տպումը ձախողված է/կրկին փորձեք"
             }
         },
         "StartView": {

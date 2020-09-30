@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Stampa",
         "BasicView": {
             "title": "Stampa la vista della mappa",
-            "name": {
-                "label": "Nome della mappa",
-                "placeholder": "Obbligatorio",
-                "tooltip": "Assegna un nome descrittivo alla tua mappa. Si prega di far riferimento alla lingua dell'interfaccia utente"
-            },
-            "language": {
-                "label": "Lingua",
-                "options": {
-                    "fi": "Finlandese",
-                    "sv": "Svedese",
-                    "en": "Inglese"
-                },
-                "tooltip": "Seleziona la lingua da usare nella stampa. Si prega di fare riferimento alla lingua dell'interfaccia utente e del dataset."
-            },
             "size": {
                 "label": "Dimensione",
                 "tooltip": "Scegli la dimensione di stampa. Gli aggiornamenti sono mostrati nell'anteprima",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Avvia la stampa",
-                "ok": "OK",
-                "back": "Indietro",
                 "cancel": "Cancella"
-            },
-            "location": {
-                "label": "Posizione e livello di zoom",
-                "tooltip": "La scala della stampa corrisponde alla scala della mappa nel browser",
-                "zoomlevel": "Scala della stampa"
             },
             "settings": {
                 "label": "Altre impostazioni",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Aiuto",
             "error": {
                 "title": "Errore",
-                "size": "Errore nella scelta della dimensione",
-                "name": "Il nome è un'informazione obbligatoria",
                 "nohelp": "Non vi è alcun aiuto disponibile",
-                "saveFailed": "La stampa della vista della mappa non è riuscita. SI prega di riprovare più tardi",
-                "nameIllegalCharacters": "Il nome contiene caratteri non consentiti. I caratteri consentiti sono le lettere dalla a alla z, nonché å, ä and ö,numeri, spazi e trattini."
+                "saveFailed": "La stampa della vista della mappa non è riuscita. SI prega di riprovare più tardi"
             }
         },
         "StartView": {

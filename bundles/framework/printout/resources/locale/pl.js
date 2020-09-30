@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Drukuj",
         "BasicView": {
             "title": "Widok wydruku mapy",
-            "name": {
-                "label": "Nazwa mapy",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "Język",
-                "options": {
-                    "fi": "Fiński",
-                    "sv": "Szwedzki",
-                    "en": "Angielski"
-                },
-                "tooltip": "Wybierz język interfejsu i danych mapy."
-            },
             "size": {
                 "label": "Rozmiar",
                 "tooltip": "Wybierz układ drukowania Podgląd mapy jest odpowiednio zaktualizowany.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Wydruk",
-                "ok": "OK",
-                "back": "",
                 "cancel": "Anuluj"
-            },
-            "location": {
-                "label": "Lokalizacja i powiększenie",
-                "tooltip": "Wydruk skali odpowiada skali mapy w przeglądarce.",
-                "zoomlevel": "Poziom powiększenia"
             },
             "settings": {
                 "label": "Więcej ustawień",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Pomoc",
             "error": {
                 "title": "Błąd",
-                "size": "",
-                "name": "",
                 "nohelp": "Brak dostępnej pomocy",
-                "saveFailed": "Wydruk mapy nie powiódł się. Spróbuj ponownie później.",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Wydruk mapy nie powiódł się. Spróbuj ponownie później."
             }
         },
         "StartView": {

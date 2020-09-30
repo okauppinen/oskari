@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "Natisni",
         "BasicView": {
             "title": "Natisni pogled karte",
-            "name": {
-                "label": "Ime karte",
-                "placeholder": "zahtevano",
-                "tooltip": "Določi opisno ime za karto. Prosim, da upoštevaš jezik uporabniškega vmesnika."
-            },
-            "language": {
-                "label": "Jezik",
-                "options": {
-                    "fi": "Finski",
-                    "sv": "Švedski",
-                    "en": "Angleški"
-                },
-                "tooltip": "Izberi jezik, ki bo uporabljen pri izrisu.  Bodi pozoren na jezik uporabniškega vmesnika in nabora podatkov."
-            },
             "size": {
                 "label": "Velikost",
                 "tooltip": "Izberi velikost lista za izris. Zadnje spremembe vidiš v oknu za predogled.",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Natisni",
-                "ok": "V redu",
-                "back": "Prejšnji",
                 "cancel": "Prekini"
-            },
-            "location": {
-                "label": "Lokacija in raven povečave",
-                "tooltip": "Merilo izrisa se ujema z merilom na karti v brskalniku",
-                "zoomlevel": "Povečava"
             },
             "settings": {
                 "label": "Več nastavitev",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Pomoč",
             "error": {
                 "title": "Napaka",
-                "size": "Napaka pri določitvi velikosti",
-                "name": "Ime je zahtevana informacija",
                 "nohelp": "Pomoč ni na voljo.",
-                "saveFailed": "Tiskanje izrisa karte ni uspelo. Poskusi kasneje.",
-                "nameIllegalCharacters": "Ime vsebuje nedovoljene znake. Dovoljeni znaki so črke a-z, številke, vračalke in vezaji."
+                "saveFailed": "Tiskanje izrisa karte ni uspelo. Poskusi kasneje."
             }
         },
         "StartView": {

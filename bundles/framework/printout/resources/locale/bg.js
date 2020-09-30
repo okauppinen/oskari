@@ -9,20 +9,6 @@ Oskari.registerLocalization(
         "btnTooltip": "",
         "BasicView": {
             "title": "Принтиране изгледа на картата",
-            "name": {
-                "label": "",
-                "placeholder": "",
-                "tooltip": ""
-            },
-            "language": {
-                "label": "",
-                "options": {
-                    "fi": "",
-                    "sv": "",
-                    "en": ""
-                },
-                "tooltip": ""
-            },
             "size": {
                 "label": "Размер",
                 "tooltip": "Избиране оформлението при принтиране / Съответно се актуализира прегледа на картата",
@@ -42,14 +28,7 @@ Oskari.registerLocalization(
             },
             "buttons": {
                 "save": "Принтиране",
-                "ok": "ОК",
-                "back": "",
                 "cancel": "Отказ / Отмяна"
-            },
-            "location": {
-                "label": "Местоположение и мащаб",
-                "tooltip": "Мащабът при принтиране да съответства на мащаба на картата в браузъра",
-                "zoomlevel": "Мащаб"
             },
             "settings": {
                 "label": "Повече настройки",
@@ -84,11 +63,8 @@ Oskari.registerLocalization(
             "help": "Помощ",
             "error": {
                 "title": "Грешка",
-                "size": "",
-                "name": "",
                 "nohelp": "Помощта не е на разположение",
-                "saveFailed": "Принтирането на картата е неуспешно| Опитайте по - късно",
-                "nameIllegalCharacters": ""
+                "saveFailed": "Принтирането на картата е неуспешно| Опитайте по - късно"
             }
         },
         "StartView": {
