@@ -8,12 +8,11 @@ import { GLOBAL_LEGEND } from './helper';
 const RasterStyleSelect = ({ selected, styles, defaultName, setSelected, controller, getMessage }) => {
     const isDefaultStyle = name => name === defaultName;
     const getStyleLabel = style => {
-        const { name, title } = style;
-        const label = title || name;
+        const { name } = style;
         if (isDefaultStyle(name)) {
-            return label + ' (' + getMessage('styles.default') + ')';
+            return name + ' (' + getMessage('styles.default') + ')';
         }
-        return label;
+        return name;
     };
     const onDefaultStyleChange = (name, isSelected) => {
         const defaultStyle = isSelected ? name : '';
@@ -41,7 +40,7 @@ const RasterStyleSelect = ({ selected, styles, defaultName, setSelected, control
                 onChange={setSelected}
             >
                 { styles.map(style => (
-                    <Option key={style.name} value={style.name}>
+                    <Option key={style.name} value={style.name} title={style.title || style.name}>
                         {getStyleLabel(style)}
                     </Option>
                 )) }
