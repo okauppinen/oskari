@@ -8,11 +8,12 @@ import { GLOBAL_LEGEND } from './helper';
 const RasterStyleSelect = ({ selected, styles, defaultName, setSelected, controller, getMessage }) => {
     const isDefaultStyle = name => name === defaultName;
     const getStyleLabel = style => {
-        const { name } = style;
+        const { name, title } = style;
+        const label = title || name;
         if (isDefaultStyle(name)) {
-            return name + ' (' + getMessage('styles.default') + ')';
+            return label + ' (' + getMessage('styles.default') + ')';
         }
-        return name;
+        return label;
     };
     const onDefaultStyleChange = (name, isSelected) => {
         const defaultStyle = isSelected ? name : '';
@@ -33,14 +34,17 @@ const RasterStyleSelect = ({ selected, styles, defaultName, setSelected, control
             </StyledFormField>
         );
     }
+
+    const value = styles.find(s => s.name === selected) ? selected : selected + ' (not in service)';
+
     return (
         <StyleField>
             <StyleSelect
-                value={selected}
+                value={value}
                 onChange={setSelected}
             >
                 { styles.map(style => (
-                    <Option key={style.name} value={style.name} title={style.title || style.name}>
+                    <Option key={style.name} value={style.name} title={style.name}>
                         {getStyleLabel(style)}
                     </Option>
                 )) }
