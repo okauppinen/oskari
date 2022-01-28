@@ -78,11 +78,9 @@ Oskari.registerLocalization(
             },
             "error": {
                 "title": "Virhe",
-                "generic": "Aineiston lataus epäonnistui järjestelmässä tapahtuneen virheen vuoksi.",
+                "load": "Omien aineistojen lataus epäonnistui järjestelmässä tapahtuneen virheen vuoksi.",
                 "deleteMsg": "Aineiston poistaminen epäonnistui järjestelmässä tapahtuneen virheen vuoksi.",
-                "editMsg": "Aineiston päivitys epäonnistui järjestelmässä tapahtuneen virheen vuoksi. Yritä myöhemmin uudelleen.",
-                "getStyle": "Aineistolle määritettyä tyyliä ei onnistuttu hakemaan. Lomakkeella näytetään oletusarvot. Vaihda tyylimäärittelyn arvot ennen muutosten tallennusta.",
-                "styleName": "Anna karttatasolle nimi ja yritä sitten uudelleen."
+                "editMsg": "Aineiston päivitys epäonnistui järjestelmässä tapahtuneen virheen vuoksi. Yritä myöhemmin uudelleen."
             }
         },
         "layer": {

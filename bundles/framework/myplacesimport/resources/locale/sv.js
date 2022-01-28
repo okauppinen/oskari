@@ -79,11 +79,9 @@ Oskari.registerLocalization(
             },
             "error": {
                 "title": "Fel!",
-                "generic": "Systemfel. Försök på nytt senare.",
+                "load": "Sökningen av datasetet misslyckades på grund av ett fel i systemet.",
                 "deleteMsg": "Systemfel. Försök på nytt senare.",
-                "editMsg": "Uppdateringen av datasetet misslyckades på grund av ett fel i systemet. Försök på nytt senare.",
-                "getStyle": "Sökningen av den stil som definierats för datasetet misslyckades. På blanketten visas utgångsvärdena. Byt värdena för stilen som definierats för datasetet innan du lagrar ändringarna.",
-                "styleName": "Namnge kartlagret och försök sedan på nytt."
+                "editMsg": "Uppdateringen av datasetet misslyckades på grund av ett fel i systemet. Försök på nytt senare."
             }
         },
         "layer": {

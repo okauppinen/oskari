@@ -79,11 +79,9 @@ Oskari.registerLocalization(
             },
             "error": {
                 "title": "Error",
-                "generic": "A system error occurred.",
+                "load": "Loading the own datasets failed due to an error in the system.",
                 "deleteMsg": "Deleting the dataset failed due to an error in the system. Please try again later.",
-                "editMsg": "Updating the dataset failed due to an error in the system. Please try again later.",
-                "getStyle": "The style defined for the dataset was not found. Default values are shown on the form. Change the style definitions before saving the changes.",
-                "styleName": "Give the map layer a name and try again."
+                "editMsg": "Updating the dataset failed due to an error in the system. Please try again later."
             }
         },
         "layer": {

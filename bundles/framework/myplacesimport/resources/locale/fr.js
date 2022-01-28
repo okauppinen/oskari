@@ -75,9 +75,7 @@ Oskari.registerLocalization(
                 "title": "Erreur !",
                 "generic": "Une erreur système s’est produite. Veuillez réessayer plus tard.",
                 "deleteMsg": "Échec de la suppression du jeu de données en raison d'une erreur avec le système. Veuillez réessayer plus tard.",
-                "editMsg": "Échec de l'actualisation du jeu de données en raison d'une erreur avec le système. Veuillez réessayer plus tard.",
-                "getStyle": "Impossible de trouver le style défini pour le jeu de données. Les valeurs par défaut sont indiquées sur le formulaire. Modifiez les définitions du style avant d'enregistrer les changements.",
-                "styleName": "Donnez un nom à la couche cartographique et essayez de nouveau."
+                "editMsg": "Échec de l'actualisation du jeu de données en raison d'une erreur avec le système. Veuillez réessayer plus tard."
             }
         },
         "layer": {
