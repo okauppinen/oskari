@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Collapse, CollapsePanel, Message, TextInput, Tooltip, Spin } from 'oskari-ui';
-import { SecondaryButton, PrimaryButton } from 'oskari-ui/components/buttons';
+import { SecondaryButton, PrimaryButton, ButtonContainer } from 'oskari-ui/components/buttons';
 import { FileInput } from 'oskari-ui/components/FileInput';
 import { LocalizationComponent } from 'oskari-ui/components/LocalizationComponent';
 import { StyleEditor } from 'oskari-ui/components/StyleEditor';
@@ -12,13 +12,6 @@ import { BUNDLE_NAME, ERRORS, FILE_INPUT_PROPS } from './constants';
 const Content = styled('div')`
     padding: 24px;
     width: 550px;
-`;
-const Buttons = styled('div')`
-    display: flex;
-    justify-content: flex-end;
-    button {
-        margin-left: 5px;
-    }
 `;
 const PaddedLabel = styled('div')`
     padding-bottom: 10px;
@@ -134,12 +127,12 @@ export const LayerFormContent = ({ values, config, onOk, onCancel, error }) => {
                 </CollapsePanel>
             </Collapse>
             <PaddingTop/>
-            <Buttons>
+            <ButtonContainer>
                 <SecondaryButton type='cancel' onClick={() => onCancel()}/>
                 <Tooltip key="okButtonTooltip" title={ getValidationMessage(validationKeys) }>
                     <PrimaryButton disabled={validationKeys.length > 0} type={okBtnType} onClick={onOkClick}/>
                 </Tooltip>
-            </Buttons>
+            </ButtonContainer>
         </Content>
     );
     if (!error && state.loading) {
