@@ -4,13 +4,13 @@ import { Slider, Message } from 'oskari-ui';
 
 // Overrride -50% translateX
 const SLIDER_PROPS = {
-    min: 10,
+    min: 5,
     max: 120,
     step: 5,
     range: true,
     tipFormatter: val => `${val}px`,
     marks: {
-        10: {
+        5: {
             style: { transform: 'translateX(-20%)' },
             label: <Message messageKey="classify.pointSizes.min"/>
         },
