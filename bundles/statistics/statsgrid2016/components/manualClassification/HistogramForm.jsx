@@ -5,7 +5,6 @@ import { showPopup } from 'oskari-ui/components/window';
 import { Message, Select, Option } from 'oskari-ui';
 import { PrimaryButton, ButtonContainer } from 'oskari-ui/components/buttons';
 import { HistogramSVG } from './HistogramSVG';
-import '../../resources/scss/manualClassification.scss';
 
 const BUNDLE_KEY = 'StatsGrid';
 
