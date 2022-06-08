@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { showPopup } from 'oskari-ui/components/window';
 import { Message, Select, Option } from 'oskari-ui';
 import { PrimaryButton, ButtonContainer } from 'oskari-ui/components/buttons';
-import { manualClassificationEditor } from './editor';
+import { HistogramSVG } from './HistogramSVG';
 import '../../resources/scss/manualClassification.scss';
 
 const BUNDLE_KEY = 'StatsGrid';
@@ -18,6 +18,23 @@ const StyledSelect = styled(Select)`
     margin-bottom: 10px;
 `;
 
+const Histogram = styled.div`
+    position: relative;
+`;
+
+const BoundInput = styled.div`
+    position: absolute;
+    bottom: 13px;
+    left: 0;
+    right: 0;
+    text-align: center;
+
+    input.fail {
+        border-color: #c00;
+        background-color: #faa;
+    }
+`;
+
 const Form = ({
     state,
     classifiedDataset,
@@ -25,20 +42,13 @@ const Form = ({
     editOptions,
     onClose
 }) => {
-    const ref = useRef();
-    const [activeBound, setActiveBound] = useState();
-    useEffect(() => {
-        // editor appends content to ref element, clear content
-        ref.current.innerHTML = '';
-        manualClassificationEditor(ref.current, bounds, dataAsList, colors, activeBound, onBoundChange);
-    });
+    const [activeBound, setActiveBound] = useState(); // TODO in here or in svg
+
     const { activeIndicator: { classification }, seriesStats, controller } = state;
     const { method } = classification;
     const { methods } = editOptions;
-    const { groups, bounds } = classifiedDataset;
-
-    const colors = groups.map(group => group.color);
     const dataAsList = Object.values(seriesStats ? seriesStats.serie : data);
+
     const onMethodChange = method => controller.updateClassification('method', method);
     const onBoundChange = (manualBounds, index) => {
         setActiveBound(index);
@@ -61,7 +71,9 @@ const Form = ({
                     </Option>
                 ))}
             </StyledSelect>
-            <div ref={ref} className="manual-class-view"/>
+            <Histogram>
+                <HistogramSVG classifiedDataset={classifiedDataset} data={dataAsList} onBoundChange={onBoundChange}/>
+            </Histogram>
             <ButtonContainer>
                 <PrimaryButton type='close' onClick={onClose}/>
             </ButtonContainer>
