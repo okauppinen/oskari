@@ -35,7 +35,7 @@ const BoundDrags = styled.g`
     fill: #6baed6;
     stroke: #4f819e;
 
-    &.selected {
+    circle.selected {
         fill: #fad500;
         stroke: #ac9200;
     }
@@ -44,7 +44,9 @@ const BoundDrags = styled.g`
 export const HistogramSVG = ({
     classifiedDataset,
     data,
-    onBoundChange
+    activeIndex,
+    onBoundChange,
+    onBoundClick
 }) => {
     // TODO: short & validate in service
     const { groups, bounds, format } = classifiedDataset;
@@ -97,7 +99,9 @@ export const HistogramSVG = ({
                 {drags.map((drag, i) =>
                     <g key={`drag-${i}`} transform={`translate(${xScales[i + 1]} 0)`}>
                         <path d={`M0 0 v${DRAG.height}`}/>
-                        <circle cy={DRAG.height} r={DRAG.r}/>
+                        <circle cy={DRAG.height} r={DRAG.r}
+                            onClick={() => onBoundClick(i)}
+                            className={`t_bound-drag ${activeIndex === i ? 'selected' : ''}`}/>
                     </g>
                 )}
             </BoundDrags>
@@ -108,5 +112,7 @@ export const HistogramSVG = ({
 HistogramSVG.propTypes = {
     classifiedDataset: PropTypes.object.isRequired,
     data: PropTypes.array.isRequired,
-    onBoundChange: PropTypes.func.isRequired
+    onBoundChange: PropTypes.func.isRequired,
+    onBoundClick: PropTypes.func.isRequired,
+    activeIndex: PropTypes.number.isRequired
 };

@@ -2,17 +2,23 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { showPopup } from 'oskari-ui/components/window';
-import { Message, Select, Option } from 'oskari-ui';
+import { Message, Select, Option, TextInput } from 'oskari-ui';
 import { PrimaryButton, ButtonContainer } from 'oskari-ui/components/buttons';
 import { HistogramSVG } from './HistogramSVG';
+import { parseValidateInput } from './helper';
 
 const BUNDLE_KEY = 'StatsGrid';
 
 const Content = styled.div`
     padding: 24px;
 `;
+
+const Label = styled.label`
+    margin-right: 10px;
+    font-weight: bold;
+`;
+
 const StyledSelect = styled(Select)`
-    margin-left: 10px;
     min-width: 150px;
     margin-bottom: 10px;
 `;
@@ -22,15 +28,8 @@ const Histogram = styled.div`
 `;
 
 const BoundInput = styled.div`
-    position: absolute;
-    bottom: 13px;
-    left: 0;
-    right: 0;
-    text-align: center;
-
-    input.fail {
-        border-color: #c00;
-        background-color: #faa;
+    input {
+        width: 150px;
     }
 `;
 
@@ -41,25 +40,52 @@ const Form = ({
     editOptions,
     onClose
 }) => {
-    const [activeBound, setActiveBound] = useState(); // TODO in here or in svg
-
+    const { bounds } = classifiedDataset;
+    // TODO: refactor states
+    const [index, setIndex] = useState(0);
+    const [bound, setBound] = useState({ value: bounds[index] });
     const { activeIndicator: { classification }, seriesStats, controller } = state;
-    const { method } = classification;
+    const { method, fractionDigits } = classification;
     const { methods } = editOptions;
     const dataAsList = Object.values(seriesStats ? seriesStats.serie : data);
 
+    const min = bounds[0];
+    const max = bounds[bounds.length - 1];
+
+    const onValueChange = (value) => {
+        const parsed = parseValidateInput(value, min, max);
+        const isValid = parsed !== null;
+        setBound({
+            value,
+            status: isValid ? '' : 'error'
+        });
+
+        // TODO: trottle or timeout bound change
+        // bounds vs manualBounds
+        // order bounds (in state or classify service??)
+        if (isValid) {
+            bounds[index] = parsed;
+            onBoundChange(bounds);
+        }
+    };
+
     const onMethodChange = method => controller.updateClassification('method', method);
-    const onBoundChange = (manualBounds, index) => {
-        setActiveBound(index);
+    const onBoundChange = (manualBounds) => {
         const updated = { manualBounds };
         if (method !== 'manual') {
             updated.method = 'manual';
         }
         controller.updateClassificationObj(updated);
     };
+    const onBoundClick = i => {
+        if (i === index) return;
+        setIndex(i);
+        setBound({ value: bounds[i] });
+    };
+    // TODO: InputNumber (min,max,step,formatter)?? At least have to check why error status doesn't use styling
     return (
         <Content>
-            <label><b><Message messageKey={'classify.labels.method' } bundleKey={BUNDLE_KEY} /></b></label>
+            <Label><Message messageKey={'classify.labels.method' } bundleKey={BUNDLE_KEY} /></Label>
             <StyledSelect
                 className='t_option-method'
                 value = {method}
@@ -71,8 +97,17 @@ const Form = ({
                 ))}
             </StyledSelect>
             <Histogram>
-                <HistogramSVG classifiedDataset={classifiedDataset} data={dataAsList} onBoundChange={onBoundChange}/>
+                <HistogramSVG
+                    activeIndex={index}
+                    classifiedDataset={classifiedDataset}
+                    data={dataAsList}
+                    onBoundClick={onBoundClick}
+                    onBoundChange={onBoundChange}/>
             </Histogram>
+            <BoundInput>
+                <Label><Message messageKey={'Selected' } bundleKey={BUNDLE_KEY} /></Label>
+                <TextInput status={bound.status} inputMode="numeric" value={bound.value} onChange={e => onValueChange(e.target.value)}/>
+            </BoundInput>
             <ButtonContainer>
                 <PrimaryButton type='close' onClick={onClose}/>
             </ButtonContainer>
