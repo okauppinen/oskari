@@ -1,4 +1,4 @@
-import { DRAW_ID } from './constants';
+import { DRAW_ID } from '../constants';
 /**
  * @class Oskari.mapframework.bundle.myplaces3.ButtonHandler
  *

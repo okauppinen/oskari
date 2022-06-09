@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { LocaleProvider } from 'oskari-ui/util';
-import { LOCALE_KEY } from './constants';
+import { LOCALE_KEY } from '../constants';
 import { MyPlacesList } from './MyPlacesList';
 import { MyPlacesLayerControls } from './MyPlacesLayerControls';
 

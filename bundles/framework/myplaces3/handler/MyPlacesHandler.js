@@ -1,5 +1,5 @@
 import { StateHandler, controllerMixin, Messaging } from 'oskari-ui/util';
-import { showLayerPopup } from '../MyPlacesLayerForm';
+import { showLayerPopup } from '../view/MyPlacesLayerForm';
 import { showPlacePopup } from '../view/PlaceForm.jsx';
 
 class PlaceHandler extends StateHandler {

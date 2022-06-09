@@ -1,5 +1,5 @@
 import { LOCALE_KEY } from './constants';
-import { MyPlacesTab } from './MyPlacesTab';
+import { MyPlacesTab } from './view/MyPlacesTab';
 import { MyPlacesHandler } from './handler/MyPlacesHandler';
 import { DrawHandler } from './handler/DrawHandler';
 

@@ -8,7 +8,7 @@ import { SecondaryButton, PrimaryButton, ButtonContainer } from 'oskari-ui/compo
 import { showPopup } from 'oskari-ui/components/window';
 import { StyleEditor } from 'oskari-ui/components/StyleEditor';
 import { OSKARI_BLANK_STYLE } from 'oskari-ui/components/StyleEditor/index';
-import { LOCALE_KEY, LAYER_FORM } from './constants';
+import { LOCALE_KEY, LAYER_FORM } from '../constants';
 
 const Content = styled.div`
     padding: 24px;

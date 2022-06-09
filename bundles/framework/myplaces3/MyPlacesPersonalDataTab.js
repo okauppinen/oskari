@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { LocaleProvider } from 'oskari-ui/util';
-import { MyPlacesLegacyLayerControls } from './MyPlacesLegacyLayerControls';
+import { MyPlacesLegacyLayerControls } from './view/MyPlacesLegacyLayerControls';
 import { LOCALE_KEY } from './constants';
-import { MyPlacesList } from './MyPlacesList';
+import { MyPlacesList } from './view/MyPlacesList';
 
 /**
  * @class Oskari.mapframework.bundle.myplaces3.MyPlacesPersonalDataTab
