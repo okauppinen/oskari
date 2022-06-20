@@ -33,6 +33,7 @@ const BoundInput = styled.div`
     }
 `;
 
+
 const Form = ({
     state,
     classifiedDataset,
@@ -41,9 +42,8 @@ const Form = ({
     onClose
 }) => {
     const { bounds } = classifiedDataset;
-    // TODO: refactor states
-    const [index, setIndex] = useState(0);
-    const [bound, setBound] = useState({ value: bounds[index] });
+    const dragBounds = bounds.map((b, i) => ({ id: i, value: b })).slice(1, -1);
+    const [dragBound, setDragBound] = useState({ ...dragBounds[0] });
     const { activeIndicator: { classification }, seriesStats, controller } = state;
     const { method, fractionDigits } = classification;
     const { methods } = editOptions;
@@ -52,20 +52,24 @@ const Form = ({
     const min = bounds[0];
     const max = bounds[bounds.length - 1];
 
+    const boundsController = {
+        selected: bound => setDragBound(bound),
+        drag: value => {
+            const { id } = dragBound;
+            setDragBound({ id, value });
+        },
+        end: () => onBoundChange(dragBounds.map(b => b.value).sort((a, b) => a - b))
+    };
+
     const onValueChange = (value) => {
         const parsed = parseValidateInput(value, min, max);
         const isValid = parsed !== null;
-        setBound({
+        setDragBound({
             value,
             status: isValid ? '' : 'error'
         });
-
-        // TODO: trottle or timeout bound change
-        // bounds vs manualBounds
-        // order bounds (in state or classify service??)
         if (isValid) {
-            bounds[index] = parsed;
-            onBoundChange(bounds);
+            onBoundChange(dragBounds.map(b => b.value).sort((a, b) => a - b));
         }
     };
 
@@ -76,11 +80,6 @@ const Form = ({
             updated.method = 'manual';
         }
         controller.updateClassificationObj(updated);
-    };
-    const onBoundClick = i => {
-        if (i === index) return;
-        setIndex(i);
-        setBound({ value: bounds[i] });
     };
     // TODO: InputNumber (min,max,step,formatter)?? At least have to check why error status doesn't use styling
     return (
@@ -98,15 +97,15 @@ const Form = ({
             </StyledSelect>
             <Histogram>
                 <HistogramSVG
-                    activeIndex={index}
                     classifiedDataset={classifiedDataset}
                     data={dataAsList}
-                    onBoundClick={onBoundClick}
-                    onBoundChange={onBoundChange}/>
+                    dragBounds={dragBounds}
+                    activeBound={dragBound}
+                    controller={boundsController}/>
             </Histogram>
             <BoundInput>
                 <Label><Message messageKey={'Selected' } bundleKey={BUNDLE_KEY} /></Label>
-                <TextInput status={bound.status} inputMode="numeric" value={bound.value} onChange={e => onValueChange(e.target.value)}/>
+                <TextInput status={'error'} inputMode="numeric" value={dragBound.value} onChange={e => onValueChange(e.target.value)}/>
             </BoundInput>
             <ButtonContainer>
                 <PrimaryButton type='close' onClick={onClose}/>

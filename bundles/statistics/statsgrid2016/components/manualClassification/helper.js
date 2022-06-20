@@ -25,21 +25,72 @@ export const parseValidateInput = (value, min, max) => {
     }
     return parsed;
 };
-/*
-const dragBehavior = d3.drag()
-    .subject((d) => {
-        return { x: x(d.value), y: d3.event.y };
-    })
-    .on('start', (d) => {
-        selectedId = d.id;
-        update();
-    })
-    .on('drag', (d) => {
-        var newX = d3.event.x;
-        d.value = x.invert(newX);
-        selectedId = d.id;
-        update();
-    })
-    .on('end', notify);
 
-*/
+export function dragHandles (el, dragBounds, activeBound, controller, xFunc, options) {
+    const { height, r } = options;
+    const dragBehavior = d3.drag()
+        .subject((d) => {
+            return { x: xFunc(d.value), y: d3.event.y };
+        })
+        .on('start', (d) => {
+            controller.selected(d);
+        })
+        .on('drag', () => {
+            const newX = d3.event.x;
+            controller.drag(xFunc.invert(newX));
+        })
+        .on('end', console.log('controller.end()'));
+    const getTransform = d => {
+        const value = isSelected(d) ? activeBound.value : d.value;
+        return `translate(${xFunc(value)} 0)`;
+    };
+
+    const isSelected = d => d.id === activeBound.id;
+
+    const handles = d3.select(el)
+        .selectAll('.handle')
+        .data(dragBounds, (d) => d.id);
+
+    const handlesEnter = handles.enter()
+        .append('g')
+        .classed('handle', true)
+        .call(dragBehavior);
+
+    handlesEnter
+        .append('path')
+        .classed('handle-line', true)
+        .attr('d', `M0 0 v${height}`);
+
+    handlesEnter
+        .append('circle')
+        .attr('cy', height);
+
+    const mergedHandles = handlesEnter
+        .merge(handles);
+
+    mergedHandles
+        .attr('transform', getTransform)
+        .classed('selected', isSelected)
+        .filter(isSelected)
+        .raise();
+
+    mergedHandles
+        .selectAll('circle')
+        .attr('r', r);
+};
+
+export function dragHandles2 (el, xFunc, onSelect, onBoundChange, onValueChange) {
+    const dragBehavior = d3.drag()
+        .on('start', (d) => {
+            onSelect(d.id);
+        })
+        .on('drag', () => {
+            const newX = d3.event.x;
+            onValueChange(xFunc.invert(newX));
+        })
+        .on('end', (d) => onBoundChange(d.id));
+
+    d3.select(el)
+        .selectAll('g')
+        .call(dragBehavior);
+};

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { getHistogramData, getYScaleFunction, getXScaleFunction } from './helper';
+import { getHistogramData, getYScaleFunction, getXScaleFunction, dragHandles } from './helper';
 
 const SVG = {
     width: 500,
@@ -35,7 +35,7 @@ const BoundDrags = styled.g`
     fill: #6baed6;
     stroke: #4f819e;
 
-    circle.selected {
+    g.selected circle {
         fill: #fad500;
         stroke: #ac9200;
     }
@@ -44,10 +44,50 @@ const BoundDrags = styled.g`
 export const HistogramSVG = ({
     classifiedDataset,
     data,
-    activeIndex,
-    onBoundChange,
-    onBoundClick
+    dragBounds,
+    activeBound,
+    controller
 }) => {
+    const dragRef = useRef();
+    useEffect(() => {
+        // editor appends content to ref element, clear content
+        // dragRef.current.innerHTML = '';
+        dragHandles(dragRef.current, dragBounds, activeBound, controller, xFunc, DRAG);
+        // dragHandles2(dragRef.current, xFunc, drags, onBoundChange);
+    });
+    /*
+    const setBound = a => console.log(a);
+    const dragHandler = useCallback(
+        ({ clientX }) => {
+            setBound(clientX);
+        },
+        [setBound]
+    );
+
+    const useEventListener = (eventName, handler, elementRef) => {
+        // Create a ref that stores handler
+        const savedHandler = useRef();
+        useEffect(() => {
+            savedHandler.current = handler;
+        }, [handler]);
+        useEffect(
+            () => {
+                const element = elementRef.current;
+                // Create event listener that calls handler function stored in ref
+                const eventListener = (event) => console.log(event);
+                // Add event listener
+                element.addEventListener(eventName, eventListener);
+                // Remove event listener on cleanup
+                return () => {
+                    element.removeEventListener(eventName, eventListener);
+                };
+            },
+            [eventName, elementRef]
+        );
+    };
+    useEventListener('drag', dragHandler, dragRef);
+    */
+
     // TODO: short & validate in service
     const { groups, bounds, format } = classifiedDataset;
     const colors = groups.map(group => group.color);
@@ -61,9 +101,7 @@ export const HistogramSVG = ({
 
     const xScales = bounds.map(b => xFunc(b));
 
-    // TODO: only indexes are needed
     const blocks = bounds.slice(0, -1); // skip last
-    const drags = bounds.slice(1, -1); // skip first & last
 
     return (
         <svg {...SVG}>
@@ -95,16 +133,7 @@ export const HistogramSVG = ({
                     </text>
                 </g>
             </Edges>
-            <BoundDrags>
-                {drags.map((drag, i) =>
-                    <g key={`drag-${i}`} transform={`translate(${xScales[i + 1]} 0)`}>
-                        <path d={`M0 0 v${DRAG.height}`}/>
-                        <circle cy={DRAG.height} r={DRAG.r}
-                            onClick={() => onBoundClick(i)}
-                            className={`t_bound-drag ${activeIndex === i ? 'selected' : ''}`}/>
-                    </g>
-                )}
-            </BoundDrags>
+            <BoundDrags ref={dragRef} />
         </svg>
     );
 };
@@ -112,7 +141,23 @@ export const HistogramSVG = ({
 HistogramSVG.propTypes = {
     classifiedDataset: PropTypes.object.isRequired,
     data: PropTypes.array.isRequired,
-    onBoundChange: PropTypes.func.isRequired,
-    onBoundClick: PropTypes.func.isRequired,
-    activeIndex: PropTypes.number.isRequired
+    controller: PropTypes.object.isRequired,
+    dragBounds: PropTypes.array.isRequired,
+    activeBound: PropTypes.object.isRequired
 };
+// <BoundDrags ref={dragRef} />
+
+/*          <BoundDrags ref={dragRef}>
+                {drags.map(({ value, id }) => {
+                    const selected = activeIndex === id;
+                    const className = selected ? 't_bound-drag selected' : 't_bound-drag';
+                    return (
+                        <g key={`drag-${id}`} transform={`translate(${xFunc(value)} 0)`} dataId={id}>
+                            <path d={`M0 0 v${DRAG.height}`}/>
+                            <circle cy={DRAG.height} r={DRAG.r}
+                                className={className}/>
+                        </g>
+                    );
+                })}
+            </BoundDrags>
+*/
