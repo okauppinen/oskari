@@ -8,6 +8,7 @@ Oskari.registerLocalization(
         "refresh": "Päivitä",
         "refresh_title": "Päivitä vektoritasot, jotka eivät päivity automaattisesti kartalla.",
         "editLayer": "Muokkaa tasoa",
+        "maxFeaturesExceeded": "{name} tasolle ei saatu haettua kaikkia kohteita. Lähennä karttaa hakeaksesi kohteita uudelleen.",
         "tile": {
             "title": "Vektoritasojen (WFS) yläpito"
         },
