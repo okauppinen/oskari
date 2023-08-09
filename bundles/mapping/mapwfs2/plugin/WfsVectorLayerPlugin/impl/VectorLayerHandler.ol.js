@@ -12,6 +12,7 @@ import olPoint from 'ol/geom/Point';
 import olMultiPoint from 'ol/geom/MultiPoint';
 
 import { LAYER_CLUSTER, WFS_ID_KEY } from '../../../../mapmodule/domain/constants';
+import { Messaging } from 'oskari-ui/util';
 
 const MAP_MOVE_THROTTLE_MS = 2000;
 const OPACITY_THROTTLE_MS = 1500;
@@ -24,6 +25,7 @@ export class VectorLayerHandler extends AbstractLayerHandler {
     constructor (layerPlugin) {
         super(layerPlugin);
         this.loadingStrategies = {};
+        this.extentsToRefresh = {};
     }
 
     createEventHandlers () {
@@ -33,6 +35,8 @@ export class VectorLayerHandler extends AbstractLayerHandler {
                 this._updateLayerStyle(event.getMapLayer()), OPACITY_THROTTLE_MS);
             handlers['AfterMapMoveEvent'] = Oskari.util.throttle(() =>
                 this._loadFeaturesForAllLayers(), MAP_MOVE_THROTTLE_MS);
+        } else {
+            handlers['AfterMapMoveEvent'] = evt => this._refreshExtents(evt);
         }
         return handlers;
     }
@@ -168,7 +172,7 @@ export class VectorLayerHandler extends AbstractLayerHandler {
                     bbox: extent.join(',')
                 },
                 url: Oskari.urls.getRoute('GetWFSFeatures'),
-                success: (resp) => {
+                success: (resp, textStatus, request ) => {
                     resp?.features?.forEach(feature => {
                         if (feature?.properties?.geometry) {
                             // Openlayers will override feature.geometry with properties.geometry if both are present
@@ -183,6 +187,9 @@ export class VectorLayerHandler extends AbstractLayerHandler {
                     features.forEach(ftr => ftr.set(WFS_ID_KEY, ftr.getId()));
                     source.addFeatures(features);
                     updateLoadingStatus(LOADING_STATUS_VALUE.COMPLETE);
+                    if (request.getResponseHeader('Oskari-Max-Features-Exceeded')) {
+                        this._storeExtentToRefresh(layer, source, resolution, extent);
+                    }
                 },
                 error: () => {
                     updateLoadingStatus(LOADING_STATUS_VALUE.ERROR);
@@ -190,6 +197,36 @@ export class VectorLayerHandler extends AbstractLayerHandler {
                     source.removeLoadedExtent(extent);
                 }
             });
+        };
+    }
+
+    _refreshExtents (event) {
+        const current = Oskari.getSandbox().getMap().getResolution();
+        const rehreshedLayers = [];
+        Object.keys(this.extentsToRefresh).forEach( layerId => {
+            const { source, resolution, extents } = this.extentsToRefresh[layerId];
+            // refreshing source makes sense only when map is zoomed in
+            if (current < resolution ) {
+                rehreshedLayers.push(layerId);
+                extents.forEach(extent => source.removeLoadedExtent(extent));
+            }
+        });
+        rehreshedLayers.forEach(id => delete this.extentsToRefresh[id]);
+    }
+
+    _storeExtentToRefresh (layer, source, resolution, extent) {
+        const layerId = layer.getId();
+        const { extents } = this.extentsToRefresh[layerId] || {};
+        if (extents) {
+            // TODO: store by resolution or update resolution and extents
+            extents.push(extent);
+            return;
+        }
+        Messaging.info(Oskari.getMsg('MapWfs2', 'maxFeaturesExceeded', {name: layer.getName()}));
+        this.extentsToRefresh[layerId] = {
+            extents: [extent],
+            resolution,
+            source
         };
     }
 
