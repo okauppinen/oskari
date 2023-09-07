@@ -1,7 +1,7 @@
 import { VectorLayerHandler } from './WfsVectorLayerPlugin/impl/VectorLayerHandler.ol';
 import { MvtLayerHandler } from './WfsVectorLayerPlugin/impl/MvtLayerHandler.ol';
 import { ReqEventHandler } from './WfsVectorLayerPlugin/ReqEventHandler';
-import { DEFAULT_STYLES, styleGenerator } from './WfsVectorLayerPlugin/util/style';
+import { DEFAULT_STYLES } from './WfsVectorLayerPlugin/util/style';
 
 import { LAYER_ID, LAYER_HOVER, LAYER_TYPE, RENDER_MODE_MVT, RENDER_MODE_VECTOR } from '../../mapmodule/domain/constants';
 const AbstractVectorLayerPlugin = Oskari.clazz.get('Oskari.mapping.mapmodule.AbstractVectorLayerPlugin');
@@ -313,7 +313,7 @@ export class WfsVectorLayerPlugin extends AbstractVectorLayerPlugin {
      * @return {ol/style/Style | StyleLike}
      */
     getCurrentOlStyle (layer) {
-        return styleGenerator(this.mapModule, layer);
+        return this.mapModule.getStyleForLayer(layer);
     }
 
     /**

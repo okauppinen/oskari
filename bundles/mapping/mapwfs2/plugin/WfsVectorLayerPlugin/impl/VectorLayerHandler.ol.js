@@ -52,9 +52,7 @@ export class VectorLayerHandler extends AbstractLayerHandler {
         });
         const olLayers = [vectorLayer];
 
-        // Setup clustering
-        const hasClusterDist = layer.getClusteringDistance() !== -1 && typeof layer.getClusteringDistance() !== 'undefined';
-        if (this._isClusteringSupported() && hasClusterDist) {
+        if (this._isClusteredLayer(layer)) {
             const clusterSource = new olCluster({
                 distance: layer.getClusteringDistance(),
                 source,
@@ -251,7 +249,7 @@ export class VectorLayerHandler extends AbstractLayerHandler {
         return resolution <= olLayer.getMaxResolution() && resolution >= olLayer.getMinResolution();
     }
 
-    _isClusteringSupported () {
-        return !this.plugin.getMapModule().getSupports3D();
+    _isClusteredLayer (layer) {
+        return !this.plugin.getMapModule().getSupports3D() && layer.getClusteringDistance() > 0;
     }
 };
