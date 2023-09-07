@@ -73,6 +73,7 @@ export const FILTER = {
 };
 
 export const STYLE_TYPE = {
+    UNKNOWN: 'unknown',
     POINT: 'point',
     LINE: 'line',
     AREA: 'area',

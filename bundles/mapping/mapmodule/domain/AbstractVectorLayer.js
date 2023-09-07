@@ -100,10 +100,11 @@ export class AbstractVectorLayer extends AbstractLayer {
     /**
      * To get distance between features when clustering kicks in.
      *  @method getClusteringDistance
-     *  @return {Number} Distance between features in pixels
+     *  @return {Number} Distance between features in pixels, clustered > 0
      */
     getClusteringDistance () {
-        return this._controlData.clusteringDistance;
+        const cluster = this._controlData.clusteringDistance;
+        return cluster || -1;
     }
 
     /**

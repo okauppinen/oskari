@@ -19,7 +19,7 @@ class Tiles3DLayer extends AbstractVectorLayer {
 
     getClusteringDistance () {
         // Clustering isn't supported
-        return undefined;
+        return -1;
     }
 
     isSupported () {

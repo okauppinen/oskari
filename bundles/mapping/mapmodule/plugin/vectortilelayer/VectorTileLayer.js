@@ -8,7 +8,7 @@ export class VectorTileLayer extends AbstractVectorLayer {
 
     // Clustering isn't supported for VectorTile
     getClusteringDistance () {
-        return undefined;
+        return -1;
     }
 
     /**
