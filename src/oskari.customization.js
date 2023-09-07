@@ -69,12 +69,13 @@ const getSvgIcons = () => {
 
 // oskari style image object
 const getSvg = ({ shape, size, fill, stroke }) => {
-    const { data, ...offsets } = getMarker(shape);
+    const { data, offsetY = SVG_SIZE / 2,  offsetX = SVG_SIZE / 2} = getMarker(shape);
     const svg = data
-        .replace(PLACEHOLDER_FILL, fill?.color || FILL_COLOR)
+        .replace(PLACEHOLDER_FILL, fill?.color || getFillColor())
         .replace(PLACEHOLDER_STROKE, stroke?.color || STROKE_COLOR);
     return {
-        ...offsets,
+        offsetY,
+        offsetX,
         scale: getScale(size),
         src: SVG_SRC + encodeURIComponent(svg)
     };
@@ -132,7 +133,6 @@ export const Customization = {
     getColors,
     getDefaultStyle,
     setDefaultStyle,
-    getFillColor,
     generateBlankStyle,
     setThemeColors
 };
