@@ -1,7 +1,6 @@
 import { VectorLayerHandler } from './WfsVectorLayerPlugin/impl/VectorLayerHandler.ol';
 import { MvtLayerHandler } from './WfsVectorLayerPlugin/impl/MvtLayerHandler.ol';
 import { ReqEventHandler } from './WfsVectorLayerPlugin/ReqEventHandler';
-import { DEFAULT_STYLES } from './WfsVectorLayerPlugin/util/style';
 
 import { LAYER_ID, LAYER_HOVER, LAYER_TYPE, RENDER_MODE_MVT, RENDER_MODE_VECTOR } from '../../mapmodule/domain/constants';
 const AbstractVectorLayerPlugin = Oskari.clazz.get('Oskari.mapping.mapmodule.AbstractVectorLayerPlugin');
@@ -38,34 +37,14 @@ export class WfsVectorLayerPlugin extends AbstractVectorLayerPlugin {
      * @param {Object} modelBuilder layer model builder instance
      * @param {Object} eventHandlers
      */
-    registerLayerType (layertype, modelClass, modelBuilder, eventHandlers) {
+    registerLayerType (layertype, modelClass) {
         if (this.layertypes.has(layertype) || !this.mapLayerService || !this.vectorFeatureService) {
             return;
         }
         this.layertypes.add(layertype);
         this.getMapModule().setLayerPlugin(layertype, this);
-        this.getMapModule().registerDefaultFeatureStyle(layertype, DEFAULT_STYLES.style);
         this.vectorFeatureService.registerLayerType(layertype, this);
-        this.vectorFeatureService.registerDefaultStyles(layertype, DEFAULT_STYLES);
         this.mapLayerService.registerLayerModel(layertype, modelClass);
-        if (modelBuilder) {
-            this.mapLayerService.registerLayerModelBuilder(layertype, modelBuilder);
-        }
-        this._registerEventHandlers(eventHandlers);
-    }
-
-    _registerEventHandlers (eventHandlers) {
-        if (!eventHandlers) {
-            return;
-        }
-        Object.keys(eventHandlers).forEach(eventName => {
-            if (typeof this._eventHandlers[eventName] !== 'undefined') {
-                this._log.warn('Wfs plugin tried to register multiple handlers for event: ' + eventName);
-                return;
-            }
-            this._eventHandlers[eventName] = eventHandlers[eventName];
-            this.getSandbox().registerForEventByName(this, eventName);
-        });
     }
 
     _initImpl () {
@@ -100,8 +79,6 @@ export class WfsVectorLayerPlugin extends AbstractVectorLayerPlugin {
         this.mapLayerService.registerLayerModel(this.getLayerTypeSelector(), layerClass, composingModel);
         this.mapLayerService.registerLayerModelBuilder(this.getLayerTypeSelector(), new WfsLayerModelBuilder(sandbox));
         this.vectorFeatureService.registerLayerType(this.layertype, this);
-        this.vectorFeatureService.registerDefaultStyles(this.layertype, DEFAULT_STYLES);
-        this.getMapModule().registerDefaultFeatureStyle(this.layertype, DEFAULT_STYLES.style);
         sandbox.registerService(this.WFSLayerService);
     }
 
