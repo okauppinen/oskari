@@ -1,5 +1,5 @@
 import { LAYER_TYPE, LAYER_HOVER, WFS_ID_KEY, FTR_PROPERTY_ID, LAYER_ID, VECTOR_TILE_TYPE, VECTOR_TYPE } from '../domain/constants';
-import { getStylesForGeometry } from '../oskariStyle/generator.ol';
+import { getFeatureStyle } from '../oskariStyle/generator.ol';
 import olOverlay from 'ol/Overlay';
 import olLayerVector from 'ol/layer/Vector';
 import olLayerVectorTile from 'ol/layer/VectorTile';
@@ -14,10 +14,8 @@ export class HoverHandler {
         this._hoverLayer = null;
         this._styleCache = {};
         this._state = {};
-        this._styleFactory = null;
         this._tooltipContents = {};
         this._tooltipOverlay = null;
-        this._defaultStyles = {};
         this._initBindings();
     }
 
@@ -25,7 +23,6 @@ export class HoverHandler {
         this._mapmodule.getMap().getViewport().addEventListener('mouseout', evt => {
             this.clearHover();
         }, false);
-        this._styleFactory = this._mapmodule.getGeomTypedStyles.bind(this._mapmodule);
         const olLayer = new olLayerVector({ source: new olSourceVector() });
         olLayer.set(LAYER_HOVER, true, true);
         this._mapmodule.addLayer(olLayer);
@@ -153,7 +150,7 @@ export class HoverHandler {
     }
 
     getCachedStyle (layerId) {
-        return this._styleCache[layerId]; // || defaultStyle;
+        return this._styleCache[layerId];
     }
 
     setTooltipContent (layer) {
@@ -164,49 +161,27 @@ export class HoverHandler {
         this._tooltipContents[layer.getId()] = options.content;
     }
 
-    setDefaultStyle (layerType, styleType, styleDef) {
-        const styles = this._defaultStyles[layerType] || {};
-        styles[styleType] = styleDef;
-        this._defaultStyles[layerType] = styles;
-    }
-
     _styleGenerator (layer, isVectorTile) {
-        const { featureStyle: layerHoverDef } = layer.getHoverOptions() || {};
-        const { hover: defaultHoverDef } = this._defaultStyles[layer.getLayerType()] || {};
-        let hoverDef = layerHoverDef || defaultHoverDef;
+        const hoverDef = layer.getHoverOptions();
         if (!hoverDef) {
             return null;
         }
-        if (hoverDef.inherit === true) {
-            hoverDef = this._getInheritedStyle(layer, hoverDef);
-        }
-        // TODO: if layer contains only one geometry type return olStyle (hoverDef) instead of function
-        const olStyles = this._styleFactory(hoverDef);
-        const layerType = layer.getLayerType();
+        const styleDef = hoverDef.inherit ? getFeatureStyle(layer, hoverDef) : hoverDef;
+        // TODO:
+        const style = this._mapmodule.getStyle(styleDef, layer.getSimpleGeometryType());
+        const isFunction = typeof style === 'function';
         if (isVectorTile) {
-            const idProp = this._getIdProperty(layerType);
+            const idProp = this._getIdProperty(layer.getLayerType());
+            const isFunction = typeof style === 'function';
             return feature => {
                 if (this._state.renderFeatureId === feature.get(idProp)) {
-                    return getStylesForGeometry(feature.getType(), olStyles);
+                    return isFunction ? style(feature) : style;
                 }
             };
         }
         return feature => {
-            return getStylesForGeometry(feature.getGeometry(), olStyles);
+            return isFunction ? style(feature) : style;;
         };
-    }
-
-    _getInheritedStyle (layer, hoverDef) {
-        const { featureStyle: defaultFeatureStyle } = this._defaultStyles[layer.getLayerType()] || {};
-        const featureStyle = layer.getCurrentStyle().getFeatureStyle();
-        const base = jQuery.extend(true, {}, defaultFeatureStyle, featureStyle);
-        if (Oskari.util.keyExists(base, 'stroke.width')) {
-            base.stroke.width = base.stroke.width + STROKE_ADDITION;
-        }
-        if (Oskari.util.keyExists(base, 'stroke.area.width')) {
-            base.stroke.area.width = base.stroke.area.width + STROKE_ADDITION;
-        }
-        return jQuery.extend(true, {}, base, hoverDef);
     }
 
     _clearState (clearLayerId) {

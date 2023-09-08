@@ -5,15 +5,7 @@ import { WFS_ID_KEY } from '../../../../mapmodule/domain/constants';
  */
 const SELECTED_STYLE = {
     inherit: true,
-    effect: 'auto major',
-    stroke: {
-        area: {
-            effect: 'none',
-            color: '#000000',
-            width: 4
-        },
-        width: 3
-    }
+    effect: 'auto major'
 };
 
 export class SelectionHelper {
