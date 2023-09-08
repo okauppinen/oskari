@@ -20,8 +20,7 @@ import * as olGeom from 'ol/geom';
 import { fromCircle } from 'ol/geom/Polygon';
 import olFeature from 'ol/Feature';
 import { OskariImageWMS } from './plugin/wmslayer/OskariImageWMS';
-import { getOlStyles, getOlStyleForLayer, setDefaultStyle } from './oskariStyle/generator.ol';
-import { STYLE_TYPE } from './oskariStyle/constants';
+import { getOlStyle, getStyleFunctionForLayer, getOlStyleForLayer, useStyleFunction  } from './oskariStyle/generator.ol';
 import { LAYER_ID } from '../mapmodule/domain/constants';
 import { VectorFeatureSelectionService } from './service/VectorFeatureSelectionService';
 import proj4 from '../../../libraries/Proj4js/proj4js-2.2.1/proj4-src.js';
@@ -290,27 +289,13 @@ export class MapModule extends AbstractMapModule {
     /**
      * @override @method getStyle
      * @param styleDef Oskari style definition
-     * @param styleType One of 'line', 'point', 'area' | optional
-     * @param requestedStyle layer's or feature's style definition (not overrided with defaults)
+     * @param geometryType constants STYLE_TYPE or ol/geom/Geometry/Type
+     * @param extendedDef  Oskari style definition which overrides featureStyle
      * @return {ol/style/StyleLike}
      **/
-    getStyle (styleDef, styleType, requestedStyle) {
-        return getOlStyles(this, styleDef, styleType, requestedStyle);
+    getStyle (styleDef, geometryType, extendedDef) {
+        return getOlStyle(this, styleDef, geometryType, extendedDef);
     }
-
-    getGeomTypedStyles (styleDef) {
-        const styles = {};
-        styles[STYLE_TYPE.AREA] = this.getStyle(styleDef, STYLE_TYPE.AREA);
-        styles[STYLE_TYPE.LINE] = this.getStyle(styleDef, STYLE_TYPE.LINE);
-        styles[STYLE_TYPE.POINT] = this.getStyle(styleDef, STYLE_TYPE.POINT);
-        if (styleDef.text) {
-            styles.label = {
-                property: styleDef.text.labelProperty,
-                text: styleDef.text.labelText
-            };
-        }
-        return styles;
-    };
 
     /**
      * @method getStyleForLayer
@@ -319,12 +304,11 @@ export class MapModule extends AbstractMapModule {
      * @return {ol/style/StyleLike}
      **/
     getStyleForLayer (layer, extendedDef) {
+        if (this.getSupports3D() || useStyleFunction(layer)) {
+            return getStyleFunctionForLayer(this, layer, extendedDef);
+        }
         return getOlStyleForLayer(this, layer, extendedDef);
     };
-
-    registerDefaultFeatureStyle (layerType, styleDef) {
-        setDefaultStyle(layerType, styleDef);
-    }
 
     getDefaultMarkerSize () {
         return this._defaultMarker.size;
