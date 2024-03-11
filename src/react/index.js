@@ -1,5 +1,6 @@
 //import 'antd/dist/antd.css';
 import 'antd/dist/antd.less';
+export const BUNDLE_KEY = 'oskariui';
 
 export { Alert } from './components/Alert';
 export { Badge } from './components/Badge';
