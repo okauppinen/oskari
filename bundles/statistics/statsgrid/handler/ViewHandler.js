@@ -7,6 +7,8 @@ import { showIndicatorForm } from '../view/Form/IndicatorForm';
 import { showClipboardPopup } from '../view/Form/ClipboardPopup';
 import { showClassificationContainer } from '../components/classification/Classification';
 import { showHistogramPopup } from '../components/manualClassification/HistogramForm';
+import { showTimeSeriesPlayer } from 'oskari-ui/components/TimeSeries';
+import { BUNDLE_KEY } from '../constants';
 
 export const FLYOUTS = ['search', 'grid', 'diagram']; // to toggle tile
 
@@ -137,6 +139,9 @@ class UIHandler extends StateHandler {
             } else if (id === CLASSIFICATION || id === 'histogram') {
                 const viewState = this.getState();
                 control.update(state, viewState);
+            } else if (id === 'series2') {
+                const series = this.getStateForSeries(state);
+                control.update(series);
             } else {
                 control.update(state);
             }
@@ -201,6 +206,18 @@ class UIHandler extends StateHandler {
         this.show('search');
     }
 
+    getStateForSeries (state) {
+        const { activeIndicator, indicators, loading } = state;
+        const indicator = indicators.find(ind => ind.hash === activeIndicator);
+        if (!indicator || !indicator.series) {
+            return { error: true, title: this.loc('errors.title'), values: []};
+        }
+        const { values, id } = indicator.series;
+        const value = indicator.selections[id];
+        const title = indicator.labels.full;
+        return { loading, values, value, title };
+    }
+
     show (id) {
         if (!id || this.controls[id]) {
             // already shown, do nothing
@@ -242,6 +259,10 @@ class UIHandler extends StateHandler {
             controls = showClipboardPopup(this.formHandler.getController(), onClose);
         } else if (id === 'series') {
             controls = this._createSeriesControls();
+        } else if (id === 'series2') {
+            const options = { bundle: BUNDLE_KEY };
+            const series = this.getStateForSeries(state);
+            controls = showTimeSeriesPlayer(series, controller, options, onClose);
         } else {
             this.log.warn(`Tried to show view with id: ${id}`);
             return;
