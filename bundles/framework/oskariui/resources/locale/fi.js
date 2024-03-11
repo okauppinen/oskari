@@ -137,6 +137,32 @@ Oskari.registerLocalization({
                 atMost: 'enintään'
             }
         },
+        TimeSeries: {
+            label: {
+                animationSpeed: 'Animaationopeus',
+                skipAhead: 'Hyppää eteenpäin'
+            },
+            animationSpeed: {
+                slow: 'Hidas',
+                normal: 'Normaali',
+                fast: 'Nopea'
+            },
+            skip: {
+                none: 'Ei yhtään',
+                minute: '1 minuutti',
+                hour: '1 tunti',
+                day: '1 päivä',
+                week: '1 viikko',
+                month: '1 kuukausi'
+            },
+            rangeControl: {
+                helpGeneric: 'Tällä aikasarjatyökalulla voit valita janalta haluamasi vuodet. Janalla näytetään pienillä ympyröillä vuodet, joilta sen hetkisen karttanäkymän alueella on dataa.',
+                helpMsg_year: 'Tässä moodissa pääset tarkastelemaan yksittäisen vuoden aineistoja. Kuvausalueiden rajoilla tarkastelua helpottaa aikavälimoodi, johon pääset siirtymään viereisestä ikonista:',
+                helpMsg_range: 'Tässä moodissa pääset tarkastelemaan valitun aikavälin sisällä tuotettua aineistoa. Huom! Näytettävä kuva on valitusta aikavälistä viimeisin saatavilla oleva. Jos haluat nähdä vain yksittäisen vuoden aineistoa vaihda moodia viereisestä ikonista:',
+                switch2range: 'Vaihda aikavälimoodiin',
+                switch2year: 'Vaihda yksittäisen vuoden valintamoodiin'
+            }
+        },
         coordinates: {
             lon: "Lon",
             lat: "Lat",
