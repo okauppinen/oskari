@@ -5,7 +5,7 @@ import { ThemeConsumer, LocaleProvider } from 'oskari-ui/util';
 import { showMovableContainer, PLACEMENTS } from 'oskari-ui/components/window';
 import { getNavigationTheme } from 'oskari-ui/theme/ThemeHelper';
 import { Background, TimeSeriesHeader, TimeSeriesSlider } from './';
-import { TimeSeriesControls } from './TimeSeriesControls';
+import { TimeSeriesControls } from './TimeSeriesPlayer/TimeSeriesControls';
 import { playerDefaults } from './util/constants';
 
 const BUNDLE_KEY = 'oskariui';
