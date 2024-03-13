@@ -12,23 +12,9 @@ Oskari.registerLocalization({
             'title': 'Tematiska kartor'
         },
         'dataProviderInfoTitle': 'Indikatorer',
-        'layertools': {
-            'table_icon': {
-                'tooltip': 'gå till tematiska kartor',
-                'title': 'Tematiska kartor'
-            },
-            'diagram_icon': {
-                'tooltip': 'Visa uppgifter i diagram',
-                'title': 'Diagram'
-            },
-            'statistics': {
-                'tooltip': 'gå till tematiska kartor',
-                'title': 'Statistik'
-            }
-        },
+        'layertool': 'Gå till tematiska kartor',
         'panels': {
             'newSearch': {
-                'title': 'SÖK DATA',
                 'seriesTitle': 'Tidsserie',
                 'datasourceTitle': 'Datakälla',
                 'indicatorTitle': 'Datamängd',
@@ -39,10 +25,7 @@ Oskari.registerLocalization({
                 'selectRegionsetPlaceholder': 'Välj områdesindelning',
                 'noResults': 'Inga sökresultat hittades med',
                 'refineSearchLabel': 'Precisera innehållet av datamängden du önskar att granska',
-                'refineSearchTooltip1': 'Du får mera alternativ när du har först valt dataleverantören och datamängden.',
-                'refineSearchTooltip2': '',
-                'addButtonTitle': 'Hämta datamängdens uppgifter',
-                'clearButtonTitle': 'Töm',
+                'refineSearchTooltip': 'Du får mera alternativ när du har först valt dataleverantören och datamängden.',
                 'defaultPlaceholder': 'Välj värde',
                 'selectionValues': {
                     'sex': {
@@ -62,12 +45,8 @@ Oskari.registerLocalization({
             }
         },
         'statsgrid': {
-            'title': 'HÄMTADE DATAMÄNGDER',
             'noResults': 'Inga valda datamängder',
             'noValues': 'Inga värden i den valda datamängden',
-            'areaSelection': {
-                'title': 'OMRÅDESINDELNING'
-            },
             'orderBy': 'Sortera',
             'orderByAscending': 'Sortera stigande',
             'orderByDescending': 'Sortera sjunkande',
@@ -80,14 +59,6 @@ Oskari.registerLocalization({
             'noEnough': 'Datamängden är för liten för att klassificeras, försök en annan datamängd eller avgränsning.',
             'noData': 'Ingen data vid den valda tidspunkten.',
             'cannotCreateLegend': 'Teckenförklaringen kan inte skapas utgående från de valda värden, vänligen försök andra värden.'
-        },
-        'series': {
-            'speed': {
-                'label': 'Animeringshastighet',
-                'fast': 'Snabb',
-                'normal': 'Normal',
-                'slow': 'Långsam'
-            }
         },
         'diagram': {
             'title': 'Stapeldiagram',
@@ -104,10 +75,6 @@ Oskari.registerLocalization({
             'region': 'Område'
         },
         'datatable': 'Tabell',
-        'published': {
-            'showMap': 'Visa karta',
-            'showTable': 'Visa tabell'
-        },
         'classify': {
             'classify': 'Klassificering',
             'labels': {
@@ -130,12 +97,6 @@ Oskari.registerLocalization({
                 'equal': 'Lika intervall',
                 'manual': 'Egen klassificering'
             },
-            'manual': 'Klassificering för hand',
-            'manualPlaceholder': 'Avgränsa tal med kommatecken.',
-            'manualRangeError': 'Klassgränserna är felaktiga. Klassgränserna bör vara mellan {min} - {max}. Avgränsa tal med kommatecken. Använd punkt som decimaltecken. Rätta till klassgränserna och försök igen.',
-            'nanError': 'Det givna värdet är ej ett tal. Rätta till värdet och försök igen. Använd punkt som decimaltecken.',
-            'infoTitle': 'Klassificering för hand',
-            'info': 'Ange klassgränserna som tal avgränsade med kommatecken. Använd punkt som decimaltecken. Till exempel genom att mata in "0, 10.5, 24, 30.2, 57, 73.1" skapas fem klasser med värden mellan "0-10,5", "10,5-24", "24-30,2", "30,2-57" och "57-73,1". Indikatorvärden, som är mindre än den lägsta klassgränsen (0 i exemplet) eller större än den högsta klassgränsen (73,1), visas inte på kartan. Klassgränserna bör vara mellan det minsta och största värdet.',
             'modes': {
                 'distinct': 'Kontinuerlig',
                 'discontinuous': 'Diskontinuerlig'
@@ -145,7 +106,6 @@ Oskari.registerLocalization({
                 'open': 'Öppna klassificeringseditoraren',
                 'close': 'Stägn klassificeringseditoraren'
             },
-            'classifyFieldsTitle': 'Klassificeringsvärden',
             'mapStyles': {
                 'choropleth': 'Koropletkarta',
                 'points': 'Karta med punktsymboler'
@@ -161,7 +121,6 @@ Oskari.registerLocalization({
             }
         },
         'errors': {
-            'title': 'Fel',
             'indicatorListError': 'Ett fel uppstod vid sökningen av dataleverantören.',
             'indicatorListIsEmpty': 'Dataleverantörens lista av datamängder är tom.',
             'indicatorMetadataError': 'Ett fel uppstod vid sökningen av datamängder.',
@@ -178,43 +137,12 @@ Oskari.registerLocalization({
             'regionsetName': 'Okänd',
             'indicator': 'Okänd indikator'
         },
-        'datacharts': {
-            'flyout': 'Sökta datamängden',
-            'barchart': 'Stapeldiagram',
-            'linechart': 'Linjediagram',
-            'table': 'Tabell',
-            'desc': 'Tabell och figurer',
-            'nodata': 'Inga valda indikatorer',
-            'indicatorVar': 'Variabeln som ska visas i figuren',
-            'descColor': 'Figurens färg',
-            'selectClr': 'Vald färg',
-            'clrFromMap': 'Färgsättning enligt kartas klassificering',
-            'chooseColor': 'Välj färg',
-            'sorting': {
-                'desc': 'Sortera',
-                'name-ascending': 'Stigande enligt namn',
-                'name-descending': 'Sjunkande enligt namn',
-                'value-ascending': 'Stigande enligt värde',
-                'value-descending': 'Sjunkande enligt värde'
-            }
-        },
-        'filter': {
-            'title': 'Filtrering',
-            'indicatorToFilter': 'Variabel som ska filtreras',
-            'condition': 'Villkor',
-            'value': 'Värde',
-            'variable': 'Variabel',
-            'conditionPlaceholder': 'Välj villkor',
-            'greater': 'Större än (>)',
-            'greaterEqual': 'Större än eller lika med (>=)',
-            'equal': 'Lika med (=)',
-            'lessEqual': 'Mindre än eller lika med (<=)',
-            'lessThan': 'Mindre än (<)',
-            'between': 'Mellan (uteslutande)',
-            'filter': 'Filtrera värden',
-            'desc': 'Filtrera med värden',
-            'filtered': 'Filtrerade värden',
-            'area': 'Filtrera med områden'
+        'sorting': {
+            'desc': 'Sortera',
+            'name-ascending': 'Stigande enligt namn',
+            'name-descending': 'Sjunkande enligt namn',
+            'value-ascending': 'Stigande enligt värde',
+            'value-descending': 'Sjunkande enligt värde'
         },
         'layer': {
             'name': 'Områdesindelning av tematiska kartan',
@@ -223,8 +151,7 @@ Oskari.registerLocalization({
         },
         'tab': {
             'title': 'Indikatorer',
-            'edit': 'Redigera',
-            'delete': 'Ta bort',
+            'confirmDelete': 'Vill du ta bort indikatorn "{name}"?',
             'grid': {
                 'name': 'Namn',
                 'edit': 'Redigera',
@@ -232,10 +159,6 @@ Oskari.registerLocalization({
                 'actions': 'Handlingar',
                 'createDate': 'Skapad',
                 'updateDate': 'Uppdaterad',
-            },
-            'popup': {
-                'deletetitle': 'Ta bort indikatorn',
-                'deletemsg': 'Vill du ta bort indikatorn "{name}"?'
             }
         },
         'userIndicators': {
@@ -292,16 +215,9 @@ Oskari.registerLocalization({
             'open': 'Visa {indicators, plural, one {indikator beskrivning} other {indikator beskrivningar}}',
             'title': '{indicators, plural, one {Indikator beskrivning} other {Indikator beskrivningar}}',
             'noMetadata': 'Tjänsten returnerade ingen beskrivning för {indicators, plural, one {indikatorn} other {indikatorer}}.',
+            'datasource': 'Datakälla',
             'updated': 'Senast uppdaterad',
             'nextUpdate': 'Nästa uppdatering'
-        },
-        'sumo': {
-            'placeholder': 'Välj här',
-            'captionFormat': '{0} valda',
-            'captionFormatAllSelected': 'Alla {0} valda!',
-            'searchText': 'Sök...',
-            'noMatch': 'Inga sökresultat hittades med "{0}"',
-            'locale': ['OK', 'Avbryt', 'Välj alla']
         }
     }
 });

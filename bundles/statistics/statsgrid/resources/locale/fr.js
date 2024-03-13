@@ -1,5 +1,4 @@
-Oskari.registerLocalization(
-{
+Oskari.registerLocalization({
     "lang": "fr",
     "key": "StatsGrid",
     "value": {
@@ -13,23 +12,9 @@ Oskari.registerLocalization(
             "title": "Cartes thématiques"
         },
         "dataProviderInfoTitle": "Indicateurs",
-        "layertools": {
-            "table_icon": {
-                "tooltip": "Passer aux cartes thématiques",
-                "title": "Cartes thématiques"
-            },
-            "diagram_icon": {
-                "tooltip": "Afficher les données dans le schéma",
-                "title": "Schéma"
-            },
-            "statistics": {
-                "tooltip": "Passer aux cartes thématiques",
-                "title": "Statistiques"
-            }
-        },
+        "layertool": "Passer aux cartes thématiques",
         "panels": {
             "newSearch": {
-                "title": "DONNÉES DE RECHERCHE",
                 "seriesTitle": "Série chronologique",
                 "datasourceTitle": "Source des données",
                 "indicatorTitle": "Indicateur",
@@ -40,10 +25,7 @@ Oskari.registerLocalization(
                 "selectRegionsetPlaceholder": "Sélectionner le jeu de régions",
                 "noResults": "Votre recherche n'a donné aucun résultat",
                 "refineSearchLabel": "Veuillez préciser le contenu des données examinées",
-                "refineSearchTooltip1": "Vous aurez plus d'options après avoir choisi le fournisseur de données et les données.",
-                "refineSearchTooltip2": "",
-                "addButtonTitle": "Obtenir le contenu des données",
-                "clearButtonTitle": "Effacer",
+                "refineSearchTooltip": "Vous aurez plus d'options après avoir choisi le fournisseur de données et les données.",
                 "defaultPlaceholder": "Sélectionner la valeur",
                 "selectionValues": {
                     "sex": {
@@ -63,12 +45,8 @@ Oskari.registerLocalization(
             }
         },
         "statsgrid": {
-            "title": "DONNÉES DE RECHERCHE",
             "noResults": "Aucune donnée sélectionnée",
             "noValues": "Aucune valeur pour les données sélectionnées",
-            "areaSelection": {
-                "title": "DIVISION DE SUPERFICIE"
-            },
             "orderBy": "Trier",
             "orderByAscending": "Trier en ordre croissant",
             "orderByDescending": "Trier en ordre décroissant",
@@ -80,14 +58,6 @@ Oskari.registerLocalization(
             "noEnough": "Les données sont trop petites pour être classifiées. Veuillez essayer des données différentes ou modifier les limites.",
             "noData": "Les données ne sont pas accessibles pour le moment précis sélectionné.",
             "cannotCreateLegend": "Impossible de créer la légende à l'aide des  valeurs choisies. Veuillez essayer des valeurs différentes."
-        },
-        "series": {
-            "speed": {
-                "label": "Vitesse d'animation",
-                "fast": "Rapide",
-                "normal": "Normal",
-                "slow": "Lent"
-            }
         },
         "diagram": {
             "title": "Schéma",
@@ -103,10 +73,6 @@ Oskari.registerLocalization(
             "region": "Région"
         },
         "datatable": "Tableau",
-        "published": {
-            "showMap": "Afficher la carte",
-            "showTable": "Afficher le tableau"
-        },
         "classify": {
             "classify": "Classification",
             "labels": {
@@ -128,12 +94,6 @@ Oskari.registerLocalization(
                 "quantile": "Quantiles",
                 "equal": "Untervalles égaux"
             },
-            "manual": "Classification manuelle des intervalles",
-            "manualPlaceholder": "Séparer les valeurs avec des virgules.",
-            "manualRangeError": "Les séparations de catégories sont erronées. Elles doivent être entre {min} et {max}. Séparer les valeurs avec des virgules. Utiliser le signe décimal comme délimiteur. Corriger les séparations de catégories et réessayer.",
-            "nanError": "La valeur saisie n'est pas un chiffre. Corriger la valeur et recommencer. Utiliser le signe décimal comme délimiteur.",
-            "infoTitle": "Classification manuelle des intervalles",
-            "info": "Saisir les séparations de catégories en tant que chiffres séparés par une virgule. Utiliser le signe décimal comme délimiteur. Par exemple, en saisissant \"0, 10.5, 24, 30.2, 57, 73.1\", on  obtient cinq catégories dont les valeurs se trouvent entre \"0-10,5\", \"10,5-24\", \"24-30,2\", \"30,2-57\" et \"57-73,1\". Les valeurs d'indicateur qui sont plus petites que la séparation de catégorie la plus basse (dans l'exemple précédent 0) ou plus grandes que la séparation de catégorie la plus élevée (73,1) ne sont pas affichées dans la carte. Les séparations de catégories doivent être entre la valeur la plus basse et la plus élevée de l'indicateur.",
             "modes": {
                 "distinct": "En continu",
                 "discontinuous": "En discontinu"
@@ -143,7 +103,6 @@ Oskari.registerLocalization(
                 'open': 'Ferme l\'éditeur de classification',
                 'close': 'Ouvrir l\'éditeur de classification'
             },
-            "classifyFieldsTitle": "Valeurs de classification",
             "mapStyles": {
                 "choropleth": "Carte choroplèthe",
                 "points": "Carte par symboles"
@@ -159,7 +118,6 @@ Oskari.registerLocalization(
             }
         },
         "errors": {
-            "title": "Erreur",
             "indicatorListError": "Une erreur est survenue lors de la recherche du fournisseur de données.",
             "indicatorListIsEmpty": "La liste de données du fournisseur de données est vide.",
             "indicatorMetadataError": "Une erreur est survenue lors de la recherche des sélections de données.",
@@ -170,43 +128,12 @@ Oskari.registerLocalization(
             "datasourceIsEmpty": "Le champ Source de données est vide.",
             "cannotDisplayAsSeries": "Impossible d'analyser l'indicateur en tant que série."
         },
-        "datacharts": {
-            "flyout": "Données recherchées",
-            "barchart": "Diagramme à barres",
-            "linechart": "Diagramme à ligne brisée",
-            "table": "Tableau",
-            "desc": "Tableau et graphiques",
-            "nodata": "Les indicateurs n'ont pas été choisis",
-            "indicatorVar": "La variable sera affichée dans le graphique",
-            "descColor": "Couleur du graphique",
-            "selectClr": "Couleur sélectionnée",
-            "clrFromMap": "Couleurs par classification dans la carte",
-            "chooseColor": "Sélectionner la couleur",
-            "sorting": {
-                "desc": "Ordre",
-                "name-ascending": "Nom en ordre croissant",
-                "name-descending": "Nom en ordre décroissant",
-                "value-ascending": "Valeur en ordre croissant",
-                "value-descending": "Valeur en ordre décroissant"
-            }
-        },
-        "filter": {
-            "title": "Filtrage",
-            "indicatorToFilter": "Variable à filtrer",
-            "condition": "Condition",
-            "value": "Valeur",
-            "variable": "Variable",
-            "conditionPlaceholder": "Sélectionner la condition",
-            "greater": "est supérieur(e) à (>)",
-            "greaterEqual": "est supérieur(e) ou égal(e) à (>=)",
-            "equal": "est égal(e) à (=)",
-            "lessEqual": "est inférieur(e) ou égal(e) à (<=)",
-            "lessThan": "est inférieur(e) à (<)",
-            "between": "Entre (exclusif)",
-            "filter": "Filtrer les valeurs",
-            "desc": "Filtrer par valeur",
-            "filtered": "Valeurs filtrées",
-            "area": "Filtrer par superficie"
+        "sorting": {
+            "desc": "Ordre",
+            "name-ascending": "Nom en ordre croissant",
+            "name-descending": "Nom en ordre décroissant",
+            "value-ascending": "Valeur en ordre croissant",
+            "value-descending": "Valeur en ordre décroissant"
         },
         "layer": {
             "name": "Division par superficie de la carte thématique",
@@ -215,16 +142,11 @@ Oskari.registerLocalization(
         },
         "tab": {
             "title": "Indicateurs",
-            "edit": "Modifier",
-            "delete": "Supprimer",
+            "confirmDelete": "Vous supprimez l'indicateur \"{name}\". Souhaitez-vous supprimer l'indicateur?",
             "grid": {
                 "name": "Nom",
                 "edit": "Modifier",
                 "delete": "Supprimer"
-            },
-            "popup": {
-                "deletetitle": "Supprimer l'indicateur",
-                "deletemsg": "Vous supprimez l'indicateur \"{name}\". Souhaitez-vous supprimer l'indicateur?",
             }
         },
         "userIndicators": {

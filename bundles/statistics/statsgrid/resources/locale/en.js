@@ -12,23 +12,9 @@ Oskari.registerLocalization({
             'title': 'Thematic maps'
         },
         'dataProviderInfoTitle': 'Indicators',
-        'layertools': {
-            'table_icon': {
-                'tooltip': 'Move to thematic maps',
-                'title': 'Thematic maps'
-            },
-            'diagram_icon': {
-                'tooltip': 'Show data in diagram',
-                'title': 'Diagram'
-            },
-            'statistics': {
-                'tooltip': 'Move to thematic maps',
-                'title': 'Statistics'
-            }
-        },
+        'layertool': 'Move to thematic maps',
         'panels': {
             'newSearch': {
-                'title': 'SEARCH DATA',
                 'seriesTitle': 'Time series',
                 'datasourceTitle': 'Data source',
                 'indicatorTitle': 'Indicator',
@@ -39,10 +25,7 @@ Oskari.registerLocalization({
                 'selectRegionsetPlaceholder': 'Select regionset',
                 'noResults': 'No results found matching',
                 'refineSearchLabel': 'Specify contents of the examined data',
-                'refineSearchTooltip1': 'You will get more options after choosing data provider and data.',
-                'refineSearchTooltip2': '',
-                'addButtonTitle': 'Get contents of data',
-                'clearButtonTitle': 'Clear',
+                'refineSearchTooltip': 'You will get more options after choosing data provider and data.',
                 'defaultPlaceholder': 'Select value',
                 'selectionValues': {
                     'sex': {
@@ -62,12 +45,8 @@ Oskari.registerLocalization({
             }
         },
         'statsgrid': {
-            'title': 'SEARCHED DATA',
             'noResults': 'No data selected',
             'noValues': 'No values for the selected data',
-            'areaSelection': {
-                'title': 'AREAL DIVISION'
-            },
             'orderBy': 'Sort',
             'orderByAscending': 'Sort ascending',
             'orderByDescending': 'Sort descending',
@@ -80,14 +59,6 @@ Oskari.registerLocalization({
             'noEnough': 'The data is too small to be classified, try different data or change limitings.',
             'noData': 'Data is not available for the selected point in time.',
             'cannotCreateLegend': 'Legend cannot be created by chosen values, try different values.'
-        },
-        'series': {
-            'speed': {
-                'label': 'Animation speed',
-                'fast': 'Fast',
-                'normal': 'Normal',
-                'slow': 'Slow'
-            }
         },
         'diagram': {
             'title': 'Diagram',
@@ -104,10 +75,6 @@ Oskari.registerLocalization({
             'region': 'Region'
         },
         'datatable': 'Table',
-        'published': {
-            'showMap': 'Show map',
-            'showTable': 'Show table'
-        },
         'classify': {
             'classify': 'Classification',
             'labels': {
@@ -130,12 +97,6 @@ Oskari.registerLocalization({
                 'equal': 'Equal intervals',
                 'manual': 'Manual classification'
             },
-            'manual': 'Manual interval classification',
-            'manualPlaceholder': 'Separate values with commas.',
-            'manualRangeError': 'Class breaks are erroneous. Class breaks must be between {min} - {max}. Separate values with commas. Use decimal point as separator mark. Correct class breaks and try again.',
-            'nanError': 'Given value is not a number. Correct value and try again. Use decimal point as separator mark.',
-            'infoTitle': 'Manual interval classification',
-            'info': 'Give class breaks as numbers separated with comma. Use decimal point as separator mark. For example by entering "0, 10.5, 24, 30.2, 57, 73.1" you get five classes which values are between "0-10,5", "10,5-24", "24-30,2", "30,2-57" and "57-73,1". Indicator values which are smaller than lowest class break (in previous exaple 0) or bigger than highest class break (73,1) are not shown in the map. Class breaks must be between smallest and largest value of the indicator.',
             'modes': {
                 'distinct': 'Continuous',
                 'discontinuous': 'Discontinuous'
@@ -145,7 +106,6 @@ Oskari.registerLocalization({
                 'open': 'Open the classification editor',
                 'close': 'Close the classification editor'
             },
-            'classifyFieldsTitle': 'Classification values',
             'mapStyles': {
                 'choropleth': 'Choropleth map',
                 'points': 'Point symbol map'
@@ -161,7 +121,6 @@ Oskari.registerLocalization({
             }
         },
         'errors': {
-            'title': 'Error',
             'indicatorListError': 'Error occurred in data provider search.',
             'indicatorListIsEmpty': "Data provider's data list is empty.",
             'indicatorMetadataError': 'Error occurred in data selection search.',
@@ -178,43 +137,12 @@ Oskari.registerLocalization({
             'regionsetName': 'Unknown',
             'indicator': 'Unknown indicator'
         },
-        'datacharts': {
-            'flyout': 'Searched data',
-            'barchart': 'Bar chart',
-            'linechart': 'Line chart',
-            'table': 'Table',
-            'desc': 'Table and graphs',
-            'nodata': 'Indicators were not chosen',
-            'indicatorVar': 'Variable to be shown in graph',
-            'descColor': 'Color of the graph',
-            'selectClr': 'Selected color',
-            'clrFromMap': 'Colors by classification in the map',
-            'chooseColor': 'Select color',
-            'sorting': {
-                'desc': 'Order',
-                'name-ascending': 'Name ascending',
-                'name-descending': 'Name descending',
-                'value-ascending': 'Value ascending',
-                'value-descending': 'Value descending'
-            }
-        },
-        'filter': {
-            'title': 'Filtering',
-            'indicatorToFilter': 'Variable to be filtered',
-            'condition': 'Condition',
-            'value': 'Value',
-            'variable': 'Variable',
-            'conditionPlaceholder': 'Select condition',
-            'greater': 'Greater than (>)',
-            'greaterEqual': 'Greater than or equal to (>=)',
-            'equal': 'Equal to (=)',
-            'lessEqual': 'Less than or equal to (<=)',
-            'lessThan': 'Less than (<)',
-            'between': 'Between (exclusive)',
-            'filter': 'Filter values',
-            'desc': 'Filter by values',
-            'filtered': 'Filtered values',
-            'area': 'Filter by areas'
+        'sorting': {
+            'desc': 'Order',
+            'name-ascending': 'Name ascending',
+            'name-descending': 'Name descending',
+            'value-ascending': 'Value ascending',
+            'value-descending': 'Value descending'
         },
         'layer': {
             'name': 'Areal division of thematic map',
@@ -223,8 +151,7 @@ Oskari.registerLocalization({
         },
         'tab': {
             'title': 'Indicators',
-            'edit': 'Edit',
-            'delete': 'Delete',
+            'confirmDelete': 'You are deleting the indicator "{name}". Do you want to delete the indicator?',
             'grid': {
                 'name': 'Name',
                 'edit': 'Edit',
@@ -232,10 +159,6 @@ Oskari.registerLocalization({
                 'actions': 'Actions',
                 'createDate': 'Created',
                 'updateDate': 'Updated'
-            },
-            'popup': {
-                'deletetitle': 'Delete Indicator',
-                'deletemsg': 'You are deleting the indicator "{name}". Do you want to delete the indicator?'
             }
         },
         'userIndicators': {
@@ -291,16 +214,9 @@ Oskari.registerLocalization({
             'open': 'Show indicator {indicators, plural, one {description} other {descriptions}}',
             'title': 'Indicator {indicators, plural, one {description} other {descriptions}}',
             'noMetadata': 'Service did not return {indicators, plural, one {description for the indicator} other {descriptions for the indicators}}',
+            'datasource': 'Data source',
             'updated': 'Last update',
             'nextUpdate': 'Next update'
-        },
-        'sumo': {
-            'placeholder': 'Select Here',
-            'captionFormat': '{0} selected',
-            'captionFormatAllSelected': 'All {0} selected!',
-            'searchText': 'Search...',
-            'noMatch': 'No results found matching "{0}"',
-            'locale': ['OK', 'Cancel', 'Select All']
         }
     }
 });
