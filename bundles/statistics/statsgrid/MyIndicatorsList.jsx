@@ -62,7 +62,7 @@ export const MyIndicatorsList = ({ controller, indicators = [], loading }) => {
                         />
                         <DeleteButton
                             type='icon'
-                            title={<Message messageKey='tab.popup.deletemsg' messageArgs={{ name: item.name }} />}
+                            title={<Message messageKey='tab.confirmDelete' messageArgs={{ name: item.name }} />}
                             onConfirm={() => controller.deleteIndicator(item.id)}
                         />
                     </ToolsContainer>

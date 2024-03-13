@@ -21,19 +21,19 @@ const StyledSelect = styled(Select)`
 const sortOptions = [
     {
         value: 'value-descending',
-        label: <Message messageKey='datacharts.sorting.value-descending' bundleKey={BUNDLE_KEY} />
+        label: <Message messageKey='sorting.value-descending' bundleKey={BUNDLE_KEY} />
     },
     {
         value: 'value-ascending',
-        label: <Message messageKey='datacharts.sorting.value-ascending' bundleKey={BUNDLE_KEY} />
+        label: <Message messageKey='sorting.value-ascending' bundleKey={BUNDLE_KEY} />
     },
     {
         value: 'name-ascending',
-        label: <Message messageKey='datacharts.sorting.name-ascending' bundleKey={BUNDLE_KEY} />
+        label: <Message messageKey='sorting.name-ascending' bundleKey={BUNDLE_KEY} />
     },
     {
         value: 'name-descending',
-        label: <Message messageKey='datacharts.sorting.name-descending' bundleKey={BUNDLE_KEY} />
+        label: <Message messageKey='sorting.name-descending' bundleKey={BUNDLE_KEY} />
     }
 ];
 
@@ -56,7 +56,7 @@ const DiagramFlyout = ({ state, controller }) => {
                     options={sortOptions}
                     onChange={(value) => setSortOrder(value)}
                     value={sortOrder}
-                    placeholder={<Message messageKey='datacharts.sorting.desc' />}
+                    placeholder={<Message messageKey='sorting.desc' />}
                 />
             </Selections>
             <Diagram indicator={current} sortOrder={sortOrder} />

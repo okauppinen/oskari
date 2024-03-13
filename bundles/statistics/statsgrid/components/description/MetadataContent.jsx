@@ -13,7 +13,7 @@ export const MetadataContent = ({description, source, metadata = {}}) => {
     return (<React.Fragment>
         <p dangerouslySetInnerHTML={{__html: desc}} />
         <p>
-            <DataLabel labelKey='panels.newSearch.datasourceTitle' value={datasource} />
+            <DataLabel labelKey='metadataPopup.datasource' value={datasource} />
             <DataLabel labelKey='metadataPopup.updated' value={metadata.updated} />
             <DataLabel labelKey='metadataPopup.nextUpdate' value={metadata.nextUpdate} />
         </p>

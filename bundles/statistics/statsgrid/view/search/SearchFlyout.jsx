@@ -120,7 +120,7 @@ const SearchFlyout = ({ state, controller }) => {
             )}
             <b><Message messageKey='panels.newSearch.refineSearchLabel' /></b>
             {!state.indicatorParams && (
-                <i><Message messageKey='panels.newSearch.refineSearchTooltip1' /></i>
+                <i><Message messageKey='panels.newSearch.refineSearchTooltip' /></i>
             )}
             {state.indicatorParams && (
                 <IndicatorParams
