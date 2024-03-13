@@ -144,24 +144,6 @@ Oskari.registerLocalization({
             'value-ascending': 'Arvon mukaan nouseva',
             'value-descending': 'Arvon mukaan laskeva'
         },
-        'filter': {
-            'title': 'Suodatus',
-            'indicatorToFilter': 'Suodatettava muuttuja',
-            'condition': 'Ehto',
-            'value': 'Arvo',
-            'variable': 'Muuttuja',
-            'conditionPlaceholder': 'Valitse ehto',
-            'greater': 'Suurempi kuin (>)',
-            'greaterEqual': 'Suurempi tai yhtäsuuri kuin (>=)',
-            'equal': 'Yhtäsuuri kuin (=)',
-            'lessEqual': 'Pienempi tai yhtäsuuri kuin (<=)',
-            'lessThan': 'Pienempi kuin (<)',
-            'between': 'Välillä (poissulkeva)',
-            'filter': 'Suodata arvot',
-            'desc': 'Suodata arvoilla',
-            'filtered': 'Suodatetut arvot',
-            'area': 'Suodata alueilla'
-        },
         'layer': {
             'name': 'Teemakartan aluejako',
             'inspireName': 'Teemakartta',
@@ -169,8 +151,7 @@ Oskari.registerLocalization({
         },
         'tab': {
             'title': 'Indikaattorit',
-            'edit': 'Muokkaa',
-            'delete': 'Poista',
+            'confirmDelete': 'Haluatko poistaa indikaattorin "{name}"?',
             'grid': {
                 'name': 'Nimi',
                 'edit': 'Muokkaa',
@@ -178,10 +159,6 @@ Oskari.registerLocalization({
                 'actions': 'Toiminnot',
                 'createDate': 'Luontiaika',
                 'updateDate': 'Muokkausaika'
-            },
-            'popup': {
-                'deletetitle': 'Poista indikaattori',
-                'deletemsg': 'Haluatko poistaa indikaattorin "{name}"?'
             }
         },
         'userIndicators': {
