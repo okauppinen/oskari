@@ -54,54 +54,42 @@ const StyledClear = styled('br')`
     clear: left;
 `;
 
-export class Opacity extends React.Component {
-    constructor (props) {
-        super(props);
-        this.state = { opacity: props.defaultValue };
-        this.onChange = this.onChange.bind(this);
-    }
-
-    onChange (value) {
-        this.setState({
-            opacity: value
-        });
-        // TODO this could be handled in some better way
-        this.props.onChange(value);
-    }
-
-    render () {
-        const { opacity } = this.state;
-        return (
-            <Container>
-                {!this.props.inputOnly && (
-                    <StyledSlider bordered={this.props.bordered}>
-                        <Slider
-                            min={0}
-                            max={100}
-                            onChange={this.onChange}
-                            value={typeof opacity === 'number' ? opacity : 0}
-                        />
-                    </StyledSlider>
-                )}
-                <NumberInputContainer>
-                    <StyledNumberInput
+export const Opacity = ({
+    onChange,
+    bordered,
+    value,
+    inputOnly
+}) => {
+    return (
+        <Container>
+            {!inputOnly && (
+                <StyledSlider bordered={bordered}>
+                    <Slider
                         min={0}
                         max={100}
-                        value={opacity}
-                        onChange={this.onChange}
+                        onChange={val => onChange(val)}
+                        value={typeof value === 'number' ? value : 0}
                     />
-                    <NumberSuffix>
-                        %
-                    </NumberSuffix>
-                </NumberInputContainer>
-                <StyledClear />
-            </Container>
-        );
-    }
-}
+                </StyledSlider>
+            )}
+            <NumberInputContainer>
+                <StyledNumberInput
+                    min={0}
+                    max={100}
+                    value={value}
+                    onChange={val => onChange(val)}
+                />
+                <NumberSuffix>
+                    %
+                </NumberSuffix>
+            </NumberInputContainer>
+            <StyledClear />
+        </Container>
+    );
+};
 
 Opacity.propTypes = {
-    defaultValue: PropTypes.number,
+    value: PropTypes.number,
     onChange: PropTypes.func,
     bordered: PropTypes.bool,
     inputOnly: PropTypes.bool
