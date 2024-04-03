@@ -30,7 +30,7 @@ export const OpacitySlider = ({ value, onChange }) => {
     return (
         <InputGroup compact>
             <Container $isMobile={isMobile}>
-                <Opacity bordered defaultValue={sliderValue} onChange={instantValueChange} inputOnly={isMobile} />
+                <Opacity bordered value={sliderValue} onChange={instantValueChange} inputOnly={isMobile} />
             </Container>
         </InputGroup>
     );

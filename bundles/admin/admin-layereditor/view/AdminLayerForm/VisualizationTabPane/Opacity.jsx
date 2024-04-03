@@ -10,7 +10,7 @@ export const Opacity = ({ layer, controller }) => (
         <StyledFormField>
             <CommonOpacity
                 key={layer.id}
-                defaultValue={layer.opacity}
+                value={layer.opacity}
                 onChange={value => controller.setOpacity(value)} />
         </StyledFormField>
     </Fragment>
