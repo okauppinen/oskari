@@ -49,7 +49,7 @@ const getColorOptions = () => Oskari.custom.getColors().map((color) => {
     };
 });
 
-const getContent = (props) => {
+const getContent = (props, onColorChange) => {
     // Don't add id to hidden input to avoid getting duplicate id with ColorTextInput, modify id if needed
     const { id, ...inputProps } = props;
     const colorInput = useRef(null);
@@ -60,9 +60,9 @@ const getContent = (props) => {
     }
     return (
         <StyledColorPicker>
-            <SvgRadioButton options={ getColorOptions() } { ...props }/>
+            <SvgRadioButton options={ getColorOptions() } { ...props } onChange={onColorChange}/>
             <MoreColors>
-                <HiddenInput ref={colorInput} type='color' { ...inputProps }/>
+                <HiddenInput ref={colorInput} type='color' { ...inputProps } onChange={onColorChange}/>
                 <Button type="primary" onClick={onClick}>
                     <Message messageKey='ColorPicker.moreColors' bundleKey='oskariui'/>
                 </Button>
@@ -71,38 +71,49 @@ const getContent = (props) => {
     );
 };
 
-export const ColorPicker = (props) => {
+export const ColorPicker = ({ onChange, ...props }) => {
     const { value = '#FFFFFF', disabled, hideTextInput } = props;
     const [visible, setVisible] = useState(false);
+    const [text, setText] = useState(value);
+    const [textStatus, setTextStatus] = useState();
+
+    const onColorChange = evt => {
+        const color = evt.target.value;
+        const isValid = Oskari.util.colorToArray(color).length >= 3;
+        setText(color);
+        setTextStatus(isValid ? '' : 'error');
+        if (isValid) {
+            props.onChange(evt);
+        }
+    };
+
     const chooseIconStyle = {
         fontSize: '20px',
         color: disabled || Oskari.util.isDarkColor(value) ? '#FFFFFF' :'#000000'
     };
-    const chooseTooltip = disabled ? '' : <Message messageKey={`ColorPicker.tooltip`} bundleKey='oskariui'/>;
     const renderTextInput = !hideTextInput && !disabled;
     return (
         <React.Fragment>
             <Popover
-                content={getContent(props)}
+                content={getContent(props, onColorChange)}
                 trigger="click"
                 placement="bottom"
                 open={visible}
-                onOpenChange = {setVisible}
-                >
-            <Tooltip title={chooseTooltip}>
-                <ChooseColor style={{ background: value }} disabled={disabled} >
-                    <BgColorsOutlined style={chooseIconStyle}/>
-                </ChooseColor>
-            </Tooltip>
+                onOpenChange = {setVisible}>
+                <Tooltip title={disabled ? '' : <Message messageKey={`ColorPicker.tooltip`} bundleKey='oskariui'/>}>
+                    <ChooseColor style={{ background: value }} disabled={disabled} >
+                        <BgColorsOutlined style={chooseIconStyle}/>
+                    </ChooseColor>
+                </Tooltip>
             </Popover>
-            { renderTextInput && <ColorTextInput { ...props }/> }
+            { renderTextInput && <ColorTextInput { ...props } status={textStatus} value={text} onChange={onColorChange}/>}
         </React.Fragment>
     );
 };
 
 ColorPicker.propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
     hideTextInput: PropTypes.bool
 };
