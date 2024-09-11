@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { sliderTypes, timeUnits } from './util/constants';
 import { getDifferenceCalculator, calculateSvgX } from './util/calculation';
@@ -86,27 +86,12 @@ export const TimeSeriesSlider = ThemeConsumer(({
 
     const [state, setState] = useState({
         sliderPoints: [],
-        handleX: range ? calcHandlePosition(value[0], min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR) : calcHandlePosition(value, min, widthUnit, 8, timeUnits.YEAR),
-        secondHandleX: range ? calcHandlePosition(value[1], min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR) : 0,
         dragElement: null,
         dragOffsetX: null
     });
-
-    useEffect(() => {
-        if (range) {
-            setState({
-                ...state,
-                handleX: calcHandlePosition(value[0], min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR),
-                secondHandleX: calcHandlePosition(value[1], min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR)
-            });
-        } else {
-            setState({
-                ...state,
-                handleX: calcHandlePosition(value, min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR)
-            });
-        }
-    }, [value, value[0], value[1]]);
-
+    const xValue = range ? value[0] : value;
+    const handleX = calcHandlePosition(xValue, min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR);
+    const secondHandleX = range ? calcHandlePosition(value[1], min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR) : 0;
     useEffect(() => {
         let points = dataPoints.map((data) => ({
             data,
@@ -222,11 +207,11 @@ export const TimeSeriesSlider = ThemeConsumer(({
                     <g onClick={(e) => onRailClick(e)}>
                         <Rail className='slider-rail' width={lineWidth} height={3} $theme={navigationTheme} />
                         {range && (
-                            <ActiveRail x1={state.handleX} x2={state.secondHandleX} y1={1.5} y2={1.5} stroke={navigationTheme.getButtonHoverColor()} strokeWidth={3} />
+                            <ActiveRail x1={handleX} x2={secondHandleX} y1={1.5} y2={1.5} stroke={navigationTheme.getButtonHoverColor()} strokeWidth={3} />
                         )}
                         {markers.map((mark, index) => {
                             return (
-                                <>
+                                <Fragment key={mark}>
                                     <Marker
                                         key={mark}
                                         transform={`translate(${calcDataPointX(mark, widthUnit, min, 35, calculator)}, -10)`}
@@ -236,7 +221,7 @@ export const TimeSeriesSlider = ThemeConsumer(({
                                         {mark}
                                     </Marker>
                                     <LineMarker key={`line-marker-${index}`} $theme={navigationTheme} width={2} height={3} transform={`translate(${calcDataPointX(mark, widthUnit, min, 2, calculator)}, 0)`} />
-                                </>
+                                </Fragment>
                             )
                         })}
                     </g>
@@ -276,7 +261,7 @@ export const TimeSeriesSlider = ThemeConsumer(({
                         strokeWidth={1}
                         width={HANDLE_WIDTH}
                         height={HANDLE_WIDTH * 2}
-                        x={state.handleX}
+                        x={handleX}
                         y={-7}
                         onMouseDown={(e) => startDrag(e)}
                         $theme={navigationTheme}
@@ -290,7 +275,7 @@ export const TimeSeriesSlider = ThemeConsumer(({
                             strokeWidth={1}
                             width={HANDLE_WIDTH}
                             height={HANDLE_WIDTH * 2}
-                            x={state.secondHandleX}
+                            x={secondHandleX}
                             y={-7}
                             onMouseDown={(e) => startDrag(e)}
                             $theme={navigationTheme}
