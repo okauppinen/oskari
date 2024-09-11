@@ -85,34 +85,28 @@ export const TimeSeriesSlider = ThemeConsumer(({
     const widthUnit = lineWidth / calculator(max, min);
 
     const [state, setState] = useState({
-        sliderPoints: [],
         dragElement: null,
         dragOffsetX: null
     });
     const xValue = range ? value[0] : value;
     const handleX = calcHandlePosition(xValue, min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR);
     const secondHandleX = range ? calcHandlePosition(value[1], min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR) : 0;
-    useEffect(() => {
-        let points = dataPoints.map((data) => ({
-            data,
-            x: calcDataPointX(data, widthUnit, min, (POINT_RADIUS * 2), calculator)
-        }));
-        setState({
-            ...state,
-            sliderPoints: points
-        });
-    }, [dataPoints]);
+
+    const sliderPoints = dataPoints.map((data) => ({
+        data,
+        x: calcDataPointX(data, widthUnit, min, (POINT_RADIUS * 2), calculator)
+    }));
 
     const onHandlePositionChange = (e, target) => {
         const svgX = calculateSvgX(e.clientX, target);
-        const snap = findSnapPoint(svgX, state.sliderPoints);
+        const snap = findSnapPoint(svgX, sliderPoints);
         target.setAttributeNS(null, 'x', snap.x - state.dragOffsetX);
         handleChange(snap.data, target.id);
     };
 
     const onRailClick = (e) => {
         const svgX = calculateSvgX(e.clientX, e.target);
-        const snap = findSnapPoint(svgX, state.sliderPoints);
+        const snap = findSnapPoint(svgX, sliderPoints);
         handleChange(snap.data);
     };
 
@@ -225,7 +219,7 @@ export const TimeSeriesSlider = ThemeConsumer(({
                             )
                         })}
                     </g>
-                    {state.sliderPoints.map((point, index) => (
+                    {sliderPoints.map((point, index) => (
                         <g
                             key={index}
                             className='slider-data-point'
