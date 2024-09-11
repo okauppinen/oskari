@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { sliderTypes, timeUnits } from './util/constants';
 import { getDifferenceCalculator, calculateSvgX } from './util/calculation';
