@@ -138,6 +138,35 @@ Oskari.registerLocalization({
                 atMost: 'som mest'
             }
         },
+        TimeSeries: {
+            speed: {
+                label: 'Animeringshastighet',
+                slow: 'Långsam',
+                normal: 'Normal',
+                fast: 'Snabb'
+            },
+            skip: {
+                label: 'Hoppa över',
+                none: 'Ingen',
+                minute: '1 minut',
+                hour: '1 timme',
+                day: '1 dag',
+                week: '1 vecka',
+                month: '1 månad'
+            },
+            dateRender: '{val, date} {val, time, short}',
+            controls: {
+                info: 'Du kan plocka flera år från linjen med att justera linjens start-och endpunkter. De små cirklarna på linjen visar de år som det finns datamängder för på kartvyns område.',
+                range: {
+                    info: 'Med denna tidsseriefunktion kan du granska bilder från flera år. Obs! I kartvyn visas den sista flygbilden för varje område. Du kan returnera till tidspunktfunktionen med att klicka på ikonen i övre höga hörnet av panelen:',
+                    toggle: 'Byt till tidspunktfunktion'
+                },
+                year: {
+                    info: 'I denna vy väljer du ett år som tidspunkt och ser de motsvarande datamängderna på kartan. Det är enklare att granska områden vid utkantena av täcket med tidsseriefunktionen. Du kan byta till tidsseriefunktionen med att klicka på ikonen i övre höga hörnet av panelen:',
+                    toggle: 'Byt till tidsseriefunktion'
+                }
+            }
+        },
         coordinates: {
             lon: "Lon",
             lat: "Lat",

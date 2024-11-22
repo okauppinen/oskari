@@ -69,6 +69,24 @@ Oskari.registerLocalization({
         Spin: {
             loading: 'Загрузка...'
         },
+        TimeSeries: {
+            speed: {
+                label: 'Скорость анимации',
+                slow: 'Медленно',
+                normal: 'Нормально',
+                fast: 'Быстро'
+            },
+            skip: {
+                label: 'Пропустить вперед',
+                none: 'Нет',
+                minute: '1 минута',
+                hour: '1 час',
+                day: '1 день',
+                week: '1 неделя',
+                month: '1 месяц'
+            },
+            dateRender: '{val, date} {val, time, short}',
+        },
         coordinates: {
             lon: "Долгота",
             lat: "Широта",

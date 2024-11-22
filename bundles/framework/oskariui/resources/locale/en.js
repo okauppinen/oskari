@@ -138,6 +138,35 @@ Oskari.registerLocalization({
                 atMost: 'at most'
             }
         },
+        TimeSeries: {
+            speed: {
+                label: 'Animation speed',
+                slow: 'Slow',
+                normal: 'Normal',
+                fast: 'Fast'
+            },
+            skip: {
+                label: 'Skip ahead',
+                none: 'None',
+                minute: '1 minute',
+                hour: '1 hour',
+                day: '1 day',
+                week: '1 week',
+                month: '1 month'
+            },
+            dateRender: '{val, date} {val, time, short}',
+            controls: {
+                info: 'With this timeseries tool, you can select the years you want in the slider. The small circles indicate the years from which there exists data in current map view.',
+                range: {
+                    info: 'In this mode you can select a time range for the data. Note! The latest available image for the selected range is shown on any given location. You can switch to single year mode by clicking the near by icon:',
+                    toggle: 'Switch to single year mode'
+                },
+                year: {
+                    info: 'In this mode you can see data from a single year. At the fringes of yearly coverage areas it is easier to inspect the data in the time range mode. You can switch the mode by clicking the nearby icon:',
+                    toggle: 'Switch to time range mode'
+                }
+            }
+        },
         coordinates: {
             lon: "Lon",
             lat: "Lat",

@@ -75,6 +75,24 @@ Oskari.registerLocalization({
         Spin: {
             loading: 'Chargement en cours...'
         },
+        TimeSeries: {
+            speed: {
+                label: 'Vitesse d\'animation',
+                slow: 'Lent',
+                normal: 'Normal',
+                fast: 'Rapide'
+            },
+            skip: {
+                label: 'Sauter',
+                none: 'Aucun',
+                minute: '1 minute',
+                hour: '1 heure',
+                day: '1 jour',
+                week: '1 semaine',
+                month: '1 mois'
+            },
+            dateRender: '{val, date} {val, time, short}',
+        },
         coordinates: {
             lon: "Lon",
             lat: "Lat",
