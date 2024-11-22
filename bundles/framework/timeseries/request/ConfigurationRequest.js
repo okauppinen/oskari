@@ -1,6 +1,6 @@
 /**
  * @class Oskari.mapframework.bundle.timeseries.ConfigurationRequest
- * Request timeseries to set configuration for control plugin.
+ * Request timeseries to set configuration.
  *
  * Requests are build and sent through Oskari.Sandbox.
  * Oskari.mapframework.request.Request superclass documents how to send one.
@@ -10,11 +10,14 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.ConfigurationRequest'
      * @method create called automatically on construction
      * @static
      *
-     * @param {Object} conf
-     *            Configuration object for timeseries control plugin
+     * @param {String} op Operation
+     * @param {Object} opts Options
      */
-    function (conf) {
-        this._conf = conf;
+    function (op, opts) {
+        const isDepracated = typeof op === 'object';
+        this._conf = isDepracated ? op : null;
+        this._op = isDepracated ? 'config' : op;
+        this._opts = opts || {};
     }, {
         /** @static @property __name request name */
         __name: 'Timeseries.ConfigurationRequest',
@@ -25,16 +28,16 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.ConfigurationRequest'
         getName: function () {
             return this.__name;
         },
-        /**
-         * @method getConfiguration
-         */
-        getConfiguration: function () {
-            return this._conf;
+        getOptions: function () {
+            return this._conf || this._opts;
+        },
+        getOperation: function () {
+            return this._op;
         }
     }, {
         /**
          * @property {String[]} protocol array of superclasses as {String}
          * @static
          */
-        'protocol': ['Oskari.mapframework.request.Request']
+        protocol: ['Oskari.mapframework.request.Request']
     });

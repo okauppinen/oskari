@@ -14,7 +14,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.WMSAnimator',
         this._sandbox = sandbox;
         this._layer = this._sandbox.findMapLayerFromSelectedMapLayers(layerId);
 
-        var times = this.getTimes();
+        const times = this.getTimes();
         this._currentTime = times[0];
         this._subsetRange = [times[0], times[times.length - 1]];
 
@@ -24,8 +24,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.WMSAnimator',
 
         this._sandbox.register(this);
         this._onDestroyCallbacks = [];
-        var p;
-        for (p in this.__eventHandlers) {
+        for (const p in this.__eventHandlers) {
             if (this.__eventHandlers.hasOwnProperty(p)) {
                 sandbox.registerForEventByName(this, p);
             }
@@ -224,7 +223,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.WMSAnimator',
             }
         }
     }, {
-        'protocol': [
+        protocol: [
             'Oskari.mapframework.bundle.timeseries.TimeseriesDelegateProtocol',
             'Oskari.mapframework.module.Module'
         ]
