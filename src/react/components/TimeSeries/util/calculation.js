@@ -35,7 +35,4 @@ export const getDifferenceCalculator = (unit) => {
     }
 };
 
-export const calculateSvgX = (clientX, svg) => {
-    const ctm = svg.getScreenCTM();
-    return (clientX - ctm.e) / ctm.a;
-}
+

@@ -1,3 +1,8 @@
+export const uiModes = {
+    RANGE: 'range',
+    PLAYER: 'player'
+};
+
 export const playbackSpeedOptions = {
     HOUR: 'HH',
     MONTH: 'MM',
