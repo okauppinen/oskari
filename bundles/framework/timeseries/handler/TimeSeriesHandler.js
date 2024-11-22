@@ -1,11 +1,15 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { StateHandler, controllerMixin } from 'oskari-ui/util';
-import { TimeseriesMetadataService } from '../../service/TimeseriesMetadataService';
+import { showTimeSeriesPlayer } from 'oskari-ui/components/TimeSeries';
+import { TimeseriesMetadataService } from '../service/TimeseriesMetadataService';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(utc);
 dayjs.extend(customParseFormat);
 
+const debounceTime = 300;
+
+// TODO move to helper? dayjs imports??
 const _getStartTimeFromYear = (year) => {
     if (!year) {
         return null;
@@ -20,34 +24,86 @@ const _getEndTimeFromYear = (year) => {
     return dayjs.utc(year.toString(), 'YYYY').endOf('year');
 };
 
+const _getDataYearsFromWMS = (layer) => {
+    if (!layer) {
+        return [];
+    }
+    // get years from WMS-layer timeseries
+    const { times = [] } = layer.getAttributes();
+    return times.map(time => dayjs(time).year());
+};
+
 class UIHandler extends StateHandler {
-    constructor (delegate, stateListener) {
+    constructor (instance) {
         super();
-        this._delegate = delegate;
-        this._layer = delegate.getLayer();
-        const hasMetadata = this._initMetadataLayer(this._layer);
+        this._instance = instance;
+        this._delegate = null;
         this._timer = null;
-        this._debounceTime = 300;
-        this._shouldAutoSelectMidDataYear = true;
-        const [start, end] = delegate.getYearRange();
-        const dataYears = hasMetadata ? [] : this._getDataYearsFromWMS();
-        this.state = {
-            title: this._layer.getName(),
-            start,
-            end,
-            mode: 'year',
-            value: start,
-            dataYears
-        };
-        this.addStateListener(stateListener);
-        delegate.onDestroy(() => this._teardown());
+        this._playerControls = null;
+        this.setState({
+            title: '',
+            start: null,
+            end: null,
+            // TODO: use mode for all??: player, year, range => jsx
+            mode: 'year', // year or range for range player TODO: refactor?? (it not stored)
+            ui: 'player',
+            value: null,
+            values: []
+        });
+        this.addStateListener(state => this._playerControls && this._playerControls.update(state));
     }
 
-    setInitialValue (value, mode) {
-        // no need to auto select mid data year if an initial
-        // value is provided through e.g. map link or map view
-        this._shouldAutoSelectMidDataYear = false;
-        this.updateValue(value, mode);
+    getLayer () {
+        return this._delegate?.getLayer();
+    }
+
+    setDelegate (delegate) {
+        if (delegate && this._delegate?.getLayer() === delegate.getLayer()) {
+            // already set
+            return;
+        }
+        this._delegate = delegate;
+        const layer = delegate.getLayer();
+        const { timeseries = {} } = layer.getOptions();
+
+        const ui = timeseries.ui || 'player';
+        const title = layer.getName();
+        const [start, end] = delegate.getYearRange(); // TODO: mode
+        const hasMetadata = this._initMetadataLayer(layer);
+        const values = hasMetadata ? [] : _getDataYearsFromWMS(layer);
+        const value = values[0]; // TODO: autoselect ?
+        this.updateState({ start, end, title, value, values, ui });
+
+        delegate.onDestroy(() => this._teardown());
+        this.showPlayer();
+    }
+
+    showPlayer () {
+        if (this._playerControls) {
+            return;
+        }
+        this._playerControls = showTimeSeriesPlayer(
+            this.getState(),
+            val => this.setValue(val),
+            { bundle: 'timeseries' },
+            () => this.closePlayer()
+        );
+    }
+
+    closePlayer () {
+        this._playerControls?.close();
+        this._playerControls = null;
+    }
+
+    setConfiguration () {}
+
+    setStoredState (state) {
+        const { time } = state || {};
+        this.setValue(time);
+    }
+
+    getStateToStore () {
+        return { time: this.getState().value };
     }
 
     updateValue (value, mode) {
@@ -59,33 +115,15 @@ class UIHandler extends StateHandler {
         if (this._timer) {
             clearTimeout(this._timer);
         }
-        this._timer = setTimeout(() => this._requestNewTime(value), this._debounceTime);
+        this._timer = setTimeout(() => this._requestNewTime(value), debounceTime);
     }
 
-    setCurrentViewportBbox (bbox, zoomLevel) {
-        if (!this._metadataHandler) {
-            return;
+    setValue (value) {
+        this.updateState({ value });
+        if (this._timer) {
+            clearTimeout(this._timer);
         }
-        if (this._metadataHandler.getToggleLevel() > zoomLevel) {
-            const dataYears = this._getDataYearsFromWMS();
-            this._autoSelectMidDataYear(dataYears);
-            this.updateState({ dataYears, error: false });
-            return;
-        }
-        this.updateState({ error: false, loading: true });
-        this._metadataHandler.setBbox(
-            bbox,
-            (dataYears) => {
-                this._autoSelectMidDataYear(dataYears);
-                this.updateState({ dataYears, loading: false });
-                const [start, end] = this._getTimeRange();
-                this._updateFeaturesByTime(start, end);
-            },
-            (error) => {
-                this.updateState({ error: true, loading: false });
-                Oskari.log('TimeSeries').warn('Error updating features', error);
-            }
-        );
+        this._timer = setTimeout(() => this._requestNewTime(value), debounceTime);
     }
 
     _autoSelectMidDataYear (dataYears) {
@@ -95,35 +133,6 @@ class UIHandler extends StateHandler {
         this._shouldAutoSelectMidDataYear = false;
         const value = dataYears[Math.ceil(dataYears.length / 2)];
         this.updateValue(value);
-    }
-
-    _teardown () {
-        if (!this._metadataHandler) {
-            return;
-        }
-        this._metadataHandler.clearPreviousFeatures();
-    }
-
-    _initMetadataLayer (layer) {
-        if (!layer) {
-            return false;
-        }
-        const options = layer.getOptions() || {};
-        const timeseries = options.timeseries || {};
-        const metadata = timeseries.metadata || {};
-        const layerId = metadata.layer;
-        if (!layerId) {
-            return false;
-        }
-        const attribute = metadata.attribute || 'time';
-        this._metadataHandler = new TimeseriesMetadataService(layerId, attribute, metadata.toggleLevel, !!metadata.visualize);
-        return true;
-    }
-
-    _getDataYearsFromWMS () {
-        // get years from WMS-layer timeseries
-        const times = this._layer.getAttributes().times;
-        return times.map(time => dayjs(time).year());
     }
 
     _requestNewTime (value) {
@@ -146,6 +155,63 @@ class UIHandler extends StateHandler {
         this._updateFeaturesByTime(startTime, endTime);
     }
 
+    _getTimeRange () {
+        const { time } = this.getState();
+        let startYear = null;
+        let endYear = null;
+        if (time.length === 2) {
+            startYear = time[0];
+            endYear = time[1];
+        } else {
+            startYear = time;
+            endYear = time;
+        }
+        return [_getStartTimeFromYear(startYear), _getEndTimeFromYear(endYear)];
+    }
+
+    /* ------------------ METADATA ------------------------ */
+    _initMetadataLayer (layer) {
+        if (!layer) {
+            return false;
+        }
+        const options = layer.getOptions() || {};
+        const timeseries = options.timeseries || {};
+        const metadata = timeseries.metadata || {};
+        const layerId = metadata.layer;
+        if (!layerId) {
+            return false;
+        }
+        const attribute = metadata.attribute || 'time';
+        this._metadataHandler = new TimeseriesMetadataService(layerId, attribute, metadata.toggleLevel, !!metadata.visualize);
+        return true;
+    }
+
+    setCurrentViewportBbox (bbox, zoomLevel) {
+        if (!this._metadataHandler) {
+            return;
+        }
+        if (this._metadataHandler.getToggleLevel() > zoomLevel) {
+            const dataYears = this._getDataYearsFromWMS(this.getLayer());
+            this._autoSelectMidDataYear(dataYears);
+            this.updateState({ dataYears, error: false });
+            return;
+        }
+        this.updateState({ error: false, loading: true });
+        this._metadataHandler.setBbox(
+            bbox,
+            (dataYears) => {
+                this._autoSelectMidDataYear(dataYears);
+                this.updateState({ dataYears, loading: false });
+                const [start, end] = this._getTimeRange();
+                this._updateFeaturesByTime(start, end);
+            },
+            (error) => {
+                this.updateState({ error: true, loading: false });
+                Oskari.log('TimeSeries').warn('Error updating features', error);
+            }
+        );
+    }
+
     _updateFeaturesByTime (start, end) {
         if (!this._metadataHandler) {
             return;
@@ -153,22 +219,18 @@ class UIHandler extends StateHandler {
         this._metadataHandler.showFeaturesForRange(start, end);
     }
 
-    _getTimeRange () {
-        const { value } = this.getState();
-        let startYear = null;
-        let endYear = null;
-        if (value.length === 2) {
-            startYear = value[0];
-            endYear = value[1];
-        } else {
-            startYear = value;
-            endYear = value;
+    _teardown () {
+        // TODO: this.closePlayer() ??
+        if (!this._metadataHandler) {
+            return;
         }
-        return [_getStartTimeFromYear(startYear), _getEndTimeFromYear(endYear)];
+        this._metadataHandler.clearPreviousFeatures();
     }
+
+    /* ------------------ /METADATA ------------------------ */
 }
 
-export const TimeSeriesRangeControlHandler = controllerMixin(UIHandler, [
+export const TimeSeriesHandler = controllerMixin(UIHandler, [
     'updateValue',
     'setCurrentViewportBbox'
 ]);
