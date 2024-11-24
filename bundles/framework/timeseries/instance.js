@@ -86,18 +86,21 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.TimeseriesToolBundleI
         },
         _createEventHandlers: function () {
             const handlers = {
+                AfterMapMoveEvent: event => this.handler?.setCurrentViewportBbox(event.getZoom()),
                 AfterRearrangeSelectedMapLayerEvent: event => this.onMapLayerEvent(event.getMovedMapLayer()),
                 AfterMapLayerAddEvent: event => this.onMapLayerEvent(event.getMapLayer()),
                 AfterMapLayerRemoveEvent: event => this.onMapLayerEvent(event.getMapLayer(), true),
                 MapLayerVisibilityChangedEvent: event => {
                     const layer = event.getMapLayer();
                     this.onMapLayerEvent(layer, !layer.isVisible());
-                }
+                },
+                MapSizeChangedEvent: event => this.handler?.onMapSizeEvent(event.getWidth())
             };
             Object.getOwnPropertyNames(handlers).forEach(p => this.sandbox.registerForEventByName(this, p));
             return handlers;
         },
         getLayers: function () {
+            // backend doesn't return times in attributes if ui mode is none (hasTimeseries => false)
             const srs = this.sandbox.getMap().getSrsName();
             return this.sandbox.findAllSelectedMapLayers()
                 .filter(l => l.hasTimeseries() && l.isVisible() && l.isSupportedSrs(srs))
