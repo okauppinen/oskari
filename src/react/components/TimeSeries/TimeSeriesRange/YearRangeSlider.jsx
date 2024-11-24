@@ -3,7 +3,8 @@ import React from 'react';
 import { TimeSeriesSlider } from 'oskari-ui/components/TimeSeries/TimeSeriesSlider';
 import { ThemeProvider } from 'oskari-ui/util';
 
-export const YearRangeSlider = ({ start, end, dataYears, isMobile, onChange, value, range }) => {
+export const YearRangeSlider = ({ start, end, values, onChange, value, range }) => {
+    const isMobile = Oskari.util.isMobile();
     const marks = {
         [start]: start,
         [end]: end
@@ -22,7 +23,7 @@ export const YearRangeSlider = ({ start, end, dataYears, isMobile, onChange, val
     // data years are those years that has timeseries photos in current map view
     // data years are also marks on the range slider but they are represented
     // as small circles on the timeline (via css styling)
-    dataYears.filter((year) => !marks[year]).forEach((year) => (marks[year] = ''));
+    values.filter((year) => !marks[year]).forEach((year) => (marks[year] = ''));
     const mapModule = Oskari.getSandbox().findRegisteredModuleInstance('MainMapModule');
     return (
         <ThemeProvider value={mapModule.getMapTheme()}>
@@ -30,7 +31,7 @@ export const YearRangeSlider = ({ start, end, dataYears, isMobile, onChange, val
                 range={range}
                 min={start}
                 max={end}
-                dataPoints={dataYears}
+                dataPoints={values}
                 markers={Object.keys(marks).filter(mark => marks[mark] !== '').map(mark => Number.parseInt(mark, 10))}
                 onChange={onChange}
                 value={value}
@@ -43,8 +44,7 @@ export const YearRangeSlider = ({ start, end, dataYears, isMobile, onChange, val
 YearRangeSlider.propTypes = {
     start: PropTypes.number.isRequired,
     end: PropTypes.number.isRequired,
-    dataYears: PropTypes.arrayOf(PropTypes.number).isRequired,
-    isMobile: PropTypes.bool.isRequired,
+    values: PropTypes.arrayOf(PropTypes.number).isRequired,
     onChange: PropTypes.func.isRequired,
     value: PropTypes.any,
     range: PropTypes.bool

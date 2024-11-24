@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Col, ColFixed, YearInput } from './styled';
+import { Col, ColFixed } from './styled';
+import { NumberInput } from 'oskari-ui';
 import { YearRangeSlider } from './YearRangeSlider';
 import styled from 'styled-components';
 
@@ -12,8 +13,16 @@ const Row = styled('div')`
     justify-content: space-between;
 `;
 
-export const TimeSeriesRange = ({ onChange, start, end, value, dataYears, isMobile }) => {
+const YearInput = styled(NumberInput)`
+    width: 80px;
+    .ant-input-number-handler-wrap {
+        opacity: 1;
+    }
+`;
+
+export const TimeSeriesRange = ({ onChange, start, end, value, values }) => {
     const [startValue, endValue] = value;
+    const isMobile = Oskari.util.isMobile();
     return (
         <Row>
             <Col>
@@ -30,7 +39,7 @@ export const TimeSeriesRange = ({ onChange, start, end, value, dataYears, isMobi
                         range
                         start={start}
                         end={end}
-                        dataYears={dataYears}
+                        values={values}
                         value={value}
                         onChange={(val) => onChange(val)}
                         isMobile={isMobile}
@@ -54,6 +63,5 @@ TimeSeriesRange.propTypes = {
     start: PropTypes.number.isRequired,
     end: PropTypes.number.isRequired,
     value: PropTypes.arrayOf(PropTypes.number).isRequired,
-    dataYears: PropTypes.arrayOf(PropTypes.number).isRequired,
-    isMobile: PropTypes.bool.isRequired
+    values: PropTypes.arrayOf(PropTypes.number).isRequired
 };
