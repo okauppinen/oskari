@@ -40,13 +40,13 @@ const ICON_OPTIONS = {
 
 const MENU_OPTIONS = {
     selectable: true,
-    multiple: true,
     trigger: ['click', 'hover']
 };
 
 // TODO: for mobile only??
 const OptionsMenu = ({iconProps, onPlayerUpdate, skip, speed }) => {
     const onSelect = ({keyPath}) => {
+        // TODO: for one item group is used and path doesn't include key (only value) => fix
         const key = keyPath[1];
         const value = keyPath[0];
         onPlayerUpdate({ [key]: value });
