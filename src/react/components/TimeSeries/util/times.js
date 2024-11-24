@@ -14,7 +14,6 @@ dayjs.extend(utc);
 dayjs.extend(customParseFormat);
 dayjs.extend(localizedFormat)
 
-console.log('fUCK', dayjs);
 /* --------- FORMATTERS ---------- */
 export const getFullYearRange = (time, stringify = true) => {
     const arr = Array.isArray(time) ? time : [time, time];
