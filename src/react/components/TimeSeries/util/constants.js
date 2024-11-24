@@ -13,7 +13,8 @@ export const timeUnits = {
     HOUR: 'hour',
     DAY: 'day',
     MONTH: 'month',
-    YEAR: 'year'
+    YEAR: 'year',
+    YEAR_INT: 'yearInt'
 };
 
 export const sliderTypes = {
