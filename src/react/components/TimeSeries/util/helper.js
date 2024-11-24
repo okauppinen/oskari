@@ -2,28 +2,30 @@ import React from 'react';
 import { playerSpeed, playerSkip } from './constants';
 import { Message } from 'oskari-ui';
 
-export const getPlayerOptions = keys => {
-    const addSpeed = keys.includes('speed');
-    const addSkip = keys.includes('skip');
-    const options = [];
-    if (addSpeed) {
-        options.push({
+export const getMenuOptions = (skip, speed) => {
+    const items = [];
+    const selectedKeys = [];
+    if (typeof speed !== 'undefined') {
+        selectedKeys.push(speed);
+        items.push({
             key: 'speed',
             label: <Message messageKey='TimeSeries.speed.label' />,
             children: playerSpeed.map(({ key }) => ({ key, label: <Message messageKey={`TimeSeries.speed.${key}`}/> }))
         });
     }
-    if (addSkip) {
-        options.push({
+    if (typeof skip !== 'undefined') {
+        selectedKeys.push(skip);
+        items.push({
             key: 'skip',
             label: <Message messageKey='TimeSeries.skip.label' />,
             children: playerSkip.map(({ key }) => ({ key, label: <Message messageKey={`TimeSeries.skip.${key}`}/> }))
         });
     }
-    if (options.length === 1) {
-        options[0].type = 'group';
+    if (items.length === 1) {
+        items[0].type = 'group';
     }
-    return options;
+    const multiple = items.length > 1;
+    return { items, selectedKeys, multiple };
 };
 
 export const calculateSvgX = (clientX, svg) => {
