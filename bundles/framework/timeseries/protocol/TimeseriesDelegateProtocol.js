@@ -67,5 +67,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.TimeseriesDelegatePro
          */
         destroy: function () {
             throw new Error('Implement your own');
+        },
+        onDestroy: function (callbackFn) {
+            throw new Error('Implement your own');
         }
     });

@@ -1,8 +1,4 @@
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-dayjs.extend(duration);
-dayjs.extend(customParseFormat);
+import { getTimesFromAttributes } from 'oskari-ui/components/TimeSeries';
 
 /**
  * @class Oskari.mapframework.bundle.timeseries.WMSAnimator
@@ -14,9 +10,9 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.WMSAnimator',
         this._sandbox = sandbox;
         this._layer = this._sandbox.findMapLayerFromSelectedMapLayers(layerId);
 
-        const times = this.getTimes();
-        this._currentTime = times[0];
-        this._subsetRange = [times[0], times[times.length - 1]];
+        this._times = this.getTimes();
+        this._currentTime = this._times[0];
+        this._subsetRange = [this._times.at(0), this._times.at(-1)];
 
         this._doneCallback = null;
         this._isBuffering = false;
@@ -24,20 +20,19 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.WMSAnimator',
 
         this._sandbox.register(this);
         this._onDestroyCallbacks = [];
-        for (const p in this.__eventHandlers) {
-            if (this.__eventHandlers.hasOwnProperty(p)) {
-                sandbox.registerForEventByName(this, p);
-            }
-        }
         this.requestNewTime(this._currentTime, null, function () {});
     }, {
         __name: 'WMSAnimator',
         getName: function () {
             return this.__name;
         },
+        init: function () {
+            Object.getOwnPropertyNames(this.__eventHandlers)
+                .forEach(p => this._sandbox.registerForEventByName(this, p));
+        },
         _clazz: 'Oskari.mapframework.bundle.timeseries.WMSAnimator',
         __eventHandlers: {
-            'ProgressEvent': function (event) {
+            ProgressEvent: function (event) {
                 if (event.getStatus() && this._layer.getId() === event.getId()) {
                     this._isLoading = false;
                     this._resolveWait();
@@ -45,7 +40,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.WMSAnimator',
             }
         },
         onEvent: function (event) {
-            var handler = this.__eventHandlers[event.getName()];
+            const handler = this.__eventHandlers[event.getName()];
             if (!handler) {
                 return;
             }
@@ -57,34 +52,11 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.WMSAnimator',
          * @return {String[]} list of available timeseries times
          */
         getTimes: function () {
-            var times = this._layer.getAttributes().times;
-            if (!Array.isArray(times)) {
-                var interval = dayjs.duration(times.interval);
-                var end = dayjs(times.end);
-                var t = dayjs(times.start);
-                times = [t.toISOString()];
-                do {
-                    if (t < end) {
-                        t = t.add(interval);
-                        times.push(t.toISOString());
-                    }
-                } while (t < end);
-                times.push(end.toISOString());
+            if (!this._times) {
+                this._times = getTimesFromAttributes(this.getLayer()?.getAttributes());
             }
-            return times;
+            return this._times;
         },
-        /**
-         * @method getYearRange
-         * Returns the start and end year of timeseries times
-         * @return {number[]} Start and end year of timeseries times
-         */
-        getYearRange: function () {
-            const times = this._layer.getAttributes().times;
-            const start = dayjs(times[0]).year();
-            const end = dayjs(times[times.length - 1]).year();
-            return [start, end];
-        },
-        init: function () { },
         /**
          * @method getLayer
          * Returns the layer domain object
@@ -124,6 +96,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.WMSAnimator',
          * @param {String} nextTime time value at next animation frame(ISO string). Can be null if not animating
          * @param {function} doneCallback callback that will be called after new time has been loaded
          */
+        // TODO: remove doneCallback ??
         requestNewTime: function (newTime, nextTime, doneCallback) {
             const me = this;
             this._currentTime = newTime;
@@ -196,7 +169,7 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.WMSAnimator',
          */
         _resolveWait: function () {
             if (!this._isLoading && !this._isBuffering && this._doneCallback) {
-                var cb = this._doneCallback;
+                const cb = this._doneCallback;
                 this._doneCallback = null;
                 cb();
             }
@@ -209,11 +182,8 @@ Oskari.clazz.define('Oskari.mapframework.bundle.timeseries.WMSAnimator',
          * Releases any event handlers and any other resources
          */
         destroy: function () {
-            for (var p in this.__eventHandlers) {
-                if (this.__eventHandlers.hasOwnProperty(p)) {
-                    this._sandbox.unregisterFromEventByName(this, p);
-                }
-            }
+            Object.getOwnPropertyNames(this.__eventHandlers)
+                .forEach(p => this._sandbox.unregisterFromEventByName(this, p));
             const destroyCbs = this._onDestroyCallbacks;
             while (destroyCbs.length) {
                 const callbackFn = destroyCbs.shift();
