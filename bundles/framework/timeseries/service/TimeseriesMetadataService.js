@@ -12,17 +12,14 @@ const DEFAULT_STYLE = {
         color: null
     }
 };
+const toggleFromMetadata = ({ toggleLevel }) => typeof toggleLevel === 'number' ? toggleLevel : -1;
 
 export class TimeseriesMetadataService {
-    constructor (layerId, attributeName, toggleLevel, visualize) {
-        this._layerId = layerId;
-        this._attributeName = attributeName;
-        this._visualize = visualize;
-        if (typeof toggleLevel === 'number' && toggleLevel > -1) {
-            this._toggleLevel = toggleLevel;
-        } else {
-            this._toggleLevel = -1;
-        }
+    constructor (metadata) {
+        this._layerId = metadata.layer;
+        this._attributeName = metadata.attribute || 'time';
+        this._visualize = metadata.visualize || false;
+        this._toggleLevel = toggleFromMetadata(metadata);
         this._geojson = null;
     }
 
@@ -36,8 +33,9 @@ export class TimeseriesMetadataService {
      * @param {Function} success called with updated years array based on the loaded features
      * @param {Function} error called if there's a problem loading the features
      */
-    setBbox (bbox, success, error) {
-        const sandbox = Oskari.getSandbox();
+    getDataYearsFromService (success, error) {
+        const map = Oskari.getSandbox().getMap();
+        const bbox = map.getBbox();
         if (!bbox || Object.keys(bbox).length !== 4) {
             this.clearPreviousFeatures();
             error('Invalid bbox');
@@ -55,11 +53,10 @@ export class TimeseriesMetadataService {
         const bottom = bboxCenterY - bboxHeight / 2;
         const top = bboxCenterY + bboxHeight / 2;
         const bboxStr = [left, bottom, right, top].join(',');
-        const attribute = this._attributeName;
         const url = Oskari.urls.getRoute('GetWFSFeatures', {
             id: this._layerId,
             bbox: bboxStr,
-            srs: sandbox.getMap().getSrsName()
+            srs: map.getSrsName()
         });
         fetch(url, {
             method: 'GET',
@@ -73,17 +70,19 @@ export class TimeseriesMetadataService {
             }
             return response.json();
         }).then(json => {
+            // TODO: process attribute (time) before storing data => no need parse on showFeaturesForRange filter
             this._geojson = json;
-            this._updateYears(attribute);
             success(this.getCurrentYears());
         }).catch(e => {
             error(e);
         });
     }
 
-    _updateYears (attribute) {
+    getCurrentYears () {
+        const attribute = this._attributeName;
         const yearSet = new Set();
-        this.getCurrentFeatures().forEach(feature => {
+        const { features } = this.getGeoJson();
+        features.forEach(feature => {
             const time = feature.properties[attribute];
             if (typeof time === 'number' && time < 10000) {
                 // handle as year value
@@ -93,21 +92,11 @@ export class TimeseriesMetadataService {
                 yearSet.add(year);
             }
         });
-        this._currentYears = Array.from(yearSet).sort();
+        return Array.from(yearSet).sort();
     }
 
-    getCurrentYears () {
-        return this._currentYears || [];
-    }
-
-    getCurrentFeatures (asGeoJson) {
-        let geoJson = this._geojson;
-        if (!geoJson || !Array.isArray(geoJson.features)) {
-            geoJson = {
-                features: []
-            };
-        }
-        return asGeoJson ? { ...geoJson } : [...geoJson.features];
+    getGeoJson () {
+        return this._geojson ? { ...this._geojson } : { features: [] };
     }
 
     clearPreviousFeatures () {
@@ -132,7 +121,7 @@ export class TimeseriesMetadataService {
             return;
         }
         const attribute = this._attributeName;
-        const geojson = this.getCurrentFeatures(true);
+        const geojson = this.getGeoJson();
         const features = geojson.features.filter(feature => {
             const time = dayjs(feature.properties[attribute]);
             return startTime < time && time < endTime;
