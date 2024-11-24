@@ -1,36 +1,24 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import { StateHandler, controllerMixin } from 'oskari-ui/util';
-import { showTimeSeriesPlayer } from 'oskari-ui/components/TimeSeries';
+import { showTimeSeriesController, timeUnits, uiModes, parseTimeToValue, getFullYearRange, nextValueByInterval } from 'oskari-ui/components/TimeSeries';
 import { TimeseriesMetadataService } from '../service/TimeseriesMetadataService';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-dayjs.extend(utc);
-dayjs.extend(customParseFormat);
+import { bisectLeft } from 'd3';
 
 const debounceTime = 300;
 
-// TODO move to helper? dayjs imports??
-const _getStartTimeFromYear = (year) => {
-    if (!year) {
-        return null;
-    }
-    return dayjs.utc(year.toString(), 'YYYY').startOf('year');
-};
-
-const _getEndTimeFromYear = (year) => {
-    if (!year) {
-        return null;
-    }
-    return dayjs.utc(year.toString(), 'YYYY').endOf('year');
-};
-
-const _getDataYearsFromWMS = (layer) => {
+// TODO: move to helper?
+const getOptionsFromLayer = (layer) => {
     if (!layer) {
-        return [];
+        return {};
     }
-    // get years from WMS-layer timeseries
-    const { times = [] } = layer.getAttributes();
-    return times.map(time => dayjs(time).year());
+    const title = layer.getName();
+
+    const { timeseries = {} } = layer.getOptions();
+    const uiMode = timeseries.ui || uiModes.PLAYER;
+    let timeUnit = timeseries.unit;
+    if (!timeUnit) {
+        timeUnit = uiMode === uiModes.RANGE ? timeUnits.YEAR_INT : timeUnits.DAY;
+    }
+    return { uiMode, timeUnit, title };
 };
 
 class UIHandler extends StateHandler {
@@ -44,45 +32,54 @@ class UIHandler extends StateHandler {
             title: '',
             start: null,
             end: null,
-            // TODO: use mode for all??: player, year, range => jsx
-            mode: 'year', // year or range for range player TODO: refactor?? (it not stored)
-            ui: 'player',
-            value: null,
+            timeUnit: null, // to format shown value and request time
+            uiMode: 'player', // player, range, none
+            value: null, // TODO: always string or string | number
             values: []
         });
         this.addStateListener(state => this._playerControls && this._playerControls.update(state));
     }
 
     getLayer () {
+        // Note that delegate protocol doesn't have layer or getLayer
         return this._delegate?.getLayer();
     }
 
     setDelegate (delegate) {
-        if (delegate && this._delegate?.getLayer() === delegate.getLayer()) {
+        if (!delegate || this._delegate === delegate) {
             // already set
             return;
         }
         this._delegate = delegate;
         const layer = delegate.getLayer();
-        const { timeseries = {} } = layer.getOptions();
+        const { timeUnit, ...restLayerOpts } = getOptionsFromLayer(layer);
 
-        const ui = timeseries.ui || 'player';
-        const title = layer.getName();
-        const [start, end] = delegate.getYearRange(); // TODO: mode
-        const hasMetadata = this._initMetadataLayer(layer);
-        const values = hasMetadata ? [] : _getDataYearsFromWMS(layer);
-        const value = values[0]; // TODO: autoselect ?
-        this.updateState({ start, end, title, value, values, ui });
+        const [start, end] = delegate.getSubsetRange().map(t => parseTimeToValue(t, timeUnit));
+        const values = delegate.getTimes().map(t => parseTimeToValue(t, timeUnit)).filter(nonEmpty => nonEmpty);
+        const value = values[0];
 
-        delegate.onDestroy(() => this._teardown());
+        if (delegate.getTimes().length !== values.length) {
+            // remove invalid values from delegate by indexes
+        }
+
+        this._initMetadataLayer(layer);
+        this.updateState({ start, end, value, values, timeUnit, ...restLayerOpts });
+
+        delegate.onDestroy(() => this._teardownMetadata());
         this.showPlayer();
+    }
+
+    onMapSizeEvent (width) {
+        Oskari.util.isMobile();
+        // TODO: toggle to compact on small size
     }
 
     showPlayer () {
         if (this._playerControls) {
+            this._playerControls.update(this.getState());
             return;
         }
-        this._playerControls = showTimeSeriesPlayer(
+        this._playerControls = showTimeSeriesController(
             this.getState(),
             val => this.setValue(val),
             { bundle: 'timeseries' },
@@ -103,27 +100,41 @@ class UIHandler extends StateHandler {
     }
 
     getStateToStore () {
+        // TODO: or ISO time from delegate. Maybe it's always right delegate for value (layer and permissions are correct)
         return { time: this.getState().value };
     }
 
-    updateValue (value, mode) {
-        const state = { value };
-        if (mode) {
-            state.mode = mode;
-        }
-        this.updateState(state);
-        if (this._timer) {
-            clearTimeout(this._timer);
-        }
-        this._timer = setTimeout(() => this._requestNewTime(value), debounceTime);
+    toggleValueMode () {
+        // For now player handles internally
+        const { value, values } = this.getState();
+        const toggled = Array.isArray(value) ? value[0] : [values[0], value];
+        this.setValue(toggled);
     }
 
-    setValue (value) {
+    setValue (value, animating, stepInterval) {
         this.updateState({ value });
+        if (!this._delegate) {
+            return;
+        }
         if (this._timer) {
             clearTimeout(this._timer);
         }
-        this._timer = setTimeout(() => this._requestNewTime(value), debounceTime);
+        const { values, timeUnit } = this.getState();
+        const index = values.indexOf(value);
+        const times = this._delegate.getTimes();
+        const time = timeUnit === timeUnits.YEAR
+            ? getFullYearRange(value).join('/')
+            : times[index];
+        if (animating) {
+            let nextTime = times[index + 1];
+            if (stepInterval) {
+                const nextISO = nextValueByInterval(value, stepInterval);
+                nextTime = times[bisectLeft(times, nextISO)];
+            }
+            // TODO: getFullYearRange
+            this._requestNewTime(time, nextTime);
+        }
+        this._timer = setTimeout(() => this._requestNewTime(time), debounceTime);
     }
 
     _autoSelectMidDataYear (dataYears) {
@@ -135,75 +146,43 @@ class UIHandler extends StateHandler {
         this.updateValue(value);
     }
 
-    _requestNewTime (value) {
-        let startYear = null;
-        let endYear = null;
-        if (Array.isArray(value)) {
-            startYear = value[0];
-            endYear = value[1];
-        } else {
-            startYear = value;
-            endYear = value;
-        }
-        const startTime = _getStartTimeFromYear(startYear);
-        const endTime = _getEndTimeFromYear(endYear);
-        if (!startTime || !endTime) {
-            return null;
-        }
-        const newTime = `${startTime.toISOString()}/${endTime.toISOString()}`;
-        this._delegate.requestNewTime(newTime);
-        this._updateFeaturesByTime(startTime, endTime);
-    }
-
-    _getTimeRange () {
-        const { time } = this.getState();
-        let startYear = null;
-        let endYear = null;
-        if (time.length === 2) {
-            startYear = time[0];
-            endYear = time[1];
-        } else {
-            startYear = time;
-            endYear = time;
-        }
-        return [_getStartTimeFromYear(startYear), _getEndTimeFromYear(endYear)];
+    _requestNewTime (time, next) {
+        this._delegate.requestNewTime(time, next);
+        this._updateFeaturesByTime();
     }
 
     /* ------------------ METADATA ------------------------ */
     _initMetadataLayer (layer) {
         if (!layer) {
+            this._teardownMetadata();
+            return;
+        }
+        const { metadata = {} } = layer.getOptions().timeseries || {};
+        // TODO: should we check also that layer is available? No
+        if (!metadata.layer) {
             return false;
         }
-        const options = layer.getOptions() || {};
-        const timeseries = options.timeseries || {};
-        const metadata = timeseries.metadata || {};
-        const layerId = metadata.layer;
-        if (!layerId) {
-            return false;
-        }
-        const attribute = metadata.attribute || 'time';
-        this._metadataHandler = new TimeseriesMetadataService(layerId, attribute, metadata.toggleLevel, !!metadata.visualize);
-        return true;
+        this._metadataHandler = new TimeseriesMetadataService(metadata);
     }
 
-    setCurrentViewportBbox (bbox, zoomLevel) {
+    setCurrentViewportBbox (zoomLevel) {
         if (!this._metadataHandler) {
             return;
         }
+        // TODO: use same filtered values than player skip ahead option
+        // or override and init again from delegate when needed
         if (this._metadataHandler.getToggleLevel() > zoomLevel) {
-            const dataYears = this._getDataYearsFromWMS(this.getLayer());
-            this._autoSelectMidDataYear(dataYears);
-            this.updateState({ dataYears, error: false });
+            // const dataYears = getValuesFromLayer(this.getLayer());
+            // this._autoSelectMidDataYear(dataYears);
+            this.updateState({ error: false });
             return;
         }
         this.updateState({ error: false, loading: true });
-        this._metadataHandler.setBbox(
-            bbox,
+        this._metadataHandler.getDataYearsFromService(
             (dataYears) => {
                 this._autoSelectMidDataYear(dataYears);
+                this._updateFeaturesByTime();
                 this.updateState({ dataYears, loading: false });
-                const [start, end] = this._getTimeRange();
-                this._updateFeaturesByTime(start, end);
             },
             (error) => {
                 this.updateState({ error: true, loading: false });
@@ -212,19 +191,22 @@ class UIHandler extends StateHandler {
         );
     }
 
-    _updateFeaturesByTime (start, end) {
+    _updateFeaturesByTime () {
         if (!this._metadataHandler) {
             return;
         }
+        const { value } = this.getState();
+        const [start, end] = this.getFullYearRange(value, false);
         this._metadataHandler.showFeaturesForRange(start, end);
     }
 
-    _teardown () {
+    _teardownMetadata () {
         // TODO: this.closePlayer() ??
         if (!this._metadataHandler) {
             return;
         }
         this._metadataHandler.clearPreviousFeatures();
+        this._metadataHandler = null;
     }
 
     /* ------------------ /METADATA ------------------------ */
