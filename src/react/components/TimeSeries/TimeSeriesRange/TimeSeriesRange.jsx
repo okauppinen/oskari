@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Col, ColFixed } from './styled';
 import { NumberInput } from 'oskari-ui';
-import { YearRangeSlider } from './YearRangeSlider';
+import { YearSlider } from './YearSlider';
 import styled from 'styled-components';
 
 const Row = styled('div')`

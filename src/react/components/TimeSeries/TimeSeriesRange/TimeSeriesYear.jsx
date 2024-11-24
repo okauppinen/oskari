@@ -5,7 +5,7 @@ import { ThemeConsumer } from 'oskari-ui/util';
 import { getNavigationTheme } from 'oskari-ui/theme/ThemeHelper';
 import { Select } from 'oskari-ui';
 import { Col, ColFixed } from './styled';
-import { YearRangeSlider } from './YearRangeSlider';
+import { YearSlider } from './YearSlider';
 import { IconButton } from 'oskari-ui/components/buttons';
 import { StepBackwardOutlined, StepForwardOutlined } from '@ant-design/icons';
 

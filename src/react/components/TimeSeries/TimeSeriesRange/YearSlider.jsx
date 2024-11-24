@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { TimeSeriesSlider } from 'oskari-ui/components/TimeSeries/TimeSeriesSlider';
+import { TimeSeriesSlider } from '../TimeSeriesSlider';
 import { ThemeProvider } from 'oskari-ui/util';
 
-export const YearRangeSlider = ({ start, end, values, onChange, value, range }) => {
+export const YearSlider = ({ start, end, values, onChange, value, range }) => {
     const isMobile = Oskari.util.isMobile();
     const marks = {
         [start]: start,
@@ -41,7 +41,7 @@ export const YearRangeSlider = ({ start, end, values, onChange, value, range }) 
     );
 };
 
-YearRangeSlider.propTypes = {
+YearSlider.propTypes = {
     start: PropTypes.number.isRequired,
     end: PropTypes.number.isRequired,
     values: PropTypes.arrayOf(PropTypes.number).isRequired,
