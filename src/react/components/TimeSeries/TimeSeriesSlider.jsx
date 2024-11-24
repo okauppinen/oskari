@@ -1,7 +1,8 @@
 import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { sliderTypes, timeUnits } from './util/constants';
-import { getDifferenceCalculator, calculateSvgX } from './util/calculation';
+import { getDifferenceCalculator } from './util/times';
+import { calculateSvgX } from './util/helper';
 import { getNavigationTheme } from 'oskari-ui/theme/ThemeHelper';
 import { ThemeConsumer } from 'oskari-ui/util';
 import styled from 'styled-components';
@@ -81,7 +82,8 @@ export const TimeSeriesSlider = ThemeConsumer(({
 }) => {
     const navigationTheme = getNavigationTheme(theme);
     const lineWidth = width - (SVG_PADDING * 2);
-    const calculator = getDifferenceCalculator(type === sliderTypes.YEAR ? timeUnits.YEAR : timeUnits.DAY);
+    const timeUnit = type === sliderTypes.YEAR ? timeUnits.YEAR : timeUnits.DAY;
+    const calculator = getDifferenceCalculator(timeUnit);
     const widthUnit = lineWidth / calculator(max, min);
 
     const [state, setState] = useState({
@@ -89,8 +91,8 @@ export const TimeSeriesSlider = ThemeConsumer(({
         dragOffsetX: null
     });
     const xValue = range ? value[0] : value;
-    const handleX = calcHandlePosition(xValue, min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR);
-    const secondHandleX = range ? calcHandlePosition(value[1], min, widthUnit, HANDLE_WIDTH, timeUnits.YEAR) : 0;
+    const handleX = calcHandlePosition(xValue, min, widthUnit, HANDLE_WIDTH, timeUnit);
+    const secondHandleX = range ? calcHandlePosition(value[1], min, widthUnit, HANDLE_WIDTH, timeUnit) : 0;
 
     const sliderPoints = dataPoints.map((data) => ({
         data,
